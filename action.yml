@@ -21,6 +21,10 @@ inputs:
     description: 'Indicates if sitemap should be formatted in xml.'
     required: true
     default: 'xml'
+  branch:
+    description: 'The branch for which to get commit time for generating lastmod dates.'
+    required: true
+    default: 'master'
 outputs:
   sitemap-path: 
     description: 'The path to the generated sitemap file.'
@@ -35,3 +39,4 @@ runs:
     - ${{ inputs.include-html }}
     - ${{ inputs.include-pdf }}
     - ${{ inputs.sitemap-format }}
+    - ${{ inputs.branch }}

@@ -5,6 +5,7 @@ baseUrl=$2
 includeHTML=$3
 includePDF=$4
 sitemapFormat=$5
+branch=$6
 
 numUrls=0
 
@@ -35,13 +36,13 @@ fi
 
 if [ "$includeHTML" == "true" ]; then
 	for i in $(find . \( -name '*.html' -o -name '*.htm' \) -type f); do 
-		lastMod=$(git log origin -1 --format=%ci $i)
+		lastMod=$(git log origin/$branch -1 --format=%ci $i)
 		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
 	done
 fi
 if [ "$includePDF" == "true" ]; then
 	for i in $(find . -name '*.pdf' -type f); do 
-		lastMod=$(git log origin -1 --format=%ci $i)
+		lastMod=$(git log origin/$branch -1 --format=%ci $i)
 		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
 	done
 fi
