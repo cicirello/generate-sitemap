@@ -1,0 +1,35 @@
+name: 'generate-sitemap'
+description: 'Generates a sitemap for a Github Pages site'
+inputs:
+  path-to-root:  
+    description: 'The path to the root of the website'
+    required: true
+    default: '.'
+  base-url-path:
+    description: 'The url to the root of your webpage'
+    required: true
+    default: 'https://web.address.of.your.site/'
+  include-html:
+    description: 'Indicates whether to include html files in map.'
+    required: true
+    default: 'true'
+  include-pdf:
+    description: 'Indicates whether to include html files in map.'
+    required: true
+    default: 'true'
+  sitemap-format:
+    description: 'Indicates if sitemap should be formatted in xml.'
+    required: true
+    default: 'xml'
+outputs:
+  sitemap-path: # id of output
+    description: 'The path to the generated sitemap file.'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.path-to-root }}
+    - ${{ inputs.base-url-path }}
+    - ${{ inputs.include-html }}
+    - ${{ inputs.include-pdf }}
+    - ${{ inputs.sitemap-format }}
