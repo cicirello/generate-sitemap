@@ -6,7 +6,7 @@
 This action generates a sitemap for a website hosted on GitHub
 Pages. It supports both xml and txt sitemaps. When generating
 an xml sitemap, it uses the last commit date of each file to
-generate the lastmod tag in the sitemap entry. It can include
+generate the `<lastmod>` tag in the sitemap entry. It can include
 html as well as pdf files in the sitemap, and has inputs to
 control the included file types (defaults include both html
 and pdf files in the sitemap). It skips over html files that
