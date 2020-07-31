@@ -6,15 +6,15 @@ inputs:
     required: true
     default: '.'
   base-url-path:
-    description: 'The url to the root of your webpage'
+    description: 'The url of your webpage'
     required: true
     default: 'https://web.address.of.your.site/'
   include-html:
-    description: 'Indicates whether to include html files in map.'
+    description: 'Indicates whether to include html files in the sitemap.'
     required: true
     default: 'true'
   include-pdf:
-    description: 'Indicates whether to include html files in map.'
+    description: 'Indicates whether to include pdf files in the sitemap.'
     required: true
     default: 'true'
   sitemap-format:
