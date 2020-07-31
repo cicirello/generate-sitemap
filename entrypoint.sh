@@ -60,4 +60,4 @@ fi
 
 echo ::set-output name=sitemap-path::$pathToSitemap
 echo ::set-output name=url-count::$numUrls
-echo ::set-output name=noindex-count::$skipCount
+echo ::set-output name=excluded-count::$skipCount

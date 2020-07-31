@@ -26,7 +26,7 @@ outputs:
     description: 'The path to the generated sitemap file.'
   url-count:
     description: 'The number of entries in the sitemap.'
-  noindex-count:
+  excluded-count:
     description: 'The number of html files excluded from sitemap due to noindex meta tag.' 
 runs:
   using: 'docker'
