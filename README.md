@@ -17,6 +17,24 @@ Actions. For example, it does not commit and push the generated
 sitemap. See the [examples](#examples) for examples of combining
 with other actions.
 
+## Requirements
+
+This action relies on `actions/checkout@v2` with `fetch-depth: 0`.
+Setting the `fetch-depth` to 0 for the checkout action ensures
+that the `generate-sitemap` action will have access to the commit
+history, which is used for generating the `<lastmod>` tags in the
+`sitemap.xml` file.  If you instead use the default when applying the
+checkout action, the `<lastmod>` tags will be incorrect.  So be
+sure to include the following as a step in your workflow:
+
+```yml
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 
+```
+
 ## Inputs
 
 ### `path-to-root`
