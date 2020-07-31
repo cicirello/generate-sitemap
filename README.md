@@ -1,6 +1,7 @@
 # Generate Sitemap
 
 [![build](https://github.com/cicirello/generate-sitemap/workflows/build/badge.svg)](https://github.com/cicirello/generate-sitemap/actions?query=workflow%3Abuild)
+[![GitHub](https://img.shields.io/github/license/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap/blob/master/LICENSE)
 
 This action generates a sitemap for a website hosted on GitHub
 Pages. It supports both xml and txt sitemaps. When generating
