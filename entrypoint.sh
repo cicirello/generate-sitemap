@@ -5,7 +5,6 @@ baseUrl=$2
 includeHTML=$3
 includePDF=$4
 sitemapFormat=$5
-branch=$6
 
 numUrls=0
 
