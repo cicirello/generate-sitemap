@@ -18,7 +18,7 @@ function formatSitemapEntry {
 		echo "<lastmod>$lastModDate<lastmod>" >> sitemap.xml
 		echo "</url>" >> sitemap.xml
 	else
-		echo "$2${1%index.html}" >> sitemap.txt
+		echo "$2${1/%\/index.html/\/}" >> sitemap.txt
 	fi
 	numUrls=$((numUrls+1))
 }
