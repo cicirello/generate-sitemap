@@ -35,7 +35,7 @@ fi
 
 if [ "$includeHTML" == "true" ]; then
 	for i in $(find . \( -name '*.html' -o -name '*.htm' \) -type f); do 
-		if [ "0" == $(grep -i -c "<meta name.+robots.+content.+noindex" $i || true) ]; then
+		if [ "0" == $(grep -i -c <meta*.*name*.*robots*.*content*.*noindex $i || true) ]; then
 			lastMod=$(git log -1 --format=%ci $i)
 			formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
 		fi
