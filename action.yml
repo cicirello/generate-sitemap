@@ -12,11 +12,11 @@ inputs:
   include-html:
     description: 'Indicates whether to include html files in the sitemap.'
     required: true
-    default: 'true'
+    default: true
   include-pdf:
     description: 'Indicates whether to include pdf files in the sitemap.'
     required: true
-    default: 'true'
+    default: true
   sitemap-format:
     description: 'Indicates if sitemap should be formatted in xml.'
     required: true
