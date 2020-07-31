@@ -14,8 +14,8 @@ does not currently attempt to respect a robots.txt file.
 
 It is designed to be used in combination with other GitHub
 Actions. For example, it does not commit and push the generated
-sitemap. See the [examples](#examples) for examples of combining
-with other actions.
+sitemap. See the [Examples](#examples) for examples of combining
+with other actions in your workflow.
 
 ## Requirements
 
@@ -91,3 +91,74 @@ This output provides the number of urls excluded from the sitemap due
 to `<meta name="robots" content="noindex">` within html files.
 
 ## Examples
+
+### Example 1: Minimal Example
+
+In this example, we use all of the default inputs except for
+the `base-url-path` input. The result will be a `sitemap.xml`
+file in the root of the repository. After completion, it then
+simply echos the outputs.
+
+```yml
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  sitemap_job:
+    runs-on: ubuntu-latest
+    name: Generate a sitemap
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 
+    - name: Generate the sitemap
+      id: sitemap
+      uses: cicirello/generate-sitemap@v1
+      with:
+        base-url-path: https://THE.URL.TO.YOUR.PAGE/
+    - name: Output stats
+      run: |
+        echo "sitemap-path = ${{ steps.sitemap.outputs.sitemap-path }}"
+        echo "url-count = ${{ steps.sitemap.outputs.url-count }}"
+        echo "excluded-count = ${{ steps.sitemap.outputs.excluded-count }}"
+```
+
+### Example 2: Webpage for API Docs
+
+This example illustrates how you might use this to generate
+a sitemap for a Pages site in the `docs` directory of the
+repository. It also demonstrates excluding `pdf` files, and
+configuring a plain text sitemap.
+
+```yml
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  sitemap_job:
+    runs-on: ubuntu-latest
+    name: Generate a sitemap
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 
+    - name: Generate the sitemap
+      id: sitemap
+      uses: cicirello/generate-sitemap@v1
+      with:
+        base-url-path: https://THE.URL.TO.YOUR.PAGE/
+        path-to-root: docs
+        include-pdf: false
+        sitemap-format: txt
+    - name: Output stats
+      run: |
+        echo "sitemap-path = ${{ steps.sitemap.outputs.sitemap-path }}"
+        echo "url-count = ${{ steps.sitemap.outputs.url-count }}"
+        echo "excluded-count = ${{ steps.sitemap.outputs.excluded-count }}"
+``` 
