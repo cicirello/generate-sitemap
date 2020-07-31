@@ -8,7 +8,7 @@ inputs:
   base-url-path:
     description: 'The url of your webpage'
     required: true
-    default: 'https://web.address.of.your.site/'
+    default: 'https://web.address.of.your.nifty.website/'
   include-html:
     description: 'Indicates whether to include html files in the sitemap.'
     required: true
