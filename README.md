@@ -94,7 +94,7 @@ to `<meta name="robots" content="noindex">` within html files.
 
 ### Example 1: Minimal Example
 
-In this example, we use all of the default inputs except for
+In this example workflow, we use all of the default inputs except for
 the `base-url-path` input. The result will be a `sitemap.xml`
 file in the root of the repository. After completion, it then
 simply echos the outputs.
@@ -130,7 +130,7 @@ jobs:
 
 ### Example 2: Webpage for API Docs
 
-This example illustrates how you might use this to generate
+This example workflow illustrates how you might use this to generate
 a sitemap for a Pages site in the `docs` directory of the
 repository. It also demonstrates excluding `pdf` files, and
 configuring a plain text sitemap.
@@ -170,7 +170,7 @@ jobs:
 ### Example 3: Combining With Other Actions
 
 Presumably you want to do something with your sitemap once it is 
-generated. In this example, we combine it with the action
+generated. In this example workflow, we combine it with the action
 [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request).
 First, the `cicirello/generate-sitemap` action generates the sitemap. And
 then the `peter-evans/create-pull-request` monitors for changes, and
