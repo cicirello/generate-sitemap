@@ -16,7 +16,7 @@ function formatSitemapEntry {
 		lastModDate="${lastModDate:0:22}:${lastModDate:22:2}"
 		echo "<url>" >> sitemap.xml
 		echo "<loc>$2${1%index.html}</loc>" >> sitemap.xml
-		echo "<lastmod>$lastModDate<lastmod>" >> sitemap.xml
+		echo "<lastmod>$lastModDate</lastmod>" >> sitemap.xml
 		echo "</url>" >> sitemap.xml
 	else
 		echo "$2${1/%\/index.html/\/}" >> sitemap.txt
