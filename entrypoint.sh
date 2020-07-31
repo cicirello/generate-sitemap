@@ -6,6 +6,8 @@ includeHTML=$3
 includePDF=$4
 sitemapFormat=$5
 
+numUrls=0
+
 function formatSitemapEntry {
 	if [ "$sitemapFormat" == "xml" ]; then
 		lastModDate=${3/ /T}
@@ -18,6 +20,7 @@ function formatSitemapEntry {
 	else
 		echo "$2${1%index.html}" >> sitemap.txt
 	fi
+	numUrls=$((numUrls+1))
 }
 
 cd "$websiteRoot"
@@ -55,3 +58,4 @@ else
 fi
 
 echo ::set-output name=sitemap-path::$pathToSitemap
+echo ::set-output name=url-count::$numUrls
