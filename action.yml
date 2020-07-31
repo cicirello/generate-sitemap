@@ -1,5 +1,8 @@
 name: 'generate-sitemap'
 description: 'Generates a sitemap for a Github Pages site'
+branding:
+  icon: 'book-open'
+  color: 'green'
 inputs:
   path-to-root:  
     description: 'The path to the root of the website'
