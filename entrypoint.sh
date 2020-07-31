@@ -34,11 +34,7 @@ else
 fi
 
 if [ "$includeHTML" == "true" ]; then
-	for i in $(find . -name '*.html' -type f); do 
-		lastMod=$(git log -1 --format=%ci $i)
-		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
-	done
-	for i in $(find . -name '*.htm' -type f); do 
+	for i in $(find . \( -name '*.html' -o -name '*.htm' \) -type f); do 
 		lastMod=$(git log -1 --format=%ci $i)
 		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
 	done
