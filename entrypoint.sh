@@ -35,13 +35,13 @@ fi
 
 if [ "$includeHTML" == "true" ]; then
 	for i in $(find . \( -name '*.html' -o -name '*.htm' \) -type f); do 
-		lastMod=$(git log -1 --format=%ci $i)
+		lastMod=$(git log origin -1 --format=%ci $i)
 		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
 	done
 fi
 if [ "$includePDF" == "true" ]; then
 	for i in $(find . -name '*.pdf' -type f); do 
-		lastMod=$(git log -1 --format=%ci $i)
+		lastMod=$(git log origin -1 --format=%ci $i)
 		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
 	done
 fi
