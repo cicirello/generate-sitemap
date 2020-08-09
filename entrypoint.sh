@@ -11,12 +11,9 @@ skipCount=0
 
 function formatSitemapEntry {
 	if [ "$sitemapFormat" == "xml" ]; then
-		lastModDate=${3/ /T}
-		lastModDate=${lastModDate/ /}
-		lastModDate="${lastModDate:0:22}:${lastModDate:22:2}"
 		echo "<url>" >> sitemap.xml
 		echo "<loc>$2${1%index.html}</loc>" >> sitemap.xml
-		echo "<lastmod>$lastModDate</lastmod>" >> sitemap.xml
+		echo "<lastmod>$3</lastmod>" >> sitemap.xml
 		echo "</url>" >> sitemap.xml
 	else
 		echo "$2${1/%\/index.html/\/}" >> sitemap.txt
@@ -37,7 +34,7 @@ fi
 if [ "$includeHTML" == "true" ]; then
 	for i in $(find . \( -name '*.html' -o -name '*.htm' \) -type f); do 
 		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $i || true) ]; then
-			lastMod=$(git log -1 --format=%ci $i)
+			lastMod=$(git log -1 --format=%cI $i)
 			formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
 		else
 			skipCount=$((skipCount+1))
