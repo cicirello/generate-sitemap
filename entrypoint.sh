@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash -l
 
 websiteRoot=$1
 baseUrl=$2
