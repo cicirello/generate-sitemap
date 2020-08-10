@@ -10,6 +10,11 @@ RUN apk add git
 # limited. We need full featured find.
 RUN apk add findutils
 
+# We also need coreutils to get fuller
+# featured versions of shell commands, 
+# such as sort.
+RUN apk add coreutils
+
 COPY LICENSE README.md /
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
