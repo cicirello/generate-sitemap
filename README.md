@@ -1,4 +1,4 @@
-# Generate Sitemap
+# generate-sitemap
 
 [![build](https://github.com/cicirello/generate-sitemap/workflows/build/badge.svg)](https://github.com/cicirello/generate-sitemap/actions?query=workflow%3Abuild)
 [![GitHub](https://img.shields.io/github/license/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap/blob/master/LICENSE)
@@ -101,7 +101,7 @@ file in the root of the repository. After completion, it then
 simply echos the outputs.
 
 ```yml
-name: Generate API sitemap
+name: Generate xml sitemap
 
 on:
   push:
@@ -178,7 +178,7 @@ then the `peter-evans/create-pull-request` monitors for changes, and
 if the sitemap changed will create a pull request.
 
 ```yml
-name: Generate API sitemap
+name: Generate xml sitemap
 
 on:
   push:
