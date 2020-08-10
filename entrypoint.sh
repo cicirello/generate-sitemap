@@ -42,7 +42,7 @@ if [ "$includeHTML" == "true" ]; then
 	done
 fi
 if [ "$includePDF" == "true" ]; then
-	for i in $(find . -name '*.pdf' -type f); do 
+	for i in $(find . -name '*.pdf' -type f -print0 | sort -z | tr '\0' '\n'); do 
 		lastMod=$(git log -1 --format=%ci $i)
 		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
 	done
