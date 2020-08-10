@@ -15,6 +15,9 @@ RUN apk add findutils
 # such as sort.
 RUN apk add coreutils
 
+# We also need gawk
+RUN apk add gawk
+
 COPY LICENSE README.md /
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

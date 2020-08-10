@@ -32,7 +32,7 @@ else
 fi
 
 if [ "$includeHTML" == "true" ]; then
-	for i in $(find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%d\t%h\t%p\n' | sort -t '\t' -n | awk -F '\t' '{print $3}'); do 
+	for i in $(find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}'); do 
 		echo "$i"
 		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $i || true) ]; then
 			lastMod=$(git log -1 --format=%cI $i)
