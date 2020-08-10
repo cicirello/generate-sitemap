@@ -11,7 +11,14 @@ html as well as pdf files in the sitemap, and has inputs to
 control the included file types (defaults include both html
 and pdf files in the sitemap). It skips over html files that
 contain `<meta name="robots" content="noindex">`. It otherwise
-does not currently attempt to respect a robots.txt file.
+does not currently attempt to respect a robots.txt file.  The 
+sitemap entries are sorted in a consistent order.  Specifically,
+all html pages appear prior to all URLs to pdf files (if pdfs
+are included).  The html pages are then first sorted by depth 
+in the directory structure (i.e., pages at the website root 
+appear first, etc), and then pages at the same depth are sorted 
+alphabetically.  URLs to pdf files are sorted in the same manner
+as the html pages.
 
 It is designed to be used in combination with other GitHub
 Actions. For example, it does not commit and push the generated
