@@ -32,21 +32,20 @@ else
 fi
 
 if [ "$includeHTML" == "true" ]; then
-	while read i; do 
-		echo "$i"
-		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $i || true) ]; then
-			lastMod=$(git log -1 --format=%cI $i)
-			formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
+	while read file; do 
+		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $file || true) ]; then
+			lastMod=$(git log -1 --format=%cI $file)
+			formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
 		else
 			skipCount=$((skipCount+1))
 		fi
 	done < <(find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
 fi
 if [ "$includePDF" == "true" ]; then
-	for i in $(find . -name '*.pdf' -type f -print0 | sort -z | tr '\0' '\n'); do 
-		lastMod=$(git log -1 --format=%ci $i)
-		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
-	done
+	while read file; do
+		lastMod=$(git log -1 --format=%cI $file)
+		formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
+	done < <(find . -name '*.pdf' -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
 fi
 
 if [ "$sitemapFormat" == "xml" ]; then
