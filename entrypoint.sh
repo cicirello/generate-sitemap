@@ -32,7 +32,7 @@ else
 fi
 
 if [ "$includeHTML" == "true" ]; then
-	find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}' | while read i; do 
+	while read i; do 
 		echo "$i"
 		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $i || true) ]; then
 			lastMod=$(git log -1 --format=%cI $i)
@@ -40,7 +40,7 @@ if [ "$includeHTML" == "true" ]; then
 		else
 			skipCount=$((skipCount+1))
 		fi
-	done
+	done < < (find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
 fi
 if [ "$includePDF" == "true" ]; then
 	for i in $(find . -name '*.pdf' -type f -print0 | sort -z | tr '\0' '\n'); do 
