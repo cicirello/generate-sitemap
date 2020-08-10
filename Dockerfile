@@ -18,6 +18,9 @@ RUN apk add coreutils
 # We also need gawk
 RUN apk add gawk
 
+# Let's use bash
+RUN apk add bash bash-doc bash-completion
+
 COPY LICENSE README.md /
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
