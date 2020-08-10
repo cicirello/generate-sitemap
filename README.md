@@ -1,5 +1,6 @@
 # generate-sitemap
 
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/cicirello/generate-sitemap?label=Marketplace&logo=GitHub)](https://github.com/marketplace/actions/generate-sitemap)
 [![build](https://github.com/cicirello/generate-sitemap/workflows/build/badge.svg)](https://github.com/cicirello/generate-sitemap/actions?query=workflow%3Abuild)
 [![GitHub](https://img.shields.io/github/license/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap/blob/master/LICENSE)
 
