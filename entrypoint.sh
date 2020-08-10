@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash -l
 
 websiteRoot=$1
 baseUrl=$2
@@ -11,12 +11,9 @@ skipCount=0
 
 function formatSitemapEntry {
 	if [ "$sitemapFormat" == "xml" ]; then
-		lastModDate=${3/ /T}
-		lastModDate=${lastModDate/ /}
-		lastModDate="${lastModDate:0:22}:${lastModDate:22:2}"
 		echo "<url>" >> sitemap.xml
 		echo "<loc>$2${1%index.html}</loc>" >> sitemap.xml
-		echo "<lastmod>$lastModDate</lastmod>" >> sitemap.xml
+		echo "<lastmod>$3</lastmod>" >> sitemap.xml
 		echo "</url>" >> sitemap.xml
 	else
 		echo "$2${1/%\/index.html/\/}" >> sitemap.txt
@@ -35,20 +32,20 @@ else
 fi
 
 if [ "$includeHTML" == "true" ]; then
-	for i in $(find . \( -name '*.html' -o -name '*.htm' \) -type f); do 
-		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $i || true) ]; then
-			lastMod=$(git log -1 --format=%ci $i)
-			formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
+	while read file; do 
+		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $file || true) ]; then
+			lastMod=$(git log -1 --format=%cI $file)
+			formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
 		else
 			skipCount=$((skipCount+1))
 		fi
-	done
+	done < <(find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
 fi
 if [ "$includePDF" == "true" ]; then
-	for i in $(find . -name '*.pdf' -type f); do 
-		lastMod=$(git log -1 --format=%ci $i)
-		formatSitemapEntry ${i#./} "$baseUrl" "$lastMod"
-	done
+	while read file; do
+		lastMod=$(git log -1 --format=%cI $file)
+		formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
+	done < <(find . -name '*.pdf' -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
 fi
 
 if [ "$sitemapFormat" == "xml" ]; then
