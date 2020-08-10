@@ -126,7 +126,7 @@ jobs:
         fetch-depth: 0 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.0.0
+      uses: cicirello/generate-sitemap@v1.1.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
     - name: Output stats
@@ -162,7 +162,7 @@ jobs:
         fetch-depth: 0 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.0.0
+      uses: cicirello/generate-sitemap@v1.1.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
         path-to-root: docs
@@ -203,7 +203,7 @@ jobs:
         fetch-depth: 0 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.0.0
+      uses: cicirello/generate-sitemap@v1.1.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
     - name: Create Pull Request
