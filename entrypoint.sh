@@ -59,19 +59,15 @@ fi
 
 if [ "$includeHTML" == "true" ]; then
 	while read file; do 
-		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $file || true) ]; then
-			lastMod=$(git log -1 --format=%cI $file)
-			formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
-		else
-			skipCount=$((skipCount+1))
-		fi
-	done < <(find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
+		lastMod=$(git log -1 --format=%cI $file)
+		formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
+	done < <(find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%p\n' | /sortandfilter.py)
 fi
 if [ "$includePDF" == "true" ]; then
 	while read file; do
 		lastMod=$(git log -1 --format=%cI $file)
 		formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
-	done < <(find . -name '*.pdf' -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
+	done < <(find . -name '*.pdf' -type f -printf '%p\n' | /sortandfilter.py)
 fi
 
 if [ "$sitemapFormat" == "xml" ]; then
