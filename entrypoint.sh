@@ -57,21 +57,33 @@ else
 	touch sitemap.txt
 fi
 
-if [ "$includeHTML" == "true" ]; then
+if [ "$includeHTML" == "true" -a "$includePDF" == "true" ]; then
 	while read file; do 
-		if [ "0" == $(grep -i -c -E "<meta*.*name*.*robots*.*content*.*noindex" $file || true) ]; then
+		if [ "${#file}" -ge "19" -a "RobotsBlockedCount:" == "${file:0:19}" ]; then
+			skipCount="${file:20}"
+		else 
 			lastMod=$(git log -1 --format=%cI $file)
 			formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
-		else
-			skipCount=$((skipCount+1))
 		fi
-	done < <(find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
-fi
-if [ "$includePDF" == "true" ]; then
+	done < <(find . \( -name '*.html' -o -name '*.htm' -o -name '*.pdf' \) -type f -printf '%p\n' | /sortandfilter.py)
+elif [ "$includeHTML" == "true" ]; then
+	while read file; do 
+		if [ "${#file}" -ge "19" -a "RobotsBlockedCount:" == "${file:0:19}" ]; then
+			skipCount="${file:20}"
+		else 
+			lastMod=$(git log -1 --format=%cI $file)
+			formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
+		fi
+	done < <(find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%p\n' | /sortandfilter.py)
+elif [ "$includePDF" == "true" ]; then
 	while read file; do
-		lastMod=$(git log -1 --format=%cI $file)
-		formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
-	done < <(find . -name '*.pdf' -type f -printf '%d\0%h\0%p\n' | sort -t '\0' -n | awk -F '\0' '{print $3}')
+		if [ "${#file}" -ge "19" -a "RobotsBlockedCount:" == "${file:0:19}" ]; then
+			skipCount="${file:20}"
+		else 
+			lastMod=$(git log -1 --format=%cI $file)
+			formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
+		fi
+	done < <(find . -name '*.pdf' -type f -printf '%p\n' | /sortandfilter.py)
 fi
 
 if [ "$sitemapFormat" == "xml" ]; then
