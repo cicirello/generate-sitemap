@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#
 # generate-sitemap: Github action for automating sitemap generation
 # 
 # Copyright (c) 2020 Vincent A Cicirello
