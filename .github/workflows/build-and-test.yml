@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, development ]
   pull_request:
     branches: [ master ]
 
@@ -14,5 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Run Python unit tests
+      run: python3 -m unittest tests/tests.py
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag generate-sitemap:$(date +%s)
