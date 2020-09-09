@@ -128,8 +128,3 @@ class TestGenerateSitemap(unittest.TestCase) :
         for f in blocked :
             self.assertTrue(sf.hasMetaRobotsNoindex(f))
 
-    def test_testing_workflow(self) :
-        #temporary fake test to make sure automated tests in Github actions
-        # work correctly (i.e., that build fails if test fails)
-        self.assertTrue(False)
-        
