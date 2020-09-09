@@ -113,3 +113,17 @@ class TestGenerateSitemap(unittest.TestCase) :
             self.assertFalse(sf.robotsBlocked(f))
         for f in blocked :
             self.assertTrue(sf.robotsBlocked(f))
+
+    def test_hasMetaRobotsNoindex(self) :
+        unblocked = [ "tests/unblocked1.html",
+                      "tests/unblocked2.html",
+                      "tests/unblocked3.html",
+                      "tests/unblocked4.html" ]
+        blocked = [ "tests/blocked1.html",
+                    "tests/blocked2.html",
+                    "tests/blocked3.html",
+                    "tests/blocked4.html" ]
+        for f in unblocked :
+            self.assertFalse(sf.hasMetaRobotsNoindex(f))
+        for f in blocked :
+            self.assertTrue(sf.hasMetaRobotsNoindex(f))
