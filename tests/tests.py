@@ -97,3 +97,19 @@ class TestGenerateSitemap(unittest.TestCase) :
         sf.urlsort(files)
         self.assertEqual(files, expected)
         
+    def test_robotsBlocked(self) :
+        unblocked = [ "/x.pdf",
+                      "/dir/y.pdf",
+                      "/dir/dir/z.pdf",
+                      "tests/unblocked1.html",
+                      "tests/unblocked2.html",
+                      "tests/unblocked3.html",
+                      "tests/unblocked4.html" ]
+        blocked = [ "tests/blocked1.html",
+                    "tests/blocked2.html",
+                    "tests/blocked3.html",
+                    "tests/blocked4.html" ]
+        for f in unblocked :
+            self.assertFalse(sf.robotsBlocked(f))
+        for f in blocked :
+            self.assertTrue(sf.robotsBlocked(f))
