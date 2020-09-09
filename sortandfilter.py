@@ -93,3 +93,4 @@ if __name__ == "__main__" :
     urlsort(files)
     for f in files :
         print(f)
+    print("RobotsBlockedCount:",len(allFiles)-len(files))
