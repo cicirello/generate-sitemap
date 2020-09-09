@@ -69,8 +69,12 @@ if [ "$includeHTML" == "true" ]; then
 fi
 if [ "$includePDF" == "true" ]; then
 	while read file; do
-		lastMod=$(git log -1 --format=%cI $file)
-		formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
+		if [ "${#file}" -ge "19" -a "RobotsBlockedCount:" == "${file:0:19}" ]; then
+			skipCount="${file:20}"
+		else 
+			lastMod=$(git log -1 --format=%cI $file)
+			formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
+		fi
 	done < <(find . -name '*.pdf' -type f -printf '%p\n' | /sortandfilter.py)
 fi
 
