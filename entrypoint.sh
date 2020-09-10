@@ -65,7 +65,7 @@ if [ "$includeHTML" == "true" -a "$includePDF" == "true" ]; then
 			lastMod=$(git log -1 --format=%cI $file)
 			formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
 		fi
-	done < <(find . \( -name '*.html' -o -name '*.htm' -o -name '*.pdf' \) -type f -printf '%p\n' | /generatesitemap.py)
+	done < <(/generatesitemap.py "$includeHTML" "$includePDF")
 elif [ "$includeHTML" == "true" ]; then
 	while read file; do 
 		if [ "${#file}" -ge "19" -a "RobotsBlockedCount:" == "${file:0:19}" ]; then
