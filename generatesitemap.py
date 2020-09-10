@@ -36,7 +36,7 @@ def gatherfiles(html, pdf) :
     if html and pdf :
         args = "find . \( -name '*.html' -o -name '*.htm' -o -name '*.pdf' \) -type f -printf '%p\n'"
     elif html :
-        args = "find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%p\n'"
+        args = ["find", ".", "\(", "-name", "'*.html'", "-o", "-name", "'*.htm'", "\)", "-type", "f", "-printf", "'%p\n'"]
     elif pdf :
         args = "find . -name '*.pdf' -type f -printf '%p\n'"
     return [ line.strip() for line in subprocess.run(args, capture_output=True, text=True).stdout ]
