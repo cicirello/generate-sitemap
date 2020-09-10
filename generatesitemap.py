@@ -33,17 +33,12 @@ import subprocess
 def gatherfiles(html, pdf) :
     if not html and not pdf :
         return []
-    args = [ "find", "." ]
-    if html :
-        args = args + [ "\(", "-name", "'*.html'", "-o", "-name", "'*.htm'" ]
-    if pdf and html:
-        args.append("-o")
-    if pdf :
-        args = args + [ "-name", "'*.pdf'" ]
-    if html :
-        args.append("\)")
-    args = args + [ "-type", "f", "-printf", "'%p\\n'" ]
-    print("args:", args)
+    if html and pdf :
+        args = "find . \( -name '*.html' -o -name '*.htm' -o -name '*.pdf' \) -type f -printf '%p\n'"
+    elif html :
+        args = "find . \( -name '*.html' -o -name '*.htm' \) -type f -printf '%p\n'"
+    elif pdf :
+        args = "find . -name '*.pdf' -type f -printf '%p\n'"
     return [ line.strip() for line in subprocess.run(args, capture_output=True, text=True).stdout ]
 
 
