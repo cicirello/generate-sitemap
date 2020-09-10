@@ -129,7 +129,7 @@ class TestGenerateSitemap(unittest.TestCase) :
         for f in blocked :
             self.assertTrue(gs.hasMetaRobotsNoindex(f))
 
-    def test_gatherfiles(self) :
+    def test_gatherfiles_html(self) :
         os.chdir("tests")
         allfiles = gs.gatherfiles(True, False)
         os.chdir("..")
@@ -139,5 +139,28 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./unblocked1.html", "./unblocked2.html",
                      "./unblocked3.html", "./unblocked4.html",
                      "./subdir/a.html", "./subdir/subdir/b.html"}
+        self.assertEqual(asSet, expected)
+
+    def test_gatherfiles_html_pdf(self) :
+        os.chdir("tests")
+        allfiles = gs.gatherfiles(True, True)
+        os.chdir("..")
+        asSet = set(allfiles)
+        expected = { "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./unblocked1.html", "./unblocked2.html",
+                     "./unblocked3.html", "./unblocked4.html",
+                     "./subdir/a.html", "./subdir/subdir/b.html",
+                     "./x.pdf", "./subdir/y.pdf",
+                     "./subdir/subdir/z.pdf"}
+        self.assertEqual(asSet, expected)
+
+    def test_gatherfiles_pdf(self) :
+        os.chdir("tests")
+        allfiles = gs.gatherfiles(False, True)
+        os.chdir("..")
+        asSet = set(allfiles)
+        expected = { "./x.pdf", "./subdir/y.pdf",
+                     "./subdir/subdir/z.pdf"}
         self.assertEqual(asSet, expected)
 
