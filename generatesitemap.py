@@ -43,6 +43,7 @@ def gatherfiles(html, pdf) :
     if html :
         args.append("\\)")
     args = args + [ "-type", "f", "-printf", "'%p\\n'" ]
+    print("args:", args)
     return [ line.strip() for line in subprocess.run(args, capture_output=True, text=True).stdout ]
 
 
