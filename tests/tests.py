@@ -26,6 +26,7 @@
 
 import unittest
 import generatesitemap as gs
+import os
 
 class TestGenerateSitemap(unittest.TestCase) :
 
@@ -127,4 +128,16 @@ class TestGenerateSitemap(unittest.TestCase) :
             self.assertFalse(gs.hasMetaRobotsNoindex(f))
         for f in blocked :
             self.assertTrue(gs.hasMetaRobotsNoindex(f))
+
+    def test_gatherfiles(self) :
+        os.chdir("tests")
+        allfiles = gs.gatherfiles(True, False)
+        os.chdir("..")
+        asSet = set(allfiles)
+        expected = { "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./unblocked1.html", "./unblocked2.html",
+                     "./unblocked3.html", "./unblocked4.html",
+                     "./subdir/a.html", "./subdir/subdir/b.html"}
+        self.assertEqual(asSet, expected)
 
