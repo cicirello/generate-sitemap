@@ -31,6 +31,14 @@ import re
 import os
 
 def gatherfiles(html, pdf) :
+    """Walks the directory tree discovering
+    files of specified types for inclusion in
+    sitemap.
+
+    Keyword arguments:
+    html - boolean indicating whether or not to include html files
+    pdf - boolean indicating whether or not to include pdfs
+    """
     if not html and not pdf :
         return []
     allfiles = []
