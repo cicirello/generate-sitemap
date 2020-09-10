@@ -36,11 +36,11 @@ def gatherfiles(html, pdf) :
     allfiles = []
     for root, dirs, files in os.walk(".") :
         for f in files :
-            if html and len(f) >= 4 and ".html" == f[-4:] :
+            if html and len(f) >= 5 and ".html" == f[-5:] :
                 allfiles.append(os.path.join(root, f))
-            elif html and len(f) >= 3 and ".htm" == f[-3:] :
+            elif html and len(f) >= 4 and ".htm" == f[-4:] :
                 allfiles.append(os.path.join(root, f))
-            elif pdf and len(f) >= 3 and ".pdf" == f[-3:] :
+            elif pdf and len(f) >= 4 and ".pdf" == f[-4:] :
                 allfiles.append(os.path.join(root, f))
     return allfiles
 
