@@ -103,7 +103,6 @@ def robotsBlocked(f) :
     return hasMetaRobotsNoindex(f)
 
 if __name__ == "__main__" :
-    #allFiles = [ line.strip() for line in sys.stdin ]
     allFiles = gatherfiles(sys.argv[1]=="true", sys.argv[2]=="true")
     files = [ f for f in allFiles if not robotsBlocked(f) ]
     urlsort(files)
