@@ -41,7 +41,6 @@ def gatherfiles(html, pdf) :
         args = "find . -name '*.pdf' -type f -printf '%p\n'"
     return [ line.strip()
              for line in subprocess.run(args,
-                                        capture_output=True,
                                         text=True, check=True,
                                         stdout=subprocess.PIPE).stdout ]
 
