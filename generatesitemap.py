@@ -31,7 +31,18 @@ import re
 import os
 
 def gatherfiles(html, pdf) :
-    return [ os.path.join(root, f) for root, dirs, files in os.walk(".") for f in files ]
+    if not html and not pdf :
+        return []
+    allfiles = []
+    for root, dirs, files in os.walk(".") :
+        for f in files :
+            if html and len(f) >= 4 and ".html" == f[-4:] :
+                allfiles.append(os.path.join(root, f))
+            elif html and len(f) >= 3 and ".htm" == f[-3:] :
+                allfiles.append(os.path.join(root, f))
+            elif pdf and len(f) >= 3 and ".pdf" == f[-3:] :
+                allfiles.append(os.path.join(root, f))
+    return allfiles
 
 def sortname(f) :
     """Partial url to sort by, which strips out the filename
