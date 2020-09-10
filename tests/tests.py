@@ -25,7 +25,7 @@
 #
 
 import unittest
-import sortandfilter as sf
+import generatesitemap as gs
 
 class TestGenerateSitemap(unittest.TestCase) :
 
@@ -61,7 +61,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "/dir/goodbye.html",
                     "/dir/dir/c.html" ]
         for i, f in enumerate(files) :
-            self.assertEqual(sf.sortname(f), expected[i])
+            self.assertEqual(gs.sortname(f), expected[i])
 
     def test_urlsort(self) :
         files = [ "/dir/dir/z.pdf", 
@@ -94,7 +94,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "/dir/dir/c.html",
                      "/dir/dir/d.html",
                      "/dir/dir/z.pdf" ]
-        sf.urlsort(files)
+        gs.urlsort(files)
         self.assertEqual(files, expected)
         
     def test_robotsBlocked(self) :
@@ -110,9 +110,9 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "tests/blocked3.html",
                     "tests/blocked4.html" ]
         for f in unblocked :
-            self.assertFalse(sf.robotsBlocked(f))
+            self.assertFalse(gs.robotsBlocked(f))
         for f in blocked :
-            self.assertTrue(sf.robotsBlocked(f))
+            self.assertTrue(gs.robotsBlocked(f))
 
     def test_hasMetaRobotsNoindex(self) :
         unblocked = [ "tests/unblocked1.html",
@@ -124,7 +124,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "tests/blocked3.html",
                     "tests/blocked4.html" ]
         for f in unblocked :
-            self.assertFalse(sf.hasMetaRobotsNoindex(f))
+            self.assertFalse(gs.hasMetaRobotsNoindex(f))
         for f in blocked :
-            self.assertTrue(sf.hasMetaRobotsNoindex(f))
+            self.assertTrue(gs.hasMetaRobotsNoindex(f))
 
