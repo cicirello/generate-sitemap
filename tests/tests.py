@@ -25,7 +25,8 @@
 #
 
 import unittest
-import sortandfilter as sf
+import generatesitemap as gs
+import os
 
 class TestGenerateSitemap(unittest.TestCase) :
 
@@ -61,7 +62,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "/dir/goodbye.html",
                     "/dir/dir/c.html" ]
         for i, f in enumerate(files) :
-            self.assertEqual(sf.sortname(f), expected[i])
+            self.assertEqual(gs.sortname(f), expected[i])
 
     def test_urlsort(self) :
         files = [ "/dir/dir/z.pdf", 
@@ -94,7 +95,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "/dir/dir/c.html",
                      "/dir/dir/d.html",
                      "/dir/dir/z.pdf" ]
-        sf.urlsort(files)
+        gs.urlsort(files)
         self.assertEqual(files, expected)
         
     def test_robotsBlocked(self) :
@@ -110,9 +111,9 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "tests/blocked3.html",
                     "tests/blocked4.html" ]
         for f in unblocked :
-            self.assertFalse(sf.robotsBlocked(f))
+            self.assertFalse(gs.robotsBlocked(f))
         for f in blocked :
-            self.assertTrue(sf.robotsBlocked(f))
+            self.assertTrue(gs.robotsBlocked(f))
 
     def test_hasMetaRobotsNoindex(self) :
         unblocked = [ "tests/unblocked1.html",
@@ -124,7 +125,42 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "tests/blocked3.html",
                     "tests/blocked4.html" ]
         for f in unblocked :
-            self.assertFalse(sf.hasMetaRobotsNoindex(f))
+            self.assertFalse(gs.hasMetaRobotsNoindex(f))
         for f in blocked :
-            self.assertTrue(sf.hasMetaRobotsNoindex(f))
+            self.assertTrue(gs.hasMetaRobotsNoindex(f))
+
+    def test_gatherfiles_html(self) :
+        os.chdir("tests")
+        allfiles = gs.gatherfiles(True, False)
+        os.chdir("..")
+        asSet = set(allfiles)
+        expected = { "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./unblocked1.html", "./unblocked2.html",
+                     "./unblocked3.html", "./unblocked4.html",
+                     "./subdir/a.html", "./subdir/subdir/b.html"}
+        self.assertEqual(asSet, expected)
+
+    def test_gatherfiles_html_pdf(self) :
+        os.chdir("tests")
+        allfiles = gs.gatherfiles(True, True)
+        os.chdir("..")
+        asSet = set(allfiles)
+        expected = { "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./unblocked1.html", "./unblocked2.html",
+                     "./unblocked3.html", "./unblocked4.html",
+                     "./subdir/a.html", "./subdir/subdir/b.html",
+                     "./x.pdf", "./subdir/y.pdf",
+                     "./subdir/subdir/z.pdf"}
+        self.assertEqual(asSet, expected)
+
+    def test_gatherfiles_pdf(self) :
+        os.chdir("tests")
+        allfiles = gs.gatherfiles(False, True)
+        os.chdir("..")
+        asSet = set(allfiles)
+        expected = { "./x.pdf", "./subdir/y.pdf",
+                     "./subdir/subdir/z.pdf"}
+        self.assertEqual(asSet, expected)
 

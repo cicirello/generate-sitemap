@@ -28,6 +28,21 @@
 
 import sys
 import re
+import os
+
+def gatherfiles(html, pdf) :
+    if not html and not pdf :
+        return []
+    allfiles = []
+    for root, dirs, files in os.walk(".") :
+        for f in files :
+            if html and len(f) >= 5 and ".html" == f[-5:] :
+                allfiles.append(os.path.join(root, f))
+            elif html and len(f) >= 4 and ".htm" == f[-4:] :
+                allfiles.append(os.path.join(root, f))
+            elif pdf and len(f) >= 4 and ".pdf" == f[-4:] :
+                allfiles.append(os.path.join(root, f))
+    return allfiles
 
 def sortname(f) :
     """Partial url to sort by, which strips out the filename
@@ -88,7 +103,7 @@ def robotsBlocked(f) :
     return hasMetaRobotsNoindex(f)
 
 if __name__ == "__main__" :
-    allFiles = [ line.strip() for line in sys.stdin ]
+    allFiles = gatherfiles(sys.argv[1]=="true", sys.argv[2]=="true")
     files = [ f for f in allFiles if not robotsBlocked(f) ]
     urlsort(files)
     for f in files :
