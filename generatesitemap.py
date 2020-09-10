@@ -35,13 +35,13 @@ def gatherfiles(html, pdf) :
         return []
     args = [ "find", "." ]
     if html :
-        args = args + [ "\\(", "-name", "'*.html'", "-o", "-name", "'*.htm'" ]
+        args = args + [ "\(", "-name", "'*.html'", "-o", "-name", "'*.htm'" ]
     if pdf and html:
         args.append("-o")
     if pdf :
         args = args + [ "-name", "'*.pdf'" ]
     if html :
-        args.append("\\)")
+        args.append("\)")
     args = args + [ "-type", "f", "-printf", "'%p\\n'" ]
     print("args:", args)
     return [ line.strip() for line in subprocess.run(args, capture_output=True, text=True).stdout ]
