@@ -39,7 +39,11 @@ def gatherfiles(html, pdf) :
         args = ["find", ".", "\(", "-name", "'*.html'", "-o", "-name", "'*.htm'", "\)", "-type", "f", "-printf", "'%p\n'"]
     elif pdf :
         args = "find . -name '*.pdf' -type f -printf '%p\n'"
-    return [ line.strip() for line in subprocess.run(args, capture_output=True, text=True, check=True, stdout=PIPE).stdout ]
+    return [ line.strip()
+             for line in subprocess.run(args,
+                                        capture_output=True,
+                                        text=True, check=True,
+                                        stdout=subprocess.PIPE).stdout ]
 
 
 def sortname(f) :
