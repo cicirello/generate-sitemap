@@ -28,22 +28,10 @@
 
 import sys
 import re
-import subprocess
+import os
 
 def gatherfiles(html, pdf) :
-    if not html and not pdf :
-        return []
-    if html and pdf :
-        args = "find . \( -name '*.html' -o -name '*.htm' -o -name '*.pdf' \) -type f -printf '%p\n'"
-    elif html :
-        args = ["find", ".", "\(", "-name", "'*.html'", "-o", "-name", "'*.htm'", "\)", "-type", "f", "-printf", "'%p\\n'"]
-    elif pdf :
-        args = "find . -name '*.pdf' -type f -printf '%p\n'"
-    return [ line.strip()
-             for line in subprocess.run(args,
-                                        text=True, check=True,
-                                        stdout=subprocess.PIPE).stdout ]
-
+    return [ os.path.join(root, f) for root, dirs, files in os.walk(".") for f in files ]
 
 def sortname(f) :
     """Partial url to sort by, which strips out the filename
