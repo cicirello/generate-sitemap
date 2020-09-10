@@ -134,6 +134,7 @@ class TestGenerateSitemap(unittest.TestCase) :
         allfiles = gs.gatherfiles(True, False)
         os.chdir("..")
         asSet = set(allfiles)
+        print(asSet)
         expected = { "./blocked1.html", "./blocked2.html",
                      "./blocked3.html", "./blocked4.html",
                      "./unblocked1.html", "./unblocked2.html",
