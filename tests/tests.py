@@ -214,5 +214,13 @@ class TestGenerateSitemap(unittest.TestCase) :
         for i, f in enumerate(filenames) :
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base1))
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base2))
+
+    def test_xmlSitemapEntry(self) :
+        base = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
+        f = "./a.html"
+        date = "2020-09-11T13:35:00-04:00"
+        actual = gs.xmlSitemapEntry(f, base, date)
+        expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>"
+        assertEqual(actual, expected)
         
         

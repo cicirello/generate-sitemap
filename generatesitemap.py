@@ -141,7 +141,21 @@ def urlstring(f, baseUrl) :
     elif (len(u)==0 or u[0]!="/") and (len(baseUrl)==0 or baseUrl[-1]!="/") :
         u = "/" + u
     return baseUrl + u
-        
+
+def xmlSitemapEntry(f, baseUrl, dateString) :
+    """Forms a string with an entry formatted for an xml sitemap
+    including lastmod date.
+
+    Keyword arguments:
+    f - filename
+    baseUrl - address of the root of the website
+    dateString - lastmod date correctly formatted
+    """
+    return "<url>\n<loc>" +
+        urlstring(f, baseUrl) +
+        "</loc>\n<lastmod>" +
+        dateString +
+        "</lastmod>\n</url>"
 
 if __name__ == "__main__" :
     websiteRoot = sys.argv[1]
