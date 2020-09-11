@@ -151,11 +151,7 @@ def xmlSitemapEntry(f, baseUrl, dateString) :
     baseUrl - address of the root of the website
     dateString - lastmod date correctly formatted
     """
-    return "<url>\n<loc>" +
-        urlstring(f, baseUrl) +
-        "</loc>\n<lastmod>" +
-        dateString +
-        "</lastmod>\n</url>"
+    return "<url>\n<loc>" + urlstring(f, baseUrl) + "</loc>\n<lastmod>" + dateString + "</lastmod>\n</url>"
 
 if __name__ == "__main__" :
     websiteRoot = sys.argv[1]
