@@ -5,4 +5,4 @@ FROM cicirello/alpine-plus-plus:latest
 RUN apk add --no-cache --update python3
 COPY entrypoint.sh /entrypoint.sh
 COPY generatesitemap.py /generatesitemap.py
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/generatesitemap.py"]
