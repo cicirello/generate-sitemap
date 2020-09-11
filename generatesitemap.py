@@ -206,7 +206,3 @@ if __name__ == "__main__" :
     print("::set-output name=sitemap-path::" + pathToSitemap)
     print("::set-output name=url-count::" + str(len(files)))
     print("::set-output name=excluded-count::" + str(len(allFiles)-len(files)))
-        
-    #for f in files :
-    #    print(f)
-    #print("RobotsBlockedCount:",len(allFiles)-len(files))
