@@ -136,9 +136,9 @@ def urlstring(f, baseUrl) :
         u = f
     if len(u) >= 10 and u[-10:] == "index.html" :
         u = u[:-10]
-    if u[0]=="/" and baseUrl[-1]=="/" :
+    if len(u) >= 1 and u[0]=="/" and len(baseUrl) >= 1 and baseUrl[-1]=="/" :
         u = u[1:]
-    elif u[0]!="/" and baseUrl[-1]!="/" :
+    elif (len(u)==0 or u[0]!="/") and (len(baseUrl)==0 or baseUrl[-1]!="/") :
         u = "/" + u
     return baseUrl + u
         
