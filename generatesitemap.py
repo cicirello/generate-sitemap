@@ -178,7 +178,7 @@ def writeXmlSitemap(files, baseUrl) :
         for f in files :
             sitemap.write(xmlSitemapEntry(f, baseUrl, lastmod(f)))
             sitemap.write("\n")
-        sitemap.write('</urlset>')
+        sitemap.write('</urlset>\n')
 
 if __name__ == "__main__" :
     websiteRoot = sys.argv[1]
