@@ -221,6 +221,6 @@ class TestGenerateSitemap(unittest.TestCase) :
         date = "2020-09-11T13:35:00-04:00"
         actual = gs.xmlSitemapEntry(f, base, date)
         expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>"
-        assertEqual(actual, expected)
+        self.assertEqual(actual, expected)
         
         
