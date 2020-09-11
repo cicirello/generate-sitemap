@@ -114,7 +114,7 @@ def robotsBlocked(f) :
 def lastmod(f) :
     return subprocess.run(['git', 'log', '-1', '--format=%cI', f],
                     stdout=subprocess.PIPE,
-                    universal_newlines=True).stdout
+                    universal_newlines=True).stdout.strip()
 
 if __name__ == "__main__" :
     allFiles = gatherfiles(sys.argv[1]=="true", sys.argv[2]=="true")
