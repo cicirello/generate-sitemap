@@ -212,7 +212,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/"
                      ]
         for i, f in enumerate(filenames) :
-            self.assertEqual(expected[i%len(expected)], urlstring(f, base1))
-            self.assertEqual(expected[i%len(expected)], urlstring(f, base2))
+            self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base1))
+            self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base2))
         
         
