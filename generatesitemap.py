@@ -112,9 +112,36 @@ def robotsBlocked(f) :
     return hasMetaRobotsNoindex(f)
 
 def lastmod(f) :
+    """Determines the date when the file was last modified and
+    returns a string with the date formatted as required for
+    the lastmod tag in an xml sitemap.
+
+    Keyword arguments:
+    f - filename
+    """
     return subprocess.run(['git', 'log', '-1', '--format=%cI', f],
                     stdout=subprocess.PIPE,
                     universal_newlines=True).stdout.strip()
+
+def urlstring(f, baseUrl) :
+    """Forms a string with the full url from a filename and base url.
+
+    Keyword arguments:
+    f - filename
+    baseUrl - address of the root of the website
+    """
+    if f[0]=="." :
+        u = f[1:]
+    else :
+        u = f
+    if len(u) >= 10 and u[-10:] == "index.html" :
+        u = u[:-10]
+    if u[0]=="/" and baseUrl[-1]=="/" :
+        u = u[1:]
+    elif u[0]!="/" and baseUrl[-1]!="/" :
+        u = "/" + u
+    return baseUrl + u
+        
 
 if __name__ == "__main__" :
     websiteRoot = sys.argv[1]
