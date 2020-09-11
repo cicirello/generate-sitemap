@@ -64,7 +64,7 @@ while read file; do
 		lastMod=$(git log -1 --format=%cI $file)
 		formatSitemapEntry ${file#./} "$baseUrl" "$lastMod"
 	fi
-done < <(/generatesitemap.py "$includeHTML" "$includePDF")
+done < <(/generatesitemap.py "$websiteRoot" "$baseUrl" "$includeHTML" "$includePDF" "$sitemapFormat")
 
 if [ "$sitemapFormat" == "xml" ]; then
 	echo "</urlset>"  >> sitemap.xml

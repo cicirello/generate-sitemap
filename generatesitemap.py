@@ -117,7 +117,13 @@ def lastmod(f) :
                     universal_newlines=True).stdout.strip()
 
 if __name__ == "__main__" :
-    allFiles = gatherfiles(sys.argv[1]=="true", sys.argv[2]=="true")
+    websiteRoot = sys.argv[1]
+    baseUrl = sys.argv[2]
+    includeHTML = sys.argv[3]=="true"
+    includePDF = sys.argv[4]=="true"
+    sitemapFormat = sys.argv[5]
+    
+    allFiles = gatherfiles(includeHTML, includePDF)
     files = [ f for f in allFiles if not robotsBlocked(f) ]
     urlsort(files)
     for f in files :
