@@ -164,3 +164,63 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./subdir/subdir/z.pdf"}
         self.assertEqual(asSet, expected)
 
+    def test_lastmod(self) :
+        def validateDate(s) :
+            if not s[0:4].isdigit() or s[4]!="-" or not s[5:7].isdigit() :
+                return False
+            if s[7]!="-" or not s[8:10].isdigit() or s[10]!="T" :
+                return False
+            if not s[11:13].isdigit() or s[13]!=":" or not s[14:16].isdigit() :
+                return False
+            if s[16]!=":" or not s[17:19].isdigit() or s[19]!="-" :
+                return False
+            if not s[20:22].isdigit() or s[22]!=":" or not s[23:25].isdigit() :
+                return False
+            return  True
+        os.chdir("tests")
+        self.assertTrue(gs.lastmod("./unblocked1.html"))
+        self.assertTrue(gs.lastmod("./subdir/a.html"))
+        os.chdir("..")
+
+    def test_urlstring(self) :
+        filenames = [ "./a.html",
+                      "./index.html",
+                      "./subdir/a.html",
+                      "./subdir/index.html",
+                      "./subdir/subdir/a.html",
+                      "./subdir/subdir/index.html",
+                      "/a.html",
+                      "/index.html",
+                      "/subdir/a.html",
+                      "/subdir/index.html",
+                      "/subdir/subdir/a.html",
+                      "/subdir/subdir/index.html",
+                      "a.html",
+                      "index.html",
+                      "subdir/a.html",
+                      "subdir/index.html",
+                      "subdir/subdir/a.html",
+                      "subdir/subdir/index.html"
+                      ]
+        base1 = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
+        base2 = "https://TESTING.FAKE.WEB.ADDRESS.TESTING"
+        expected = [ "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/a.html",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/a.html",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/"
+                     ]
+        for i, f in enumerate(filenames) :
+            self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base1))
+            self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base2))
+
+    def test_xmlSitemapEntry(self) :
+        base = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
+        f = "./a.html"
+        date = "2020-09-11T13:35:00-04:00"
+        actual = gs.xmlSitemapEntry(f, base, date)
+        expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>"
+        self.assertEqual(actual, expected)
+        
+        
