@@ -172,7 +172,7 @@ def writeXmlSitemap(files, baseUrl) :
     files - a list of filenames
     baseUrl - the base url to the root of the website
     """
-    with open("sitemap.txt", "w") as sitemap :
+    with open("sitemap.xml", "w") as sitemap :
         sitemap.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         sitemap.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         for f in files :
