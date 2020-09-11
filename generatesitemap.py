@@ -153,16 +153,60 @@ def xmlSitemapEntry(f, baseUrl, dateString) :
     """
     return "<url>\n<loc>" + urlstring(f, baseUrl) + "</loc>\n<lastmod>" + dateString + "</lastmod>\n</url>"
 
+def writeTextSitemap(files, baseUrl) :
+    """Writes a plain text sitemap to the file sitemap.txt.
+
+    Keyword Arguments:
+    files - a list of filenames
+    baseUrl - the base url to the root of the website
+    """
+    with open("sitemap.txt", "w") as sitemap :
+        for f in files :
+            sitemap.write(urlstring(f, baseUrl))
+            sitemap.write("\n")
+
+def writeXmlSitemap(files, baseUrl) :
+    """Writes an xml sitemap to the file sitemap.xml.
+
+    Keyword Arguments:
+    files - a list of filenames
+    baseUrl - the base url to the root of the website
+    """
+    with open("sitemap.txt", "w") as sitemap :
+        sitemap.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        sitemap.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+        for f in files :
+            sitemap.write(xmlSitemapEntry(f, baseUrl, lastmod(f)))
+            sitemap.write("\n")
+        sitemap.write('</urlset>')
+
 if __name__ == "__main__" :
     websiteRoot = sys.argv[1]
     baseUrl = sys.argv[2]
     includeHTML = sys.argv[3]=="true"
     includePDF = sys.argv[4]=="true"
     sitemapFormat = sys.argv[5]
+
+    os.chdir(websiteRoot)
     
     allFiles = gatherfiles(includeHTML, includePDF)
     files = [ f for f in allFiles if not robotsBlocked(f) ]
     urlsort(files)
-    for f in files :
-        print(f)
-    print("RobotsBlockedCount:",len(allFiles)-len(files))
+
+    pathToSitemap = websiteRoot
+    if pathToSitemap[-1] != "/" :
+        pathToSitemap += "/"
+    if sitemapFormat == "xml" :
+        writeXmlSitemap(files, baseUrl)
+        pathToSitemap += "sitemap.xml"
+    else :
+        writeTextSitemap(files, baseUrl)
+        pathToSitemap += "sitemap.txt"
+
+    print("::set-output name=sitemap-path::" + pathToSitemap)
+    print("::set-output name=url-count::" + str(len(files)))
+    print("::set-output name=excluded-count::" + str(len(allFiles)-len(files)))
+        
+    #for f in files :
+    #    print(f)
+    #print("RobotsBlockedCount:",len(allFiles)-len(files))
