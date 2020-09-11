@@ -29,6 +29,7 @@
 import sys
 import re
 import os
+import subprocess
 
 def gatherfiles(html, pdf) :
     """Walks the directory tree discovering
@@ -72,7 +73,7 @@ def urlsort(files) :
     files - list of files to include in sitemap
     """
     files.sort(key = lambda f : sortname(f))
-    files.sort(key = lambda s : s.count("/"))
+    files.sort(key = lambda f : f.count("/"))
 
 def hasMetaRobotsNoindex(f) :
     """Checks whether an html file contains
@@ -109,6 +110,11 @@ def robotsBlocked(f) :
     if len(f) >= 4 and f[-4:] == ".pdf" :
         return False
     return hasMetaRobotsNoindex(f)
+
+def lastmod(f) :
+    return subprocess.run(['git', 'log', '-1', '--format=%cI', f],
+                    stdout=subprocess.PIPE,
+                    universal_newlines=True).stdout
 
 if __name__ == "__main__" :
     allFiles = gatherfiles(sys.argv[1]=="true", sys.argv[2]=="true")

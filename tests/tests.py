@@ -164,3 +164,11 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./subdir/subdir/z.pdf"}
         self.assertEqual(asSet, expected)
 
+    def test_lastmod(self) :
+        os.chdir("tests")
+        date = gs.lastmod("./unblocked1.html")
+        print(date)
+        date = gs.lastmod("./subdir/a.html")
+        print(date)
+        os.chdir("..")
+        
