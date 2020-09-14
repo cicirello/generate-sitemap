@@ -142,6 +142,11 @@ def urlstring(f, baseUrl) :
         u = "/" + u
     return baseUrl + u
 
+xmlSitemapEntryTemplate = """<url>
+<loc>{0}</loc>
+<lastmod>{1}</lastmod>
+</url>"""	
+	
 def xmlSitemapEntry(f, baseUrl, dateString) :
     """Forms a string with an entry formatted for an xml sitemap
     including lastmod date.
@@ -151,7 +156,7 @@ def xmlSitemapEntry(f, baseUrl, dateString) :
     baseUrl - address of the root of the website
     dateString - lastmod date correctly formatted
     """
-    return "<url>\n<loc>" + urlstring(f, baseUrl) + "</loc>\n<lastmod>" + dateString + "</lastmod>\n</url>"
+    return xmlSitemapEntryTemplate.format(urlstring(f, baseUrl), dateString)
 
 def writeTextSitemap(files, baseUrl) :
     """Writes a plain text sitemap to the file sitemap.txt.
