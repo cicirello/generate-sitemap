@@ -193,7 +193,7 @@ def parseRobotsTxt() :
                     rulesStart = True
                     if len(line) > 9 :
                         path = line[9:].strip()
-                        if len(path) > 0 :
+                        if len(path) > 0 and " " not in path and "\t" not in path:
                             blockedPaths.append(path)
             elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
                 foundBlock = True
