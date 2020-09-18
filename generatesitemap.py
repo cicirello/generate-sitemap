@@ -97,7 +97,7 @@ def hasMetaRobotsNoindex(f) :
                 return False
     return False
 
-def robotsBlocked(f, blockedPaths) :
+def robotsBlocked(f, blockedPaths=[]) :
     """Checks if robots are blocked from acessing the
     url.
 
