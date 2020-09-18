@@ -111,12 +111,17 @@ def robotsBlocked(f) :
         return False
     return hasMetaRobotsNoindex(f)
 
-def parseRobotsTxt() :
+def parseRobotsTxt(robotsFile="robots.txt") :
     """Parses a robots.txt if present in the root of the
     site, and returns a list of disallowed paths. It only
-    includes paths disallowed for *."""
+    includes paths disallowed for *.
+
+    Keyword arguments:
+    robotsFile - the name of the robots.txt, which in production
+    must be robots.txt (the default). The parameter is to enable
+    unit testing with different robots.txt files."""
     blockedPaths = []
-    with open("robots.txt","r") as robots :
+    with open(robotsFile,"r") as robots :
         foundBlock = False
         rulesStart = False
         for line in robots :
