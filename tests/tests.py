@@ -242,4 +242,16 @@ class TestGenerateSitemap(unittest.TestCase) :
             filename = "robots" + str(i) + ".txt"
             self.assertEqual(set(gs.parseRobotsTxt(filename)), set(e))
         os.chdir("..")
+
+    def test_robotsBlockedWithRobotsParser(self) :
+        allFiles = [ "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./unblocked1.html", "./unblocked2.html",
+                     "./unblocked3.html", "./unblocked4.html",
+                     "./subdir/a.html", "./subdir/subdir/b.html",
+                     "./x.pdf", "./subdir/y.pdf",
+                     "./subdir/subdir/z.pdf"]
+        for f in allFiles :
+            self.assertTrue(gs.robotsBlocked(f, ["/"]))
+        
         
