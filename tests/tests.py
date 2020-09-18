@@ -232,6 +232,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                      ["/subdir/y.pdf"],
                      ["/subdir/subdir/"],
                      ["/subdir/y.pdf", "/subdir/subdir/b.html"],
+                     ["/subdir/y.pdf", "/subdir/subdir/b.html"],
                      ["/subdir/y.pdf", "/subdir/subdir/b.html"]
                      ]
         os.chdir("tests")
