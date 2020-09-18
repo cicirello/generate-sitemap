@@ -238,6 +238,6 @@ class TestGenerateSitemap(unittest.TestCase) :
         os.chdir("tests")
         for i, e in enumerate(expected) :
             filename = "robots" + str(i+1) + ".txt"
-            self.assertEqual(gs.parseRobotsTxt(filename), e)
+            self.assertEqual(set(gs.parseRobotsTxt(filename)), set(e))
         os.chdir("..")
         
