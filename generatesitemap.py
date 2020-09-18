@@ -29,6 +29,7 @@
 import sys
 import re
 import os
+import os.path
 import subprocess
 
 def gatherfiles(html, pdf) :
@@ -96,20 +97,60 @@ def hasMetaRobotsNoindex(f) :
                 return False
     return False
 
-def robotsBlocked(f) :
+def robotsBlocked(f, blockedPaths=[]) :
     """Checks if robots are blocked from acessing the
     url.
 
     Keyword arguments:
     f - file name including path relative from the root of the website.
+    blockedPaths - a list of paths blocked by robots.txt
     """
-    # For now, we let all pdfs through if included
-    # since we are not yet parsing robots.txt.
-    # Once robots.txt is supported, we'll check pdfs
-    # against robots.txt.
+    if len(blockedPaths) > 0 :
+        f2 = f
+        if f2[0] == "." :
+            f2 = f2[1:]
+        for b in blockedPaths :
+            if f2.startswith(b) :
+                return True
     if len(f) >= 4 and f[-4:] == ".pdf" :
         return False
     return hasMetaRobotsNoindex(f)
+
+def parseRobotsTxt(robotsFile="robots.txt") :
+    """Parses a robots.txt if present in the root of the
+    site, and returns a list of disallowed paths. It only
+    includes paths disallowed for *.
+
+    Keyword arguments:
+    robotsFile - the name of the robots.txt, which in production
+    must be robots.txt (the default). The parameter is to enable
+    unit testing with different robots.txt files."""
+    blockedPaths = []
+    if os.path.isfile(robotsFile) :
+        with open(robotsFile,"r") as robots :
+            foundBlock = False
+            rulesStart = False
+            for line in robots :
+                commentStart = line.find("#")
+                if commentStart > 0 :
+                    line = line[:commentStart]
+                line = line.strip()
+                lineLow = line.lower()
+                if foundBlock :
+                    if rulesStart and lineLow.startswith("user-agent:") :
+                        foundBlock = False
+                    elif not rulesStart and lineLow.startswith("allow:") :
+                        rulesStart = True
+                    elif lineLow.startswith("disallow:") :
+                        rulesStart = True
+                        if len(line) > 9 :
+                            path = line[9:].strip()
+                            if len(path) > 0 and " " not in path and "\t" not in path:
+                                blockedPaths.append(path)
+                elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
+                    foundBlock = True
+                    rulesStart = False
+    return blockedPaths
 
 def lastmod(f) :
     """Determines the date when the file was last modified and
@@ -169,7 +210,7 @@ def writeTextSitemap(files, baseUrl) :
         for f in files :
             sitemap.write(urlstring(f, baseUrl))
             sitemap.write("\n")
-
+            
 def writeXmlSitemap(files, baseUrl) :
     """Writes an xml sitemap to the file sitemap.xml.
 
@@ -193,9 +234,10 @@ if __name__ == "__main__" :
     sitemapFormat = sys.argv[5]
 
     os.chdir(websiteRoot)
+    blockedPaths = parseRobotsTxt()
     
     allFiles = gatherfiles(includeHTML, includePDF)
-    files = [ f for f in allFiles if not robotsBlocked(f) ]
+    files = [ f for f in allFiles if not robotsBlocked(f, blockedPaths) ]
     urlsort(files)
 
     pathToSitemap = websiteRoot

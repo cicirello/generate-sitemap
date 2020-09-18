@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /subdir/y.pdf
+Disallow: /subdir/subdir/b.html

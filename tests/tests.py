@@ -222,5 +222,66 @@ class TestGenerateSitemap(unittest.TestCase) :
         actual = gs.xmlSitemapEntry(f, base, date)
         expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>"
         self.assertEqual(actual, expected)
-        
+
+    def test_robotsTxtParser(self) :
+        expected = [ [],
+                     ["/"],
+                     ["/"],
+                     [],
+                     ["/subdir"],
+                     ["/subdir/"],
+                     ["/subdir/y.pdf"],
+                     ["/subdir/subdir/"],
+                     ["/subdir/y.pdf", "/subdir/subdir/b.html"],
+                     ["/subdir/y.pdf", "/subdir/subdir/b.html"],
+                     ["/subdir/y.pdf", "/subdir/subdir/b.html"],
+                     ["/subdir/y.pdf", "/subdir/subdir/b.html"]
+                     ]
+        os.chdir("tests")
+        for i, e in enumerate(expected) :
+            filename = "robots" + str(i) + ".txt"
+            self.assertEqual(set(gs.parseRobotsTxt(filename)), set(e))
+        os.chdir("..")
+
+    def test_robotsBlockedWithRobotsParser(self) :
+        os.chdir("tests")
+        allFiles = [ "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./unblocked1.html", "./unblocked2.html",
+                     "./unblocked3.html", "./unblocked4.html",
+                     "./subdir/a.html", "./subdir/subdir/b.html",
+                     "./x.pdf", "./subdir/y.pdf",
+                     "./subdir/subdir/z.pdf"]
+        for f in allFiles :
+            self.assertTrue(gs.robotsBlocked(f, ["/"]))
+        blocked = {  "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./subdir/a.html", "./subdir/subdir/b.html",
+                     "./subdir/y.pdf",
+                     "./subdir/subdir/z.pdf"}
+        for f in allFiles :
+            if f in blocked :
+                self.assertTrue(gs.robotsBlocked(f, ["/subdir/"]))
+            else :
+                self.assertFalse(gs.robotsBlocked(f, ["/subdir/"]))
+        blocked = {  "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./subdir/subdir/b.html",
+                     "./subdir/subdir/z.pdf"}
+        for f in allFiles :
+            if f in blocked :
+                self.assertTrue(gs.robotsBlocked(f, ["/subdir/subdir/"]))
+            else :
+                self.assertFalse(gs.robotsBlocked(f, ["/subdir/subdir"]))
+        blocked = { "./blocked1.html", "./blocked2.html",
+                    "./blocked3.html", "./blocked4.html",
+                    "./subdir/subdir/b.html", "./subdir/y.pdf",
+                    "./unblocked1.html" }
+        blockThese = [ "/subdir/subdir/b", "/unblocked1.html", "/subdir/y.pdf"]
+        for f in allFiles :
+            if f in blocked :
+                self.assertTrue(gs.robotsBlocked(f, blockThese))
+            else :
+                self.assertFalse(gs.robotsBlocked(f, blockThese))
+        os.chdir("..")
         

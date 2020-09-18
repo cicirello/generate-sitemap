@@ -1,0 +1,2 @@
+User-agent: R2D2
+Disallow: /

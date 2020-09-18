@@ -1,0 +1,11 @@
+#This is a comment
+User-agent: R2D2
+Disallow: /
+
+# This is another comment
+User-agent: *
+Disallow: /subdir/y.pdf
+Disallow: /subdir/subdir/b.html
+
+User-agent: C3PO
+Disallow: /
