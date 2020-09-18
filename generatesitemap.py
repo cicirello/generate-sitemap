@@ -105,10 +105,13 @@ def robotsBlocked(f, blockedPaths=[]) :
     f - file name including path relative from the root of the website.
     blockedPaths - a list of paths blocked by robots.txt
     """
-    # For now, we let all pdfs through if included
-    # since we are not yet parsing robots.txt.
-    # Once robots.txt is supported, we'll check pdfs
-    # against robots.txt.
+    if len(blockedPaths) > 0 :
+        f2 = f
+        if f2[0] == "." :
+            f2 = f2[1:]
+        for b in blockedPaths :
+            if f2.startswith(b) :
+                return True
     if len(f) >= 4 and f[-4:] == ".pdf" :
         return False
     return hasMetaRobotsNoindex(f)
