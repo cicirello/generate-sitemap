@@ -97,12 +97,13 @@ def hasMetaRobotsNoindex(f) :
                 return False
     return False
 
-def robotsBlocked(f) :
+def robotsBlocked(f, blockedPaths) :
     """Checks if robots are blocked from acessing the
     url.
 
     Keyword arguments:
     f - file name including path relative from the root of the website.
+    blockedPaths - a list of paths blocked by robots.txt
     """
     # For now, we let all pdfs through if included
     # since we are not yet parsing robots.txt.
@@ -230,9 +231,10 @@ if __name__ == "__main__" :
     sitemapFormat = sys.argv[5]
 
     os.chdir(websiteRoot)
+    blockedPaths = parseRobotsTxt()
     
     allFiles = gatherfiles(includeHTML, includePDF)
-    files = [ f for f in allFiles if not robotsBlocked(f) ]
+    files = [ f for f in allFiles if not robotsBlocked(f, blockedPaths) ]
     urlsort(files)
 
     pathToSitemap = websiteRoot
