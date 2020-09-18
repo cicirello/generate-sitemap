@@ -111,6 +111,36 @@ def robotsBlocked(f) :
         return False
     return hasMetaRobotsNoindex(f)
 
+def parseRobotsTxt() :
+    """Parses a robots.txt if present in the root of the
+    site, and returns a list of disallowed paths. It only
+    includes paths disallowed for *."""
+    blockedPaths = []
+    with open("robots.txt","r") as robots :
+        foundBlock = False
+        rulesStart = False
+        for line in robots :
+            commentStart = line.find("#")
+            if commentStart > 0 :
+                line = line[:commentStart]
+            line = line.strip()
+            lineLow = line.lower()
+            if foundBlock :
+                if rulesStart and lineLow.startswith("user-agent:") :
+                    foundBlock = False
+                elif not rulesStart and lineLow.startswith("allow:") :
+                    rulesStart = True
+                elif lineLow.startswith("disallow:") :
+                    rulesStart = True
+                    if len(line) > 9 :
+                        path = line[9:].strip()
+                        if len(path) > 0 and " " not in path and "\t" not in path:
+                            blockedPaths.append(path)
+            elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
+                foundBlock = True
+                rulesStart = False
+        return blockedPaths
+
 def lastmod(f) :
     """Determines the date when the file was last modified and
     returns a string with the date formatted as required for
@@ -169,36 +199,6 @@ def writeTextSitemap(files, baseUrl) :
         for f in files :
             sitemap.write(urlstring(f, baseUrl))
             sitemap.write("\n")
-
-def parseRobotsTxt() :
-    """Parses a robots.txt if present in the root of the
-    site, and returns a list of disallowed paths. It only
-    includes paths disallowed for *."""
-    blockedPaths = []
-    with open("robots.txt","r") as robots :
-        foundBlock = False
-        rulesStart = False
-        for line in robots :
-            commentStart = line.find("#")
-            if commentStart > 0 :
-                line = line[:commentStart]
-            line = line.strip()
-            lineLow = line.lower()
-            if foundBlock :
-                if rulesStart and lineLow.startswith("user-agent:") :
-                    foundBlock = False
-                elif not rulesStart and lineLow.startswith("allow:") :
-                    rulesStart = True
-                elif lineLow.startswith("disallow:") :
-                    rulesStart = True
-                    if len(line) > 9 :
-                        path = line[9:].strip()
-                        if len(path) > 0 and " " not in path and "\t" not in path:
-                            blockedPaths.append(path)
-            elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
-                foundBlock = True
-                rulesStart = False
-        return blockedPaths
             
 def writeXmlSitemap(files, baseUrl) :
     """Writes an xml sitemap to the file sitemap.xml.
