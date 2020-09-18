@@ -224,7 +224,8 @@ class TestGenerateSitemap(unittest.TestCase) :
         self.assertEqual(actual, expected)
 
     def test_robotsTxtParser(self) :
-        expected = [ ["/"],
+        expected = [ [],
+                     ["/"],
                      ["/"],
                      [],
                      ["/subdir"],
@@ -238,7 +239,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                      ]
         os.chdir("tests")
         for i, e in enumerate(expected) :
-            filename = "robots" + str(i+1) + ".txt"
+            filename = "robots" + str(i) + ".txt"
             self.assertEqual(set(gs.parseRobotsTxt(filename)), set(e))
         os.chdir("..")
         

@@ -29,6 +29,7 @@
 import sys
 import re
 import os
+import os.path
 import subprocess
 
 def gatherfiles(html, pdf) :
@@ -121,30 +122,31 @@ def parseRobotsTxt(robotsFile="robots.txt") :
     must be robots.txt (the default). The parameter is to enable
     unit testing with different robots.txt files."""
     blockedPaths = []
-    with open(robotsFile,"r") as robots :
-        foundBlock = False
-        rulesStart = False
-        for line in robots :
-            commentStart = line.find("#")
-            if commentStart > 0 :
-                line = line[:commentStart]
-            line = line.strip()
-            lineLow = line.lower()
-            if foundBlock :
-                if rulesStart and lineLow.startswith("user-agent:") :
-                    foundBlock = False
-                elif not rulesStart and lineLow.startswith("allow:") :
-                    rulesStart = True
-                elif lineLow.startswith("disallow:") :
-                    rulesStart = True
-                    if len(line) > 9 :
-                        path = line[9:].strip()
-                        if len(path) > 0 and " " not in path and "\t" not in path:
-                            blockedPaths.append(path)
-            elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
-                foundBlock = True
-                rulesStart = False
-        return blockedPaths
+    if os.path.isfile(robotsFile) :
+        with open(robotsFile,"r") as robots :
+            foundBlock = False
+            rulesStart = False
+            for line in robots :
+                commentStart = line.find("#")
+                if commentStart > 0 :
+                    line = line[:commentStart]
+                line = line.strip()
+                lineLow = line.lower()
+                if foundBlock :
+                    if rulesStart and lineLow.startswith("user-agent:") :
+                        foundBlock = False
+                    elif not rulesStart and lineLow.startswith("allow:") :
+                        rulesStart = True
+                    elif lineLow.startswith("disallow:") :
+                        rulesStart = True
+                        if len(line) > 9 :
+                            path = line[9:].strip()
+                            if len(path) > 0 and " " not in path and "\t" not in path:
+                                blockedPaths.append(path)
+                elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
+                    foundBlock = True
+                    rulesStart = False
+    return blockedPaths
 
 def lastmod(f) :
     """Determines the date when the file was last modified and
