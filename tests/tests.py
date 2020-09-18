@@ -254,7 +254,9 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./subdir/subdir/z.pdf"]
         for f in allFiles :
             self.assertTrue(gs.robotsBlocked(f, ["/"]))
-        blocked = {  "./subdir/a.html", "./subdir/subdir/b.html",
+        blocked = {  "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./subdir/a.html", "./subdir/subdir/b.html",
                      "./subdir/y.pdf",
                      "./subdir/subdir/z.pdf"}
         for f in allFiles :
@@ -262,7 +264,9 @@ class TestGenerateSitemap(unittest.TestCase) :
                 self.assertTrue(gs.robotsBlocked(f, ["/subdir/"]))
             else :
                 self.assertFalse(gs.robotsBlocked(f, ["/subdir/"]))
-        blocked = {  "./subdir/subdir/b.html",
+        blocked = {  "./blocked1.html", "./blocked2.html",
+                     "./blocked3.html", "./blocked4.html",
+                     "./subdir/subdir/b.html",
                      "./subdir/subdir/z.pdf"}
         for f in allFiles :
             if f in blocked :
