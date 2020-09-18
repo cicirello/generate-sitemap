@@ -222,5 +222,20 @@ class TestGenerateSitemap(unittest.TestCase) :
         actual = gs.xmlSitemapEntry(f, base, date)
         expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>"
         self.assertEqual(actual, expected)
-        
+
+    def test_robotsTxtParser(self) :
+        expected = [ ["/"],
+                     ["/"],
+                     [],
+                     ["/subdir"],
+                     ["/subdir/"],
+                     ["/subdir/y.pdf"],
+                     ["/subdir/subdir/"],
+                     ["/subdir/y.pdf", "/subdir/subdir/b.html"]
+                     ]
+        os.chdir("tests")
+        for i, e in enumerate(expected) :
+            filename = "robots" + str(i+1) + ".txt"
+            self.assertEqual(gs.parseRobotsTxt(filename), e)
+        os.chdir("..")
         
