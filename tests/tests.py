@@ -244,6 +244,7 @@ class TestGenerateSitemap(unittest.TestCase) :
         os.chdir("..")
 
     def test_robotsBlockedWithRobotsParser(self) :
+        os.chdir("tests")
         allFiles = [ "./blocked1.html", "./blocked2.html",
                      "./blocked3.html", "./blocked4.html",
                      "./unblocked1.html", "./unblocked2.html",
@@ -261,5 +262,12 @@ class TestGenerateSitemap(unittest.TestCase) :
                 self.assertTrue(gs.robotsBlocked(f, ["/subdir/"]))
             else :
                 self.assertFalse(gs.robotsBlocked(f, ["/subdir/"]))
-        
+        blocked = {  "./subdir/subdir/b.html",
+                     "./subdir/subdir/z.pdf"}
+        for f in allFiles :
+            if f in blocked :
+                self.assertTrue(gs.robotsBlocked(f, ["/subdir/subdir/"]))
+            else :
+                self.assertFalse(gs.robotsBlocked(f, ["/subdir/subdir"]))
+        os.chdir("..")
         
