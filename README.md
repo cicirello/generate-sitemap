@@ -5,23 +5,19 @@
 [![GitHub](https://img.shields.io/github/license/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap/blob/master/LICENSE)
 ![GitHub top language](https://img.shields.io/github/languages/top/cicirello/generate-sitemap)
 
-This action generates a sitemap for a website hosted on GitHub
-Pages. It supports both xml and txt sitemaps. When generating
-an xml sitemap, it uses the last commit date of each file to
-generate the `<lastmod>` tag in the sitemap entry. It can include
-html as well as pdf files in the sitemap, and has inputs to
-control the included file types (defaults include both html
-and pdf files in the sitemap). It skips over html files that
-contain `<meta name="robots" content="noindex">`. It otherwise
-does not currently attempt to respect a robots.txt file.  The 
-sitemap entries are sorted in a consistent order.  The URLs 
-are first sorted by depth in the directory structure (i.e., 
-pages at the website root appear first, etc), and then pages 
-at the same depth are sorted alphabetically.  
+The generate-sitemap GitHub action generates a sitemap for a website hosted on GitHub
+Pages, and has the following features:
+* Support for both xml and txt sitemaps (you choose using one of the action's inputs). 
+* When generating an xml sitemap, it uses the last commit date of each file to generate the `<lastmod>` tag in the sitemap entry. 
+* Supports URLs for html and pdf files in the sitemap, and has inputs to control the included file types (defaults include both html and pdf files in the sitemap). 
+* Checks content of html files for `<meta name="robots" content="noindex">` directives, excluding any that do from the sitemap. 
+* Parses a robots.txt, if present at the root of the website, excluding any URLs from the sitemap that match `Disallow:` rules for `User-agent: *`.
+* Sorts the sitemap entries in a consistent order, such that the URLs are first sorted by depth in the directory structure (i.e., pages at the website root appear first, etc), and then pages at the same depth are sorted alphabetically.  
 
-It is designed to be used in combination with other GitHub
-Actions. For example, it does not commit and push the generated
-sitemap. See the [Examples](#examples) for examples of combining
+The generate-sitemap GitHub action is designed to be used 
+in combination with other GitHub Actions. For example, it 
+does not commit and push the generated sitemap. See 
+the [Examples](#examples) for examples of combining
 with other actions in your workflow.
 
 ## Requirements
@@ -125,7 +121,7 @@ jobs:
         fetch-depth: 0 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.5.0
+      uses: cicirello/generate-sitemap@v1.6.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
     - name: Output stats
@@ -161,7 +157,7 @@ jobs:
         fetch-depth: 0 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.5.0
+      uses: cicirello/generate-sitemap@v1.6.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
         path-to-root: docs
@@ -202,7 +198,7 @@ jobs:
         fetch-depth: 0 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.5.0
+      uses: cicirello/generate-sitemap@v1.6.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
     - name: Create Pull Request
