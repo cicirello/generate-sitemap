@@ -5,7 +5,7 @@
 [![GitHub](https://img.shields.io/github/license/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap/blob/master/LICENSE)
 ![GitHub top language](https://img.shields.io/github/languages/top/cicirello/generate-sitemap)
 
-This action generates a sitemap for a website hosted on GitHub
+The generate-sitemap GitHub action generates a sitemap for a website hosted on GitHub
 Pages, and has the following features:
 * Support for both xml and txt sitemaps (you choose using one of the action's inputs). 
 * When generating an xml sitemap, it uses the last commit date of each file to generate the `<lastmod>` tag in the sitemap entry. 
