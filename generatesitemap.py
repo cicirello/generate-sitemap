@@ -61,8 +61,10 @@ def sortname(f) :
     Keyword arguments:
     f - Filename with path
     """
-    if len(f) >= 10 and f[-10:] == "index.html" :
+    if len(f) >= 11 and f[-11:] == "/index.html" :
         return f[:-10]
+    elif f == "index.html" :
+        return ""
     else :
         return f
 
@@ -175,8 +177,10 @@ def urlstring(f, baseUrl) :
         u = f[1:]
     else :
         u = f
-    if len(u) >= 10 and u[-10:] == "index.html" :
+    if len(u) >= 11 and u[-11:] == "/index.html" :
         u = u[:-10]
+    elif u == "index.html" :
+        u = ""
     if len(u) >= 1 and u[0]=="/" and len(baseUrl) >= 1 and baseUrl[-1]=="/" :
         u = u[1:]
     elif (len(u)==0 or u[0]!="/") and (len(baseUrl)==0 or baseUrl[-1]!="/") :
