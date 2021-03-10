@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [ master, development ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -25,5 +25,18 @@ jobs:
     - name: Run Python unit tests
       run: python3 -u -m unittest tests/tests.py
 
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag generate-sitemap:$(date +%s)
+    - name: Verify that the Docker image for the action builds
+      run: docker build . --file Dockerfile
+
+    - name: Integration test
+      id: integration
+      uses: ./
+      with:
+        path-to-root: tests
+        base-url-path: https://TESTING.FAKE.WEB.ADDRESS.TESTING/
+
+    - name: Output stats
+      run: |
+        echo "sitemap-path = ${{ steps.integration.outputs.sitemap-path }}"
+        echo "url-count = ${{ steps.integration.outputs.url-count }}"
+        echo "excluded-count = ${{ steps.integration.outputs.excluded-count }}"
