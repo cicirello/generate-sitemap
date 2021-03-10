@@ -146,7 +146,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.6.1
+      uses: cicirello/generate-sitemap@v1.6.2
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 
@@ -185,7 +185,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.6.1
+      uses: cicirello/generate-sitemap@v1.6.2
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
         path-to-root: docs
@@ -229,7 +229,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.6.1
+      uses: cicirello/generate-sitemap@v1.6.2
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 

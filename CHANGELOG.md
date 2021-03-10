@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### CI/CD
 
 
+## [1.6.2] - 2021-3-10
+
+### Changed
+* Improved the documentation (otherwise, this release is
+  functionally equivalent to the previous release).
+
+
 ## [1.6.1] - 2020-9-24
 
 ### Fixed
