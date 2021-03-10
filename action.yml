@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020 Vincent A Cicirello
+# Copyright (c) 2020-2021 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -31,23 +31,23 @@ branding:
 inputs:
   path-to-root:  
     description: 'The path to the root of the website'
-    required: true
+    required: false
     default: '.'
   base-url-path:
     description: 'The url of your webpage'
-    required: true
+    required: false
     default: 'https://web.address.of.your.nifty.website/'
   include-html:
     description: 'Indicates whether to include html files in the sitemap.'
-    required: true
+    required: false
     default: true
   include-pdf:
     description: 'Indicates whether to include pdf files in the sitemap.'
-    required: true
+    required: false
     default: true
   sitemap-format:
     description: 'Indicates if sitemap should be formatted in xml.'
-    required: true
+    required: false
     default: 'xml'
 outputs:
   sitemap-path: 
