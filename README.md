@@ -2,6 +2,7 @@
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/cicirello/generate-sitemap?label=Marketplace&logo=GitHub)](https://github.com/marketplace/actions/generate-sitemap)
 [![build](https://github.com/cicirello/generate-sitemap/actions/workflows/build.yml/badge.svg)](https://github.com/cicirello/generate-sitemap/actions/workflows/build.yml)
+[![CodeQL](https://github.com/cicirello/generate-sitemap/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/cicirello/generate-sitemap/actions/workflows/codeql-analysis.yml)
 [![GitHub](https://img.shields.io/github/license/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap/blob/master/LICENSE)
 ![GitHub top language](https://img.shields.io/github/languages/top/cicirello/generate-sitemap)
 
