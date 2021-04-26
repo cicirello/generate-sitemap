@@ -36,7 +36,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                   "/.html", "/.htm",
                   "/a.html", "/a.htm",
                   "b/a.html", "b/a.htm",
-                  "b/index.html", "b/index.htm"
+                  "b/index.html", "b/index.htm",
                   "html", "htm",
                   "ahtml", "ahtm",
                   "/html", "/htm",
