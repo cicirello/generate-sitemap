@@ -28,18 +28,33 @@ jobs:
     - name: Verify that the Docker image for the action builds
       run: docker build . --file Dockerfile
 
-    - name: Integration test
+    - name: Integration test 1
       id: integration
       uses: ./
       with:
         path-to-root: tests
         base-url-path: https://TESTING.FAKE.WEB.ADDRESS.TESTING/
 
-    - name: Output stats
+    - name: Output stats test 1
       run: |
         echo "sitemap-path = ${{ steps.integration.outputs.sitemap-path }}"
         echo "url-count = ${{ steps.integration.outputs.url-count }}"
         echo "excluded-count = ${{ steps.integration.outputs.excluded-count }}"
+
+    - name: Integration test 2
+      id: integration2
+      uses: ./
+      with:
+        path-to-root: tests
+        base-url-path: https://TESTING.FAKE.WEB.ADDRESS.TESTING/
+        sitemap-format: txt 
+        additional-extensions: docx pptx
+
+    - name: Output stats test 2
+      run: |
+        echo "sitemap-path = ${{ steps.integration2.outputs.sitemap-path }}"
+        echo "url-count = ${{ steps.integration2.outputs.url-count }}"
+        echo "excluded-count = ${{ steps.integration2.outputs.excluded-count }}"
 
     - name: Verify integration test results
       run: python3 -u -m unittest tests/integration.py

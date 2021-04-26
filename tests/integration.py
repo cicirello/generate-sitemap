@@ -46,3 +46,22 @@ class IntegrationTest(unittest.TestCase) :
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/x.pdf", 
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/z.pdf" }
         self.assertEqual(expected, urlset)
+
+    def testIntegrationWithAdditionalTypes(self) :
+        urlset = set()
+        with open("tests/sitemap.txt","r") as f :
+            for line in f :
+                line = line.strip()
+                if len(line) > 0 :
+                    urlset.add(line)
+        expected = { "https://TESTING.FAKE.WEB.ADDRESS.TESTING/unblocked1.html",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/unblocked2.html",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/unblocked3.html",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/unblocked4.html",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/a.html",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/x.pdf", 
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/z.pdf",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/include.docx",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/include.pptx"}
+        self.assertEqual(expected, urlset)
+
