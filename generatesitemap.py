@@ -32,25 +32,20 @@ import os
 import os.path
 import subprocess
 
-def gatherfiles(html, pdf) :
+def gatherfiles(extensionsToInclude) :
     """Walks the directory tree discovering
     files of specified types for inclusion in
     sitemap.
 
     Keyword arguments:
-    html - boolean indicating whether or not to include html files
-    pdf - boolean indicating whether or not to include pdfs
+    extensionsToInclude - a set of the file extensions to include in sitemap
     """
-    if not html and not pdf :
+    if len(extensionsToInclude) == 0 :
         return []
     allfiles = []
     for root, dirs, files in os.walk(".") :
         for f in files :
-            if html and len(f) >= 5 and ".html" == f[-5:] :
-                allfiles.append(os.path.join(root, f))
-            elif html and len(f) >= 4 and ".htm" == f[-4:] :
-                allfiles.append(os.path.join(root, f))
-            elif pdf and len(f) >= 4 and ".pdf" == f[-4:] :
+            if getFileExtension(f) in extensionsToInclude :
                 allfiles.append(os.path.join(root, f))
     return allfiles
 

@@ -227,7 +227,7 @@ class TestGenerateSitemap(unittest.TestCase) :
 
     def test_gatherfiles_html(self) :
         os.chdir("tests")
-        allfiles = gs.gatherfiles(True, False)
+        allfiles = gs.gatherfiles({"html", "htm"})
         os.chdir("..")
         asSet = set(allfiles)
         expected = { "./blocked1.html", "./blocked2.html",
@@ -239,7 +239,7 @@ class TestGenerateSitemap(unittest.TestCase) :
 
     def test_gatherfiles_html_pdf(self) :
         os.chdir("tests")
-        allfiles = gs.gatherfiles(True, True)
+        allfiles = gs.gatherfiles({"html", "htm", "pdf"})
         os.chdir("..")
         asSet = set(allfiles)
         expected = { "./blocked1.html", "./blocked2.html",
@@ -253,7 +253,7 @@ class TestGenerateSitemap(unittest.TestCase) :
 
     def test_gatherfiles_pdf(self) :
         os.chdir("tests")
-        allfiles = gs.gatherfiles(False, True)
+        allfiles = gs.gatherfiles({"pdf"})
         os.chdir("..")
         asSet = set(allfiles)
         expected = { "./x.pdf", "./subdir/y.pdf",
