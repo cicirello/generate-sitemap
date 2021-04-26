@@ -156,8 +156,7 @@ name: Generate xml sitemap
 
 on:
   push:
-    branches:
-      - master
+    branches: [ main ]
 
 jobs:
   sitemap_job:
@@ -195,8 +194,7 @@ name: Generate API sitemap
 
 on:
   push:
-    branches:
-      - master
+    branches: [ main ]
 
 jobs:
   sitemap_job:
@@ -238,8 +236,7 @@ name: Generate xml sitemap
 
 on:
   push:
-    branches:
-      - master
+    branches: [ main ]
 
 jobs:
   sitemap_job:
@@ -280,8 +277,7 @@ name: Generate xml sitemap
 
 on:
   push:
-    branches:
-      - master
+    branches: [ main ]
 
 jobs:
   sitemap_job:
