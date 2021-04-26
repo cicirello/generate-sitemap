@@ -128,7 +128,7 @@ def robotsBlocked(f, blockedPaths=[]) :
         for b in blockedPaths :
             if f2.startswith(b) :
                 return True
-    if len(f) >= 4 and f[-4:] == ".pdf" :
+    if not isHTMLFile(f) : 
         return False
     return hasMetaRobotsNoindex(f)
 
