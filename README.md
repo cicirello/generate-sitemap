@@ -9,11 +9,19 @@
 The generate-sitemap GitHub action generates a sitemap for a website hosted on GitHub
 Pages, and has the following features:
 * Support for both xml and txt sitemaps (you choose using one of the action's inputs). 
-* When generating an xml sitemap, it uses the last commit date of each file to generate the `<lastmod>` tag in the sitemap entry. 
-* Supports URLs for html and pdf files in the sitemap, and has inputs to control the included file types (defaults include both html and pdf files in the sitemap). 
-* Checks content of html files for `<meta name="robots" content="noindex">` directives, excluding any that do from the sitemap. 
-* Parses a robots.txt, if present at the root of the website, excluding any URLs from the sitemap that match `Disallow:` rules for `User-agent: *`.
-* Sorts the sitemap entries in a consistent order, such that the URLs are first sorted by depth in the directory structure (i.e., pages at the website root appear first, etc), and then pages at the same depth are sorted alphabetically.  
+* When generating an xml sitemap, it uses the last commit date of 
+  each file to generate the `<lastmod>` tag in the sitemap entry. 
+* Supports URLs for html and pdf files in the sitemap, and has inputs 
+  to control the included file types (defaults include both html and pdf files in the sitemap).
+* Now also supports including URLs for a user specified list of 
+  additional file extensions in the sitemap. 
+* Checks content of html files for `<meta name="robots" content="noindex">` 
+  directives, excluding any that do from the sitemap. 
+* Parses a robots.txt, if present at the root of the website, excluding 
+  any URLs from the sitemap that match `Disallow:` rules for `User-agent: *`.
+* Sorts the sitemap entries in a consistent order, such that the URLs are 
+  first sorted by depth in the directory structure (i.e., pages at the website 
+  root appear first, etc), and then pages at the same depth are sorted alphabetically.  
 
 The generate-sitemap GitHub action is designed to be used 
 in combination with other GitHub Actions. For example, it 
@@ -29,9 +37,9 @@ hand. For example, I use it for multiple Java project
 documentation sites, where most of the site is generated 
 by javadoc. I also use it with my personal website, which 
 is generated with a custom static site generator. As long as
-the repository for the GitHub Pages site contains html
-(pdfs are also supported), the generate-sitemap action is 
-applicable.
+the repository for the GitHub Pages site contains the
+site as served (e.g., html files, pdf files, etc), the 
+generate-sitemap action is applicable.
 
 The generate-sitemap action is not for GitHub Pages 
 Jekyll sites (unless you generate the site locally and 
@@ -39,7 +47,7 @@ push the html output instead of the markdown, but why would
 you do that?). In the case of a GitHub Pages Jekyll site, 
 the repository contains markdown, and not the html that 
 is generated from the markdown. The generate-sitemap action 
-does not support that case. If you are looking to generate 
+does not support that use-case. If you are looking to generate 
 a sitemap for a Jekyll website, there is 
 a [Jekyll plugin](https://github.com/jekyll/jekyll-sitemap) for that. 
 
@@ -82,12 +90,29 @@ purposes.
 ### `include-html`
 
 This flag determines whether html files are included in
-your sitemap. Default: `true`.
+your sitemap (files with an extension of either `.html` 
+or `.htm`). Default: `true`.
 
 ### `include-pdf`
 
 This flag determines whether pdf files are included in
 your sitemap. Default: `true`.
+
+### `additional-extensions`
+
+If you want to include URLs to other document types, you can use
+the `additional-extensions` input to specify a list (separated by
+spaces) of file extensions. For example, Google (and other search
+engines) index a variety of other file types, including `docx`, `doc`,
+source code for various common programming languages, etc. Here
+is an example:
+
+```yml
+    - name: Generate the sitemap
+      uses: cicirello/generate-sitemap@v1.7.0
+      with:
+        additional-extensions: doc docx ppt pptx
+```
 
 ### `sitemap-format`
 
@@ -109,11 +134,11 @@ or `sitemap.txt`).
 
 ### `url-count`
 
-This output provides the number of urls in the sitemap.
+This output provides the number of URLs in the sitemap.
 
 ### `excluded-count`
 
-This output provides the number of urls excluded from the sitemap due
+This output provides the number of URLs excluded from the sitemap due
 to either `<meta name="robots" content="noindex">` within html files,
 or due to exclusion from directives in a `robots.txt` file.
 
@@ -147,7 +172,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.6.2
+      uses: cicirello/generate-sitemap@v1.7.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 
@@ -186,7 +211,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.6.2
+      uses: cicirello/generate-sitemap@v1.7.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
         path-to-root: docs
@@ -200,7 +225,48 @@ jobs:
         echo "excluded-count = ${{ steps.sitemap.outputs.excluded-count }}"
 ``` 
 
-### Example 3: Combining With Other Actions
+### Example 3: Including Additional Indexable File Types
+
+In this example workflow, we add various additional types to the
+sitemap using the `additional-extensions` input. Note that this
+also include html files and pdf files since the workflow is using the
+default values for `include-html` and `include-pdf`, which both default to
+`true`.
+
+```yml
+name: Generate xml sitemap
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  sitemap_job:
+    runs-on: ubuntu-latest
+    name: Generate a sitemap
+
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 
+
+    - name: Generate the sitemap
+      id: sitemap
+      uses: cicirello/generate-sitemap@v1.7.0
+      with:
+        base-url-path: https://THE.URL.TO.YOUR.PAGE/
+        additional-extensions: doc docx ppt pptx xls xlsx
+
+    - name: Output stats
+      run: |
+        echo "sitemap-path = ${{ steps.sitemap.outputs.sitemap-path }}"
+        echo "url-count = ${{ steps.sitemap.outputs.url-count }}"
+        echo "excluded-count = ${{ steps.sitemap.outputs.excluded-count }}"
+```
+
+### Example 4: Combining With Other Actions
 
 Presumably you want to do something with your sitemap once it is 
 generated. In this example workflow, we combine it with the action
@@ -230,7 +296,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.6.2
+      uses: cicirello/generate-sitemap@v1.7.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 
