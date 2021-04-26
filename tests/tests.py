@@ -30,6 +30,52 @@ import os
 
 class TestGenerateSitemap(unittest.TestCase) :
 
+    def test_getFileExtension(self) :
+        cases = [ ".html", ".htm",
+                  "a.html", "a.htm",
+                  "/.html", "/.htm",
+                  "/a.html", "/a.htm",
+                  "b/a.html", "b/a.htm",
+                  "b/index.html", "b/index.htm"
+                  "html", "htm",
+                  "ahtml", "ahtm",
+                  "/html", "/htm",
+                  "/ahtml", "/ahtm",
+                  "b/ahtml", "b/ahtm",
+                  "b/indexhtml", "b/indexhtm",
+                  ".something/somethingElse",
+                  "some.thing/somethingElse",
+                  "some.html/somethingElse",
+                  ".something/somethingElse.doc",
+                  "some.thing/somethingElse.doc",
+                  "some.html/somethingElse.doc",
+                  ".HTML", ".HTM",
+                  "a.HTML", "a.HTM",
+                  "/.HTML", "/.HTM",
+                  "/a.HTML", "/a.HTM",
+                  "b/a.HTML", "b/a.HTM",
+                  "b/index.HTML", "b/index.HTM"
+                  ]
+        ext = [ "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                None, None, None, None, None, None,
+                None, None, None, None, None, None,
+                None, None, None,
+                "doc", "doc", "doc",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm"
+                ]
+        for i, f in enumerate(cases) :
+            self.assertEqual(ext[i], gs.getFileExtension(f))
+
     def test_isHTMLFile(self) :
         htmlFilenames = [ ".html",
                           ".htm",

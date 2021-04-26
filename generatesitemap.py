@@ -99,6 +99,18 @@ def hasMetaRobotsNoindex(f) :
                 return False
     return False
 
+def getFileExtension(f) :
+    """Gets the file extension, and returns it (in all
+    lowercase). Returns None if file has no extension.
+
+    Keyword arguments:
+    f - file name possibly with path
+    """
+    i = f.rfind(".")
+    return f[i+1:] if i >= 0 and f.rfind("/") < i else None
+
+HTML_EXTENSIONS = { "html", "htm" }
+
 def isHTMLFile(f) :
     """Checks if the file is an HTML file,
     which currently means has an extension of html
@@ -107,11 +119,7 @@ def isHTMLFile(f) :
     Keyword arguments:
     f - file name including path relative from the root of the website.
     """
-    if len(f) >= 5 and f[-5:] == ".html" :
-        return True
-    if len(f) >= 4 and f[-4:] == ".htm" :
-        return True
-    return False
+    return getFileExtension(f) in HTML_EXTENSIONS
     
 def robotsBlocked(f, blockedPaths=[]) :
     """Checks if robots are blocked from acessing the
