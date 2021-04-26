@@ -2,7 +2,7 @@
 #
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020 Vincent A Cicirello
+# Copyright (c) 2021 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -99,6 +99,20 @@ def hasMetaRobotsNoindex(f) :
                 return False
     return False
 
+def isHTMLFile(f) :
+    """Checks if the file is an HTML file,
+    which currently means has an extension of html
+    or htm.
+
+    Keyword arguments:
+    f - file name including path relative from the root of the website.
+    """
+    if len(f) >= 5 and f[-5:] == ".html" :
+        return True
+    if len(f) >= 4 and f[-4:] == ".htm" :
+        return True
+    return False
+    
 def robotsBlocked(f, blockedPaths=[]) :
     """Checks if robots are blocked from acessing the
     url.

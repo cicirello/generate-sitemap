@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020 Vincent A Cicirello
+# Copyright (c) 2021 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -29,6 +29,50 @@ import generatesitemap as gs
 import os
 
 class TestGenerateSitemap(unittest.TestCase) :
+
+    def test_isHTMLFile(self) :
+        htmlFilenames = [ ".html",
+                          ".htm",
+                          "a.html",
+                          "a.htm",
+                          "index.html",
+                          "index.htm",
+                          "/.html",
+                          "/.htm",
+                          "/a.html",
+                          "/a.htm",
+                          "/index.html",
+                          "/index.htm",
+                          "b/.html",
+                          "b/.htm",
+                          "b/a.html",
+                          "b/a.htm",
+                          "b/index.html",
+                          "b/index.htm"
+                          ]
+        nonHtmlFilenames = [ ".0html",
+                          ".0htm",
+                          "indexhtml",
+                          "indexhtm",
+                          "html",
+                          "htm",
+                          "/html",
+                          "/htm",
+                          "a/html",
+                          "a/htm",
+                          "a.0html",
+                          "a.0htm",
+                          "a/b.0html",
+                          "a/b.0htm",
+                          "b/a.html0",
+                          "b/a.htm0",
+                          "b/index.html0",
+                          "b/index.htm0"
+                          ]
+        for f in htmlFilenames :
+            self.assertTrue(gs.isHTMLFile(f))
+        for f in nonHtmlFilenames :
+            self.assertFalse(gs.isHTMLFile(f))
 
     def test_sortname(self) :
         files = [ "/dir/dir/z.pdf", 
