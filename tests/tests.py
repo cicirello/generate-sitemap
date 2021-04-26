@@ -74,7 +74,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                 "html", "htm"
                 ]
         for i, f in enumerate(cases) :
-            self.assertEqual(ext[i], gs.getFileExtension(f))
+            self.assertEqual(ext[i], gs.getFileExtension(f), msg="failed on filename: "+f)
 
     def test_isHTMLFile(self) :
         htmlFilenames = [ ".html",
