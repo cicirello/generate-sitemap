@@ -102,7 +102,7 @@ def getFileExtension(f) :
     f - file name possibly with path
     """
     i = f.rfind(".")
-    return f[i+1:] if i >= 0 and f.rfind("/") < i else None
+    return f[i+1:].lower() if i >= 0 and f.rfind("/") < i else None
 
 HTML_EXTENSIONS = { "html", "htm" }
 
