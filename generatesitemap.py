@@ -253,8 +253,12 @@ if __name__ == "__main__" :
     includeHTML = sys.argv[3]=="true"
     includePDF = sys.argv[4]=="true"
     sitemapFormat = sys.argv[5]
+    additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split())
 
-    fileExtensionsToInclude = HTML_EXTENSIONS.copy() if includeHTML else set()
+    if includeHTML :
+        fileExtensionsToInclude = additionalExt | HTML_EXTENSIONS
+    else :
+        fileExtensionsToInclude = additionalExt
     if includePDF :
         fileExtensionsToInclude.add("pdf")
 
