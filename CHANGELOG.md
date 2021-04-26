@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - 2021-4-26
 
 ### Added
-* New action input, `additional-extensions`, that enables adding 
-  other indexable file types to the sitemap.
 
 ### Changed
 
@@ -17,6 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+
+### CI/CD
+
+
+## [1.7.0] - 2021-4-26
+
+### Added
+* New action input, `additional-extensions`, that enables adding 
+  other indexable file types to the sitemap.
 
 ### CI/CD
 * Enabled CodeQL code scanning on all push/pull-request events.
