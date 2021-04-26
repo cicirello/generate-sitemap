@@ -2,7 +2,7 @@
 #
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020 Vincent A Cicirello
+# Copyright (c) 2021 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -32,25 +32,20 @@ import os
 import os.path
 import subprocess
 
-def gatherfiles(html, pdf) :
+def gatherfiles(extensionsToInclude) :
     """Walks the directory tree discovering
     files of specified types for inclusion in
     sitemap.
 
     Keyword arguments:
-    html - boolean indicating whether or not to include html files
-    pdf - boolean indicating whether or not to include pdfs
+    extensionsToInclude - a set of the file extensions to include in sitemap
     """
-    if not html and not pdf :
+    if len(extensionsToInclude) == 0 :
         return []
     allfiles = []
     for root, dirs, files in os.walk(".") :
         for f in files :
-            if html and len(f) >= 5 and ".html" == f[-5:] :
-                allfiles.append(os.path.join(root, f))
-            elif html and len(f) >= 4 and ".htm" == f[-4:] :
-                allfiles.append(os.path.join(root, f))
-            elif pdf and len(f) >= 4 and ".pdf" == f[-4:] :
+            if getFileExtension(f) in extensionsToInclude :
                 allfiles.append(os.path.join(root, f))
     return allfiles
 
@@ -99,6 +94,28 @@ def hasMetaRobotsNoindex(f) :
                 return False
     return False
 
+def getFileExtension(f) :
+    """Gets the file extension, and returns it (in all
+    lowercase). Returns None if file has no extension.
+
+    Keyword arguments:
+    f - file name possibly with path
+    """
+    i = f.rfind(".")
+    return f[i+1:].lower() if i >= 0 and f.rfind("/") < i else None
+
+HTML_EXTENSIONS = { "html", "htm" }
+
+def isHTMLFile(f) :
+    """Checks if the file is an HTML file,
+    which currently means has an extension of html
+    or htm.
+
+    Keyword arguments:
+    f - file name including path relative from the root of the website.
+    """
+    return getFileExtension(f) in HTML_EXTENSIONS
+    
 def robotsBlocked(f, blockedPaths=[]) :
     """Checks if robots are blocked from acessing the
     url.
@@ -114,7 +131,7 @@ def robotsBlocked(f, blockedPaths=[]) :
         for b in blockedPaths :
             if f2.startswith(b) :
                 return True
-    if len(f) >= 4 and f[-4:] == ".pdf" :
+    if not isHTMLFile(f) : 
         return False
     return hasMetaRobotsNoindex(f)
 
@@ -236,11 +253,19 @@ if __name__ == "__main__" :
     includeHTML = sys.argv[3]=="true"
     includePDF = sys.argv[4]=="true"
     sitemapFormat = sys.argv[5]
+    additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split())
+
+    if includeHTML :
+        fileExtensionsToInclude = additionalExt | HTML_EXTENSIONS
+    else :
+        fileExtensionsToInclude = additionalExt
+    if includePDF :
+        fileExtensionsToInclude.add("pdf")
 
     os.chdir(websiteRoot)
     blockedPaths = parseRobotsTxt()
     
-    allFiles = gatherfiles(includeHTML, includePDF)
+    allFiles = gatherfiles(fileExtensionsToInclude)
     files = [ f for f in allFiles if not robotsBlocked(f, blockedPaths) ]
     urlsort(files)
 

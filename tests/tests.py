@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020 Vincent A Cicirello
+# Copyright (c) 2021 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -29,6 +29,96 @@ import generatesitemap as gs
 import os
 
 class TestGenerateSitemap(unittest.TestCase) :
+
+    def test_getFileExtension(self) :
+        cases = [ ".html", ".htm",
+                  "a.html", "a.htm",
+                  "/.html", "/.htm",
+                  "/a.html", "/a.htm",
+                  "b/a.html", "b/a.htm",
+                  "b/index.html", "b/index.htm",
+                  "html", "htm",
+                  "ahtml", "ahtm",
+                  "/html", "/htm",
+                  "/ahtml", "/ahtm",
+                  "b/ahtml", "b/ahtm",
+                  "b/indexhtml", "b/indexhtm",
+                  ".something/somethingElse",
+                  "some.thing/somethingElse",
+                  "some.html/somethingElse",
+                  ".something/somethingElse.doc",
+                  "some.thing/somethingElse.doc",
+                  "some.html/somethingElse.doc",
+                  ".HTML", ".HTM",
+                  "a.HTML", "a.HTM",
+                  "/.HTML", "/.HTM",
+                  "/a.HTML", "/a.HTM",
+                  "b/a.HTML", "b/a.HTM",
+                  "b/index.HTML", "b/index.HTM"
+                  ]
+        ext = [ "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                None, None, None, None, None, None,
+                None, None, None, None, None, None,
+                None, None, None,
+                "doc", "doc", "doc",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm",
+                "html", "htm"
+                ]
+        for i, f in enumerate(cases) :
+            self.assertEqual(ext[i], gs.getFileExtension(f), msg="failed on filename: "+f)
+
+    def test_isHTMLFile(self) :
+        htmlFilenames = [ ".html",
+                          ".htm",
+                          "a.html",
+                          "a.htm",
+                          "index.html",
+                          "index.htm",
+                          "/.html",
+                          "/.htm",
+                          "/a.html",
+                          "/a.htm",
+                          "/index.html",
+                          "/index.htm",
+                          "b/.html",
+                          "b/.htm",
+                          "b/a.html",
+                          "b/a.htm",
+                          "b/index.html",
+                          "b/index.htm"
+                          ]
+        nonHtmlFilenames = [ ".0html",
+                          ".0htm",
+                          "indexhtml",
+                          "indexhtm",
+                          "html",
+                          "htm",
+                          "/html",
+                          "/htm",
+                          "a/html",
+                          "a/htm",
+                          "a.0html",
+                          "a.0htm",
+                          "a/b.0html",
+                          "a/b.0htm",
+                          "b/a.html0",
+                          "b/a.htm0",
+                          "b/index.html0",
+                          "b/index.htm0"
+                          ]
+        for f in htmlFilenames :
+            self.assertTrue(gs.isHTMLFile(f))
+        for f in nonHtmlFilenames :
+            self.assertFalse(gs.isHTMLFile(f))
 
     def test_sortname(self) :
         files = [ "/dir/dir/z.pdf", 
@@ -137,7 +227,7 @@ class TestGenerateSitemap(unittest.TestCase) :
 
     def test_gatherfiles_html(self) :
         os.chdir("tests")
-        allfiles = gs.gatherfiles(True, False)
+        allfiles = gs.gatherfiles({"html", "htm"})
         os.chdir("..")
         asSet = set(allfiles)
         expected = { "./blocked1.html", "./blocked2.html",
@@ -149,7 +239,7 @@ class TestGenerateSitemap(unittest.TestCase) :
 
     def test_gatherfiles_html_pdf(self) :
         os.chdir("tests")
-        allfiles = gs.gatherfiles(True, True)
+        allfiles = gs.gatherfiles({"html", "htm", "pdf"})
         os.chdir("..")
         asSet = set(allfiles)
         expected = { "./blocked1.html", "./blocked2.html",
@@ -163,7 +253,7 @@ class TestGenerateSitemap(unittest.TestCase) :
 
     def test_gatherfiles_pdf(self) :
         os.chdir("tests")
-        allfiles = gs.gatherfiles(False, True)
+        allfiles = gs.gatherfiles({"pdf"})
         os.chdir("..")
         asSet = set(allfiles)
         expected = { "./x.pdf", "./subdir/y.pdf",

@@ -49,6 +49,10 @@ inputs:
     description: 'Indicates if sitemap should be formatted in xml.'
     required: false
     default: 'xml'
+  additional-extensions:
+    description: 'Space separated list of additional file extensions to include in sitemap.'
+    required: false
+    default: ''
 outputs:
   sitemap-path: 
     description: 'The path to the generated sitemap file.'
@@ -65,3 +69,4 @@ runs:
     - ${{ inputs.include-html }}
     - ${{ inputs.include-pdf }}
     - ${{ inputs.sitemap-format }}
+    - ${{ inputs.additional-extensions }}
