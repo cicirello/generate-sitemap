@@ -254,10 +254,14 @@ if __name__ == "__main__" :
     includePDF = sys.argv[4]=="true"
     sitemapFormat = sys.argv[5]
 
+    fileExtensionsToInclude = HTML_EXTENSIONS.copy() if includeHTML else set()
+    if includePDF :
+        fileExtensionsToInclude.add("pdf")
+
     os.chdir(websiteRoot)
     blockedPaths = parseRobotsTxt()
     
-    allFiles = gatherfiles(includeHTML, includePDF)
+    allFiles = gatherfiles(fileExtensionsToInclude)
     files = [ f for f in allFiles if not robotsBlocked(f, blockedPaths) ]
     urlsort(files)
 
