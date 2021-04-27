@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2021 Vincent A Cicirello
+# Copyright (c) 2020-2021 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -29,6 +29,30 @@ import generatesitemap as gs
 import os
 
 class TestGenerateSitemap(unittest.TestCase) :
+
+    def test_createExtensionSet_htmlOnly(self):
+        self.assertEqual({"html", "htm"}, gs.createExtensionSet(True, False, set()))
+
+    def test_createExtensionSet_pdfOnly(self):
+        self.assertEqual({"pdf"}, gs.createExtensionSet(False, True, set()))
+
+    def test_createExtensionSet_htmlAndPdf(self):
+        self.assertEqual({"html", "htm", "pdf"}, gs.createExtensionSet(True, True, set()))
+
+    def test_createExtensionSet_html_and_more(self):
+        self.assertEqual({"html", "htm", "abc"}, gs.createExtensionSet(True, False, {"abc"}))
+
+    def test_createExtensionSet_pdf_and_more(self):
+        self.assertEqual({"pdf", "abc", "def"}, gs.createExtensionSet(False, True, {"abc", "def"}))
+
+    def test_createExtensionSet_htmlAndPdf_and_more(self):
+        self.assertEqual({"html", "htm", "pdf", "abc"}, gs.createExtensionSet(True, True, {"abc"}))
+
+    def test_createExtensionSet_only_additional(self):
+        self.assertEqual({"abc", "def"}, gs.createExtensionSet(False, False, {"abc", "def"}))
+
+    def test_createExtensionSet_none(self):
+        self.assertEqual(set(), gs.createExtensionSet(False, False, set()))
 
     def test_getFileExtension(self) :
         cases = [ ".html", ".htm",
