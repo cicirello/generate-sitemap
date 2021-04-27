@@ -2,7 +2,7 @@
 #
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2021 Vincent A Cicirello
+# Copyright (c) 2020-2021 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -115,6 +115,26 @@ def isHTMLFile(f) :
     f - file name including path relative from the root of the website.
     """
     return getFileExtension(f) in HTML_EXTENSIONS
+
+def createExtensionSet(includeHTML, includePDF, additionalExt) :
+    """Creates a set of file extensions for the file types to include
+    in the sitemap.
+
+    Keyword arguments:
+    includeHTML - boolean, which if true indicates that all html related extensions
+        should be included.
+    includePDF - boolean, which if true results in inclusion of the extension pdf
+    additionalExt - a set of additional file extensions to include
+    """
+    if includeHTML :
+        fileExtensionsToInclude = additionalExt | HTML_EXTENSIONS
+    else :
+        fileExtensionsToInclude = additionalExt
+        
+    if includePDF :
+        fileExtensionsToInclude.add("pdf")
+    
+    return fileExtensionsToInclude
     
 def robotsBlocked(f, blockedPaths=[]) :
     """Checks if robots are blocked from acessing the
@@ -247,6 +267,7 @@ def writeXmlSitemap(files, baseUrl) :
             sitemap.write("\n")
         sitemap.write('</urlset>\n')
 
+
 if __name__ == "__main__" :
     websiteRoot = sys.argv[1]
     baseUrl = sys.argv[2]
@@ -255,17 +276,10 @@ if __name__ == "__main__" :
     sitemapFormat = sys.argv[5]
     additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split())
 
-    if includeHTML :
-        fileExtensionsToInclude = additionalExt | HTML_EXTENSIONS
-    else :
-        fileExtensionsToInclude = additionalExt
-    if includePDF :
-        fileExtensionsToInclude.add("pdf")
-
     os.chdir(websiteRoot)
     blockedPaths = parseRobotsTxt()
     
-    allFiles = gatherfiles(fileExtensionsToInclude)
+    allFiles = gatherfiles(createExtensionSet(includeHTML, includePDF, additionalExt))
     files = [ f for f in allFiles if not robotsBlocked(f, blockedPaths) ]
     urlsort(files)
 
