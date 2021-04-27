@@ -21,7 +21,11 @@ Pages, and has the following features:
   any URLs from the sitemap that match `Disallow:` rules for `User-agent: *`.
 * Sorts the sitemap entries in a consistent order, such that the URLs are 
   first sorted by depth in the directory structure (i.e., pages at the website 
-  root appear first, etc), and then pages at the same depth are sorted alphabetically.  
+  root appear first, etc), and then pages at the same depth are sorted alphabetically. 
+* It assumes that for files with the name `index.html` that the preferred URL for the page
+  ends with the enclosing directory, leaving out the `index.html`. For example,
+  instead of `https://WEBSITE/PATH/index.html`, the sitemap will contain
+  `https://WEBSITE/PATH/` in such a case.  
 
 The generate-sitemap GitHub action is designed to be used 
 in combination with other GitHub Actions. For example, it 
