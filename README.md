@@ -148,6 +148,28 @@ or due to exclusion from directives in a `robots.txt` file.
 
 ## Examples
 
+### Basic Action Syntax
+
+You can run the action with a step in yuor workflow like this:
+
+```yml
+    - name: Tidy up the javadocs
+      uses: cicirello/generate-sitemap@v1
+      with:
+        base-url-path: https://THE.URL.TO.YOUR.PAGE/
+```
+
+In the above example, the major release version was used, which ensures that you'll
+be using the latest patch level release, including any bug fixes, etc. If you prefer,
+you can also use a specific version such as with:
+
+```yml
+    - name: Tidy up the javadocs
+      uses: cicirello/generate-sitemap@v1.7.1
+      with:
+        base-url-path: https://THE.URL.TO.YOUR.PAGE/
+```
+
 ### Example 1: Minimal Example
 
 In this example workflow, we use all of the default inputs except for
@@ -175,7 +197,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.7.0
+      uses: cicirello/generate-sitemap@v1
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 
@@ -213,7 +235,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.7.0
+      uses: cicirello/generate-sitemap@v1
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
         path-to-root: docs
@@ -255,7 +277,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.7.0
+      uses: cicirello/generate-sitemap@v1
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
         additional-extensions: doc docx ppt pptx xls xlsx
@@ -296,7 +318,7 @@ jobs:
 
     - name: Generate the sitemap
       id: sitemap
-      uses: cicirello/generate-sitemap@v1.7.0
+      uses: cicirello/generate-sitemap@v1
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 
