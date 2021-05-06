@@ -113,7 +113,7 @@ is an example:
 
 ```yml
     - name: Generate the sitemap
-      uses: cicirello/generate-sitemap@v1.7.0
+      uses: cicirello/generate-sitemap@v1
       with:
         additional-extensions: doc docx ppt pptx
 ```
