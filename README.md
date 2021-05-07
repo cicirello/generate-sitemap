@@ -153,7 +153,7 @@ or due to exclusion from directives in a `robots.txt` file.
 You can run the action with a step in yuor workflow like this:
 
 ```yml
-    - name: Tidy up the javadocs
+    - name: Generate the sitemap
       uses: cicirello/generate-sitemap@v1
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
@@ -164,7 +164,7 @@ be using the latest patch level release, including any bug fixes, etc. If you pr
 you can also use a specific version such as with:
 
 ```yml
-    - name: Tidy up the javadocs
+    - name: Generate the sitemap
       uses: cicirello/generate-sitemap@v1.7.1
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
