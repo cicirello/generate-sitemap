@@ -334,6 +334,40 @@ jobs:
           [create-pull-request](https://github.com/peter-evans/create-pull-request) GitHub action.
 ```
 
+## Real Examples From Projects Using the Action
+
+### Personal Website
+
+This first real example is from the [personal website](https://www.cicirello.org/) 
+of the developer. One of the workflows, 
+[sitemap-generation.yml](https://github.com/cicirello/cicirello.github.io/blob/staging/.github/workflows/sitemap-generation.yml), 
+is strictly for generating the sitemap. It runs on pushes of either `*.html` or `*.pdf` 
+files to the staging branch of this repository. After generating the sitemap, it uses 
+[peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request)
+to generate a pull request. You can also replace that step with a commit and push instead.
+You can find the resulting sitemap here: [sitemap.xml](https://www.cicirello.org/sitemap.xml).
+
+### Documentation Website for a Java Library
+
+This next example is for the documentation website of 
+the [Chips-n-Salsa](https://chips-n-salsa.cicirello.org/) library. The
+[docs.yml](https://github.com/cicirello/Chips-n-Salsa/blob/master/.github/workflows/docs.yml)
+workflow runs on push and pull-requests of either `*.java` files. It uses Maven
+to run javadoc (e.g., with `mvn javadoc:javadoc`). It then copies the generated javadoc
+documentation to the `docs` directory, from which the API website is served. This is followed
+by another GitHub Action, 
+[cicirello/javadoc-cleanup](https://github.com/cicirello/javadoc-cleanup),
+which makes a few edits to the javadoc generated website to improve mobile browsing. 
+
+Next, it commits any changes (without pushing yet) produced by javadoc and/or 
+javadoc-cleanup. After performing those commits, it now runs the generate-sitemap
+action to generate the sitemap. It does this after committing the site changes so that
+the lastmod dates will be accurate. Finally, it uses 
+[peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request)
+to generate a pull request. You can also replace that step with a commit and push instead.
+
+You can find the resulting sitemap here: [sitemap.xml](https://chips-n-salsa.cicirello.org/sitemap.xml).
+ 
 ## License
 
 The scripts and documentation for this GitHub action is released under
