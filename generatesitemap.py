@@ -31,6 +31,7 @@ import re
 import os
 import os.path
 import subprocess
+from datetime import datetime
 
 def gatherfiles(extensionsToInclude) :
     """Walks the directory tree discovering
@@ -199,9 +200,12 @@ def lastmod(f) :
     Keyword arguments:
     f - filename
     """
-    return subprocess.run(['git', 'log', '-1', '--format=%cI', f],
+    mod = subprocess.run(['git', 'log', '-1', '--format=%cI', f],
                     stdout=subprocess.PIPE,
                     universal_newlines=True).stdout.strip()
+    if len(mod) == 0 :
+        mod = datetime.now().astimezone().replace(microsecond=0).isoformat()
+    return mod
 
 def urlstring(f, baseUrl) :
     """Forms a string with the full url from a filename and base url.
