@@ -90,6 +90,8 @@ class IntegrationTest(unittest.TestCase) :
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/x.pdf", 
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/z.pdf",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/include.docx",
-                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/include.pptx"}
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/include.pptx",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/uncommitted.html"
+                     }
         self.assertEqual(expected, urlset)
 
