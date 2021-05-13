@@ -28,6 +28,9 @@ jobs:
     - name: Verify that the Docker image for the action builds
       run: docker build . --file Dockerfile
 
+    - name: Create new uncommitted html file for testing
+      run: touch tests/uncommitted.html
+
     - name: Integration test 1
       id: integration
       uses: ./
