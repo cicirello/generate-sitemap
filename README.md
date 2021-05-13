@@ -10,7 +10,9 @@ The generate-sitemap GitHub action generates a sitemap for a website hosted on G
 Pages, and has the following features:
 * Support for both xml and txt sitemaps (you choose using one of the action's inputs). 
 * When generating an xml sitemap, it uses the last commit date of 
-  each file to generate the `<lastmod>` tag in the sitemap entry. 
+  each file to generate the `<lastmod>` tag in the sitemap entry. If the file
+  was created during that workflow run, but not yet committed, then it instead uses
+  the current date (however, we recommend if possible committing newly created files first).
 * Supports URLs for html and pdf files in the sitemap, and has inputs 
   to control the included file types (defaults include both html and pdf files in the sitemap).
 * Now also supports including URLs for a user specified list of 
