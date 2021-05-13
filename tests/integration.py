@@ -27,7 +27,7 @@
 import unittest
 
 def validateDate(s) :
-    if len(s) < 26 :
+    if len(s) < 25 :
         return False
     if not s[0:4].isdigit() or s[4]!="-" or not s[5:7].isdigit() :
         return False
