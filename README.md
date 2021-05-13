@@ -167,7 +167,7 @@ you can also use a specific version such as with:
 
 ```yml
     - name: Generate the sitemap
-      uses: cicirello/generate-sitemap@v1.7.1
+      uses: cicirello/generate-sitemap@v1.7.2
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 ```
