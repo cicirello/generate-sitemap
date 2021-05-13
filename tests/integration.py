@@ -26,6 +26,21 @@
 
 import unittest
 
+def validateDate(s) :
+    if len(s) < 25 :
+        return False
+    if not s[0:4].isdigit() or s[4]!="-" or not s[5:7].isdigit() :
+        return False
+    if s[7]!="-" or not s[8:10].isdigit() or s[10]!="T" :
+        return False
+    if not s[11:13].isdigit() or s[13]!=":" or not s[14:16].isdigit() :
+        return False
+    if s[16]!=":" or not s[17:19].isdigit() or (s[19]!="-" and s[19]!="+"):
+        return False
+    if not s[20:22].isdigit() or s[22]!=":" or not s[23:25].isdigit() :
+        return False
+    return  True
+        
 class IntegrationTest(unittest.TestCase) :
 
     def testIntegration(self) :
@@ -35,16 +50,29 @@ class IntegrationTest(unittest.TestCase) :
                 i = line.find("<loc>")
                 if i >= 0 :
                     i += 5
-                    j = line.find("</loc>", 5)
+                    j = line.find("</loc>", i)
                     if j >= 0 :
                         urlset.add(line[i:j].strip())
+                    else :
+                        self.fail("No closing </loc>")
+                i = line.find("<lastmod>")
+                if i >= 0 :
+                    i += 9
+                    j = line.find("</lastmod>", i)
+                    if j >= 0 :
+                        self.assertTrue(validateDate(line[i:j].strip()))
+                    else :
+                        self.fail("No closing </lastmod>")
+                    
         expected = { "https://TESTING.FAKE.WEB.ADDRESS.TESTING/unblocked1.html",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/unblocked2.html",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/unblocked3.html",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/unblocked4.html",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/a.html",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/x.pdf", 
-                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/z.pdf" }
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/z.pdf",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/uncommitted.html"
+                     }
         self.assertEqual(expected, urlset)
 
     def testIntegrationWithAdditionalTypes(self) :
@@ -62,6 +90,8 @@ class IntegrationTest(unittest.TestCase) :
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/x.pdf", 
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/z.pdf",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/include.docx",
-                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/include.pptx"}
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/include.pptx",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/uncommitted.html"
+                     }
         self.assertEqual(expected, urlset)
 

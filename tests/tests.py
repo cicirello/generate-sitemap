@@ -28,6 +28,21 @@ import unittest
 import generatesitemap as gs
 import os
 
+def validateDate(s) :
+    if len(s) < 25 :
+        return False
+    if not s[0:4].isdigit() or s[4]!="-" or not s[5:7].isdigit() :
+        return False
+    if s[7]!="-" or not s[8:10].isdigit() or s[10]!="T" :
+        return False
+    if not s[11:13].isdigit() or s[13]!=":" or not s[14:16].isdigit() :
+        return False
+    if s[16]!=":" or not s[17:19].isdigit() or (s[19]!="-" and s[19]!="+"):
+        return False
+    if not s[20:22].isdigit() or s[22]!=":" or not s[23:25].isdigit() :
+        return False
+    return  True
+
 class TestGenerateSitemap(unittest.TestCase) :
 
     def test_createExtensionSet_htmlOnly(self):
@@ -285,21 +300,11 @@ class TestGenerateSitemap(unittest.TestCase) :
         self.assertEqual(asSet, expected)
 
     def test_lastmod(self) :
-        def validateDate(s) :
-            if not s[0:4].isdigit() or s[4]!="-" or not s[5:7].isdigit() :
-                return False
-            if s[7]!="-" or not s[8:10].isdigit() or s[10]!="T" :
-                return False
-            if not s[11:13].isdigit() or s[13]!=":" or not s[14:16].isdigit() :
-                return False
-            if s[16]!=":" or not s[17:19].isdigit() or s[19]!="-" :
-                return False
-            if not s[20:22].isdigit() or s[22]!=":" or not s[23:25].isdigit() :
-                return False
-            return  True
         os.chdir("tests")
-        self.assertTrue(validateDate(gs.lastmod("./unblocked1.html")))
-        self.assertTrue(validateDate(gs.lastmod("./subdir/a.html")))
+        dateStr = gs.lastmod("./unblocked1.html")
+        self.assertTrue(validateDate(dateStr), msg=dateStr)
+        dateStr = gs.lastmod("./subdir/a.html")
+        self.assertTrue(validateDate(dateStr), msg=dateStr)
         os.chdir("..")
 
     def test_urlstring(self) :

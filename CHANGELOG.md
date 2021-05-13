@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2021-05-06
+## [Unreleased] - 2021-05-13
 
 ### Added
 
@@ -17,6 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### CI/CD
+
+
+## [1.7.2] - 2021-05-13
+
+### Changed
+* Switched tag used to pull base Docker image from latest to the
+  specific release that is the current latest, to enable testing
+  against base image updates prior to releases. This is a purely
+  non-functional change.
+
+### Fixed
+* Bug involving missing lastmod dates for website files created by
+  the workflow, but not yet committed. These are now set using the 
+  current date and time.
 
 
 ## [1.7.1] - 2021-05-06
