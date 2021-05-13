@@ -301,8 +301,10 @@ class TestGenerateSitemap(unittest.TestCase) :
 
     def test_lastmod(self) :
         os.chdir("tests")
-        self.assertTrue(validateDate(gs.lastmod("./unblocked1.html")))
-        self.assertTrue(validateDate(gs.lastmod("./subdir/a.html")))
+        dateStr = gs.lastmod("./unblocked1.html")
+        self.assertTrue(validateDate(dateStr), msg=dateStr)
+        dateStr = gs.lastmod("./subdir/a.html")
+        self.assertTrue(validateDate(dateStr, msg=dateStr))
         os.chdir("..")
 
     def test_urlstring(self) :
