@@ -1,7 +1,7 @@
 # generate-sitemap
 
 [<img alt="cicirello/generate-sitemap - Generate XML sitemaps for static websites in GitHub Actions" 
-     src="images/generate-sitemap.png" width="640" height="320">](#generate-sitemap)
+     src="images/generate-sitemap.png" width="640">](#generate-sitemap)
 
 ## About
 
