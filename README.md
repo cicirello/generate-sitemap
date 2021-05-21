@@ -1,5 +1,10 @@
 # generate-sitemap
 
+[<img alt="cicirello/generate-sitemap - Generate XML sitemaps for static websites in GitHub Actions" 
+     src="images/generate-sitemap.png" width="640" height="320">](#generate-sitemap)
+
+## About
+
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/cicirello/generate-sitemap?label=Marketplace&logo=GitHub)](https://github.com/marketplace/actions/generate-sitemap)
 [![build](https://github.com/cicirello/generate-sitemap/actions/workflows/build.yml/badge.svg)](https://github.com/cicirello/generate-sitemap/actions/workflows/build.yml)
 [![CodeQL](https://github.com/cicirello/generate-sitemap/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/cicirello/generate-sitemap/actions/workflows/codeql-analysis.yml)
