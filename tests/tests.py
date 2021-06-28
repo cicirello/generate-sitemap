@@ -196,8 +196,28 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "/aindex.html",
                     "/dir/aindex.html"
                   ]
+        expectedDropHtml = [ "/dir/dir/z.pdf", 
+                    "/dir/yoohoo",
+                    "/x.pdf",
+                    "/2",
+                    "/dir/dir/b",
+                    "/",
+                    "/dir/dir/a",
+                    "/dir/y.pdf",
+                    "/dir/hello",
+                    "/1",
+                    "/dir/dir/",
+                    "/dir/",
+                    "/dir/dir/d",
+                    "/dir/goodbye",
+                    "/dir/dir/c",
+                    "/aindex",
+                    "/dir/aindex"
+                  ]
         for i, f in enumerate(files) :
             self.assertEqual(gs.sortname(f), expected[i])
+        for i, f in enumerate(files) :
+            self.assertEqual(gs.sortname(f, True), expectedDropHtml[i])
 
     def test_urlsort(self) :
         files = [ "/dir/dir/z.pdf", 
@@ -231,6 +251,40 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "/dir/dir/d.html",
                      "/dir/dir/z.pdf" ]
         gs.urlsort(files)
+        self.assertEqual(files, expected)
+
+    def test_urlsort2(self) :
+        files = [ "/dir/dir/z.pdf", 
+                    "/dir/yoohoo.html",
+                    "/x.pdf",
+                    "/2.html",
+                    "/dir/dir/b.html",
+                    "/index.html",
+                    "/dir/dir/a.html",
+                    "/dir/y.pdf",
+                    "/dir/hello.html",
+                    "/1.html",
+                    "/dir/dir/index.html",
+                    "/dir/index.html",
+                    "/dir/dir/d.html",
+                    "/dir/goodbye.html",
+                    "/dir/dir/c.html" ]
+        expected = [ "/index.html",
+                     "/1.html",
+                     "/2.html",
+                     "/x.pdf",
+                     "/dir/index.html",
+                     "/dir/goodbye.html",
+                     "/dir/hello.html",
+                     "/dir/y.pdf",
+                     "/dir/yoohoo.html",
+                     "/dir/dir/index.html",
+                     "/dir/dir/a.html",
+                     "/dir/dir/b.html",
+                     "/dir/dir/c.html",
+                     "/dir/dir/d.html",
+                     "/dir/dir/z.pdf" ]
+        gs.urlsort(files, True)
         self.assertEqual(files, expected)
         
     def test_robotsBlocked(self) :
@@ -348,12 +402,56 @@ class TestGenerateSitemap(unittest.TestCase) :
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base1))
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base2))
 
+    def test_urlstring_drop_html(self) :
+        filenames = [ "./a.html",
+                      "./index.html",
+                      "./subdir/a.html",
+                      "./subdir/index.html",
+                      "./subdir/subdir/a.html",
+                      "./subdir/subdir/index.html",
+                      "./aindex.html",
+                      "./subdir/aindex.html",
+                      "/a.html",
+                      "/index.html",
+                      "/subdir/a.html",
+                      "/subdir/index.html",
+                      "/subdir/subdir/a.html",
+                      "/subdir/subdir/index.html",
+                      "/aindex.html",
+                      "/subdir/aindex.html",
+                      "a.html",
+                      "index.html",
+                      "subdir/a.html",
+                      "subdir/index.html",
+                      "subdir/subdir/a.html",
+                      "subdir/subdir/index.html",
+                      "aindex.html",
+                      "subdir/aindex.html"
+                      ]
+        base1 = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
+        base2 = "https://TESTING.FAKE.WEB.ADDRESS.TESTING"
+        expected = [ "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/a",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/a",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/aindex",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/aindex"
+                     ]
+        for i, f in enumerate(filenames) :
+            self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base1, True))
+            self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base2, True))
+
     def test_xmlSitemapEntry(self) :
         base = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
         f = "./a.html"
         date = "2020-09-11T13:35:00-04:00"
         actual = gs.xmlSitemapEntry(f, base, date)
         expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>"
+        self.assertEqual(actual, expected)
+        actual = gs.xmlSitemapEntry(f, base, date, True)
+        expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>"
         self.assertEqual(actual, expected)
 
     def test_robotsTxtParser(self) :

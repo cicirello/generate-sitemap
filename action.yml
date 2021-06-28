@@ -53,6 +53,10 @@ inputs:
     description: 'Space separated list of additional file extensions to include in sitemap.'
     required: false
     default: ''
+  drop-html-extension:
+    description: 'Enables dropping .html from urls in sitemap.'
+    required: false
+    default: false
 outputs:
   sitemap-path: 
     description: 'The path to the generated sitemap file.'
@@ -70,3 +74,4 @@ runs:
     - ${{ inputs.include-pdf }}
     - ${{ inputs.sitemap-format }}
     - ${{ inputs.additional-extensions }}
+    - ${{ inputs.drop-html-extension }}
