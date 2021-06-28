@@ -117,6 +117,8 @@ class IntegrationTest(unittest.TestCase) :
                         self.fail("No closing </lastmod>")
 
         expected = { "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/y.pdf",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/b",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/z.pdf"
                      }
         self.assertEqual(expected, urlset)
@@ -129,6 +131,8 @@ class IntegrationTest(unittest.TestCase) :
                 if len(line) > 0 :
                     urlset.add(line)
         expected = { "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/y.pdf",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/b",
                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/z.pdf"
                      }
         self.assertEqual(expected, urlset)
