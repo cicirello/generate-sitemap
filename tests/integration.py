@@ -95,3 +95,45 @@ class IntegrationTest(unittest.TestCase) :
                      }
         self.assertEqual(expected, urlset)
 
+    def testIntegrationDropHtmlExtension(self) :
+        urlset = set()
+        with open("tests/subdir/sitemap.xml","r") as f :
+            for line in f :
+                i = line.find("<loc>")
+                if i >= 0 :
+                    i += 5
+                    j = line.find("</loc>", i)
+                    if j >= 0 :
+                        urlset.add(line[i:j].strip())
+                    else :
+                        self.fail("No closing </loc>")
+                i = line.find("<lastmod>")
+                if i >= 0 :
+                    i += 9
+                    j = line.find("</lastmod>", i)
+                    if j >= 0 :
+                        self.assertTrue(validateDate(line[i:j].strip()))
+                    else :
+                        self.fail("No closing </lastmod>")
+
+        expected = { "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/y.pdf",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/b",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/z.pdf"
+                     }
+        self.assertEqual(expected, urlset)
+
+    def testIntegrationWithAdditionalTypesDropHtmlExtension(self) :
+        urlset = set()
+        with open("tests/subdir/sitemap.txt","r") as f :
+            for line in f :
+                line = line.strip()
+                if len(line) > 0 :
+                    urlset.add(line)
+        expected = { "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/y.pdf",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/b",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/z.pdf"
+                     }
+        self.assertEqual(expected, urlset)
+

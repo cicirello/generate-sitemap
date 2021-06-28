@@ -4,13 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2021-05-20
+## [Unreleased] - 2021-06-28
 
 ### Added
 
 ### Changed
-* Use major release tag when pulling base docker image (e.g., automatically get non-breaking
-  changes to base image, such as bug fixes, etc without need to update Dockerfile).
 
 ### Deprecated
 
@@ -19,6 +17,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### CI/CD
+
+
+## [1.8.0] - 2021-06-28
+
+### Added
+* Added option to exclude `.html` from URLs listed in the sitemap 
+  for html files. GitHub Pages automatically serves a corresponding
+  html file if a user browses to a page with a URL with no file extension.
+  This new option to the `generate-sitemap` action enables your sitemap to
+  match this behavior if you prefer the extension-less look of URLs. There
+  is a new action input, `drop-html-extension`, to control this behavior.
+
+### Changed
+* Use major release tag when pulling base docker image (e.g., 
+  automatically get non-breaking changes to base image, such as 
+  bug fixes, etc without need to update Dockerfile).
 
 
 ## [1.7.2] - 2021-05-13

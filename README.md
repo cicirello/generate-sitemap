@@ -32,7 +32,8 @@ Pages, and has the following features:
 * It assumes that for files with the name `index.html` that the preferred URL for the page
   ends with the enclosing directory, leaving out the `index.html`. For example,
   instead of `https://WEBSITE/PATH/index.html`, the sitemap will contain
-  `https://WEBSITE/PATH/` in such a case.  
+  `https://WEBSITE/PATH/` in such a case. 
+* Provides option to exclude `.html` extension from URLs listed in sitemap.   
 
 The generate-sitemap GitHub action is designed to be used 
 in combination with other GitHub Actions. For example, it 
@@ -133,6 +134,22 @@ that are generated using the last commit dates of each file. Setting
 this input to anything other than `xml` will generate a plain text 
 `sitemap.txt` simply listing the urls.
 
+### `drop-html-extension`
+
+The `drop-html-extension` input provides the option to exclude `.html` extension 
+from URLs listed in the sitemap. The default is `drop-html-extension: false`.  If
+you want to use this option, just pass `drop-html-extension: true` to the action in
+your workflow. GitHub Pages automatically serves the 
+corresponding html file if URL has no file extension. For example, if a user
+of your site browses to the URL, `https://WEBSITE/PATH/filename` (with no extension),
+GitHub Pages automatically serves `https://WEBSITE/PATH/filename.html` if it exists.
+The default behavior of the `generate-sitemap` action includes the `.html` extension
+for pages where the filename has the `.html` extension. If you prefer to exclude the
+`.html` extension from the URLs in your sitemap, then 
+pass `drop-html-extension: true` to the action in your workflow. 
+Note that you should also ensure that any canonical links that you list within
+the html files corresponds to your choice here.  
+
 ## Outputs
 
 ### `sitemap-path`
@@ -172,7 +189,7 @@ you can also use a specific version such as with:
 
 ```yml
     - name: Generate the sitemap
-      uses: cicirello/generate-sitemap@v1.7.2
+      uses: cicirello/generate-sitemap@v1.8.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 ```

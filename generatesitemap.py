@@ -50,28 +50,32 @@ def gatherfiles(extensionsToInclude) :
                 allfiles.append(os.path.join(root, f))
     return allfiles
 
-def sortname(f) :
+def sortname(f, dropExtension=False) :
     """Partial url to sort by, which strips out the filename
     if the filename is index.html.
 
     Keyword arguments:
     f - Filename with path
+    dropExtension - true to drop extensions of .html from the filename when sorting
     """
     if len(f) >= 11 and f[-11:] == "/index.html" :
         return f[:-10]
     elif f == "index.html" :
         return ""
+    elif dropExtension and len(f) >= 5 and f[-5:] == ".html" :
+        return f[:-5]
     else :
         return f
 
-def urlsort(files) :
+def urlsort(files, dropExtension=False) :
     """Sorts the urls with a primary sort by depth in the website,
     and a secondary sort alphabetically.
 
     Keyword arguments:
     files - list of files to include in sitemap
+    dropExtension - true to drop extensions of .html from the filename when sorting
     """
-    files.sort(key = lambda f : sortname(f))
+    files.sort(key = lambda f : sortname(f, dropExtension))
     files.sort(key = lambda f : f.count("/"))
 
 def hasMetaRobotsNoindex(f) :
@@ -207,12 +211,13 @@ def lastmod(f) :
         mod = datetime.now().astimezone().replace(microsecond=0).isoformat()
     return mod
 
-def urlstring(f, baseUrl) :
+def urlstring(f, baseUrl, dropExtension=False) :
     """Forms a string with the full url from a filename and base url.
 
     Keyword arguments:
     f - filename
     baseUrl - address of the root of the website
+    dropExtension - true to drop extensions of .html from the filename in urls
     """
     if f[0]=="." :
         u = f[1:]
@@ -222,6 +227,8 @@ def urlstring(f, baseUrl) :
         u = u[:-10]
     elif u == "index.html" :
         u = ""
+    elif dropExtension and len(u) >= 5 and u[-5:] == ".html" :
+        u = u[:-5]
     if len(u) >= 1 and u[0]=="/" and len(baseUrl) >= 1 and baseUrl[-1]=="/" :
         u = u[1:]
     elif (len(u)==0 or u[0]!="/") and (len(baseUrl)==0 or baseUrl[-1]!="/") :
@@ -233,7 +240,7 @@ xmlSitemapEntryTemplate = """<url>
 <lastmod>{1}</lastmod>
 </url>"""	
 	
-def xmlSitemapEntry(f, baseUrl, dateString) :
+def xmlSitemapEntry(f, baseUrl, dateString, dropExtension=False) :
     """Forms a string with an entry formatted for an xml sitemap
     including lastmod date.
 
@@ -241,33 +248,36 @@ def xmlSitemapEntry(f, baseUrl, dateString) :
     f - filename
     baseUrl - address of the root of the website
     dateString - lastmod date correctly formatted
+    dropExtension - true to drop extensions of .html from the filename in urls
     """
-    return xmlSitemapEntryTemplate.format(urlstring(f, baseUrl), dateString)
+    return xmlSitemapEntryTemplate.format(urlstring(f, baseUrl, dropExtension), dateString)
 
-def writeTextSitemap(files, baseUrl) :
+def writeTextSitemap(files, baseUrl, dropExtension=False) :
     """Writes a plain text sitemap to the file sitemap.txt.
 
     Keyword Arguments:
     files - a list of filenames
     baseUrl - the base url to the root of the website
+    dropExtension - true to drop extensions of .html from the filename in urls
     """
     with open("sitemap.txt", "w") as sitemap :
         for f in files :
-            sitemap.write(urlstring(f, baseUrl))
+            sitemap.write(urlstring(f, baseUrl, dropExtension))
             sitemap.write("\n")
             
-def writeXmlSitemap(files, baseUrl) :
+def writeXmlSitemap(files, baseUrl, dropExtension=False) :
     """Writes an xml sitemap to the file sitemap.xml.
 
     Keyword Arguments:
     files - a list of filenames
     baseUrl - the base url to the root of the website
+    dropExtension - true to drop extensions of .html from the filename in urls
     """
     with open("sitemap.xml", "w") as sitemap :
         sitemap.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         sitemap.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         for f in files :
-            sitemap.write(xmlSitemapEntry(f, baseUrl, lastmod(f)))
+            sitemap.write(xmlSitemapEntry(f, baseUrl, lastmod(f), dropExtension))
             sitemap.write("\n")
         sitemap.write('</urlset>\n')
 
@@ -279,22 +289,23 @@ if __name__ == "__main__" :
     includePDF = sys.argv[4]=="true"
     sitemapFormat = sys.argv[5]
     additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split())
+    dropExtension = sys.argv[7]=="true"
 
     os.chdir(websiteRoot)
     blockedPaths = parseRobotsTxt()
     
     allFiles = gatherfiles(createExtensionSet(includeHTML, includePDF, additionalExt))
     files = [ f for f in allFiles if not robotsBlocked(f, blockedPaths) ]
-    urlsort(files)
+    urlsort(files, dropExtension)
 
     pathToSitemap = websiteRoot
     if pathToSitemap[-1] != "/" :
         pathToSitemap += "/"
     if sitemapFormat == "xml" :
-        writeXmlSitemap(files, baseUrl)
+        writeXmlSitemap(files, baseUrl, dropExtension)
         pathToSitemap += "sitemap.xml"
     else :
-        writeTextSitemap(files, baseUrl)
+        writeTextSitemap(files, baseUrl, dropExtension)
         pathToSitemap += "sitemap.txt"
 
     print("::set-output name=sitemap-path::" + pathToSitemap)

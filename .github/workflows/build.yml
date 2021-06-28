@@ -59,5 +59,36 @@ jobs:
         echo "url-count = ${{ steps.integration2.outputs.url-count }}"
         echo "excluded-count = ${{ steps.integration2.outputs.excluded-count }}"
 
+    - name: Integration test 3
+      id: integration3
+      uses: ./
+      with:
+        path-to-root: tests/subdir
+        base-url-path: https://TESTING.FAKE.WEB.ADDRESS.TESTING/
+        drop-html-extension: true
+
+    - name: Output stats test 3
+      run: |
+        echo "sitemap-path = ${{ steps.integration3.outputs.sitemap-path }}"
+        echo "url-count = ${{ steps.integration3.outputs.url-count }}"
+        echo "excluded-count = ${{ steps.integration3.outputs.excluded-count }}"
+
+    - name: Integration test 4
+      id: integration4
+      uses: ./
+      with:
+        path-to-root: tests/subdir
+        base-url-path: https://TESTING.FAKE.WEB.ADDRESS.TESTING/
+        sitemap-format: txt 
+        additional-extensions: docx pptx
+        drop-html-extension: true
+
+    - name: Output stats test 4
+      run: |
+        echo "sitemap-path = ${{ steps.integration4.outputs.sitemap-path }}"
+        echo "url-count = ${{ steps.integration4.outputs.url-count }}"
+        echo "excluded-count = ${{ steps.integration4.outputs.excluded-count }}"
+
     - name: Verify integration test results
       run: python3 -u -m unittest tests/integration.py
+
