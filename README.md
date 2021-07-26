@@ -391,7 +391,22 @@ the lastmod dates will be accurate. Finally, it uses
 to generate a pull request. You can also replace that step with a commit and push instead.
 
 You can find the resulting sitemap here: [sitemap.xml](https://chips-n-salsa.cicirello.org/sitemap.xml).
- 
+
+## Support the Project
+
+You can support the project in a number of ways:
+* __Starring__: If you find the `generate-sitemap` action 
+  useful, consider starring the repository.
+* __Sharing with Others__: Consider sharing it with others who
+  you feel might find it useful.
+* __Reporting Issues__: If you find a bug or have a suggestion for
+  a new feature, please report it via 
+  the [Issue tracker](https://github.com/cicirello/generate-sitemap/issues).
+* __Contributing Code__: If there is an open issue that you think
+  you can help with, submit a pull request.
+* __Sponsoring__: You can also consider 
+  [becoming a sponsor](https://github.com/sponsors/cicirello).
+  
 ## License
 
 The scripts and documentation for this GitHub action is released under
