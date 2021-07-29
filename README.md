@@ -65,6 +65,19 @@ does not support that use-case. If you are looking to generate
 a sitemap for a Jekyll website, there is 
 a [Jekyll plugin](https://github.com/jekyll/jekyll-sitemap) for that. 
 
+## Table of Contents
+
+The remainder of the documentation is organized into the following
+sections:
+* [Requirements](#requirements): Explanation of a pre-requisite step of any workflow
+  using the action.
+* [Inputs](#inputs): Documentation of all of the actions's inputs.
+* [Outputs](#outputs): Documentation of all of the actions's outputs.
+* [Examples](#examples): Several example workflows illustrating various features.
+* [Real Examples From Projects Using the Action](#real-examples-from-projects-using-the-action)
+* [Support the Project](#support-the-project): Information on various ways that you can support
+  the project.
+
 ## Requirements
 
 This action relies on `actions/checkout@v2` with `fetch-depth: 0`.
