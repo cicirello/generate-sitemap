@@ -24,7 +24,7 @@
 # SOFTWARE.
 # 
 name: 'generate-sitemap'
-description: 'Generates a sitemap for a Github Pages site'
+description: 'Generate an XML sitemap for a GitHub Pages site using GitHub Actions'
 branding:
   icon: 'book-open'
   color: 'green'
