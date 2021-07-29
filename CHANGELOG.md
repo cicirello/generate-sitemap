@@ -4,12 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2021-07-05
+## [Unreleased] - 2021-07-29
 
 ### Added
 
 ### Changed
-* Upgraded base image to cicirello/pyaction:4.
 
 ### Deprecated
 
@@ -18,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### CI/CD
+
+
+## [1.8.1] - 2021-07-29
+
+### Changed
+* Upgraded base docker image to cicirello/pyaction:4.
 
 
 ## [1.8.0] - 2021-06-28
