@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+* Disabled pycache to protect against potential future bug. Currently
+  no imports so no pycache created, but if future versions import
+  local py modules, a pycache would be created during run in repo. Disabled
+  creation of pycache now to avoid.
 
 ### CI/CD
 
