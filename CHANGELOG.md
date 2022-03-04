@@ -4,11 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2021-07-29
+## [Unreleased] - 2022-03-04
 
 ### Added
 
 ### Changed
+* Bumped Python to 3.10.
+* Bumped base Docker image to pyaction 4.2.0.
+* Now pulls base Docker image from the GitHub Container Registry rather
+  than Docker Hub under the assumption that pulling from GitHub from
+  GitHub Actions is likely faster than from Docker Hub.
 
 ### Deprecated
 
