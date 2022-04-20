@@ -190,7 +190,7 @@ or due to exclusion from directives in a `robots.txt` file.
 
 ### Basic Action Syntax
 
-You can run the action with a step in yuor workflow like this:
+You can run the action with a step in your workflow like this:
 
 ```yml
     - name: Generate the sitemap
