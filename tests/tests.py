@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020-2021 Vincent A Cicirello
+# Copyright (c) 2020-2022 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -294,11 +294,14 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "tests/unblocked1.html",
                       "tests/unblocked2.html",
                       "tests/unblocked3.html",
-                      "tests/unblocked4.html" ]
+                      "tests/unblocked4.html",
+                      "tests/badCharsDoIndex.html"]
         blocked = [ "tests/blocked1.html",
                     "tests/blocked2.html",
                     "tests/blocked3.html",
-                    "tests/blocked4.html" ]
+                    "tests/blocked4.html",
+                    "tests/badCharsNoindex1.html",
+                    "tests/badCharsNoindex2.html"]
         for f in unblocked :
             self.assertFalse(gs.robotsBlocked(f))
         for f in blocked :
@@ -308,11 +311,14 @@ class TestGenerateSitemap(unittest.TestCase) :
         unblocked = [ "tests/unblocked1.html",
                       "tests/unblocked2.html",
                       "tests/unblocked3.html",
-                      "tests/unblocked4.html" ]
+                      "tests/unblocked4.html",
+                      "tests/badCharsDoIndex.html" ]
         blocked = [ "tests/blocked1.html",
                     "tests/blocked2.html",
                     "tests/blocked3.html",
-                    "tests/blocked4.html" ]
+                    "tests/blocked4.html",
+                    "tests/badCharsNoindex1.html",
+                    "tests/badCharsNoindex2.html" ]
         for f in unblocked :
             self.assertFalse(gs.hasMetaRobotsNoindex(f))
         for f in blocked :
@@ -327,7 +333,12 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./blocked3.html", "./blocked4.html",
                      "./unblocked1.html", "./unblocked2.html",
                      "./unblocked3.html", "./unblocked4.html",
-                     "./subdir/a.html", "./subdir/subdir/b.html"}
+                     "./subdir/a.html", "./subdir/subdir/b.html",
+                     "./badCharsNoindex1.html",
+                     "./badCharsNoindex2.html",
+                     "./badCharsDoIndex.html"}
+        if os.name == "nt" :
+            expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
 
     def test_gatherfiles_html_pdf(self) :
@@ -341,7 +352,12 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./unblocked3.html", "./unblocked4.html",
                      "./subdir/a.html", "./subdir/subdir/b.html",
                      "./x.pdf", "./subdir/y.pdf",
-                     "./subdir/subdir/z.pdf"}
+                     "./subdir/subdir/z.pdf",
+                     "./badCharsNoindex1.html",
+                     "./badCharsNoindex2.html",
+                     "./badCharsDoIndex.html"}
+        if os.name == "nt" :
+            expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
 
     def test_gatherfiles_pdf(self) :
@@ -351,15 +367,21 @@ class TestGenerateSitemap(unittest.TestCase) :
         asSet = set(allfiles)
         expected = { "./x.pdf", "./subdir/y.pdf",
                      "./subdir/subdir/z.pdf"}
+        if os.name == "nt" :
+            expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
 
     def test_lastmod(self) :
-        os.chdir("tests")
-        dateStr = gs.lastmod("./unblocked1.html")
-        self.assertTrue(validateDate(dateStr), msg=dateStr)
-        dateStr = gs.lastmod("./subdir/a.html")
-        self.assertTrue(validateDate(dateStr), msg=dateStr)
-        os.chdir("..")
+        # assumes that if on windows must be running tests locally
+        # rather than in GitHub Actions, and may or may not be in a
+        # git repo, so simply skips this test.
+        if os.name != "nt" :
+            os.chdir("tests")
+            dateStr = gs.lastmod("./unblocked1.html")
+            self.assertTrue(validateDate(dateStr), msg=dateStr)
+            dateStr = gs.lastmod("./subdir/a.html")
+            self.assertTrue(validateDate(dateStr), msg=dateStr)
+            os.chdir("..")
 
     def test_urlstring(self) :
         filenames = [ "./a.html",
@@ -471,7 +493,7 @@ class TestGenerateSitemap(unittest.TestCase) :
         os.chdir("tests")
         for i, e in enumerate(expected) :
             filename = "robots" + str(i) + ".txt"
-            self.assertEqual(set(gs.parseRobotsTxt(filename)), set(e))
+            self.assertEqual(set(gs.parseRobotsTxt(filename)), set(e), msg=filename)
         os.chdir("..")
 
     def test_robotsBlockedWithRobotsParser(self) :
