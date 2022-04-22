@@ -185,10 +185,15 @@ def parseRobotsTxt(robotsFile="robots.txt") :
                         line = line[:commentStart]
                     line = line.strip()
                     lineLow = line.lower()
-                    if foundBlock :
-                        if rulesStart and lineLow.startswith("user-agent:") :
+                    if lineLow.startswith("user-agent:") :
+                        if len(line)>11 and line[11:].strip() == "*" :
+                            foundBlock = True
+                            rulesStart = False
+                        elif rulesStart :
                             foundBlock = False
-                        elif not rulesStart and lineLow.startswith("allow:") :
+                            rulesStart = False
+                    elif foundBlock :
+                        if lineLow.startswith("allow:") :
                             rulesStart = True
                         elif lineLow.startswith("disallow:") :
                             rulesStart = True
@@ -196,9 +201,6 @@ def parseRobotsTxt(robotsFile="robots.txt") :
                                 path = line[9:].strip()
                                 if len(path) > 0 and " " not in path and "\t" not in path:
                                     blockedPaths.append(path)
-                    elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
-                        foundBlock = True
-                        rulesStart = False
     except OSError:
         print("WARNING: OS error while parsing robots.txt")
         print("Assuming nothing disallowed.")
