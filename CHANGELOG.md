@@ -4,24 +4,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2022-03-31
+## [Unreleased] - 2022-04-22
 
 ### Added
 
 ### Changed
-* Bumped base Docker image cicirello/pyaction from 4.2.0 to 4.3.1.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+### CI/CD
+
+### Dependencies
+
+
+## [1.8.3] - 2022-04-22
+
+### Fixed
+* Corrected check for robots noindex directive in case when non-utf8 characters
+  present in an html file.
 * Disabled pycache to protect against potential future bug. Currently
   no imports so no pycache created, but if future versions import
   local py modules, a pycache would be created during run in repo. Disabled
   creation of pycache now to avoid.
 
-### CI/CD
+### Dependencies
+* Bumped base Docker image cicirello/pyaction from 4.2.0 to 4.3.1.
 
 
 ## [1.8.2] - 2022-03-04
