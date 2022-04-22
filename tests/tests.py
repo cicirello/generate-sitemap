@@ -294,11 +294,14 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "tests/unblocked1.html",
                       "tests/unblocked2.html",
                       "tests/unblocked3.html",
-                      "tests/unblocked4.html" ]
+                      "tests/unblocked4.html",
+                      "tests/badCharsDoIndex.html"]
         blocked = [ "tests/blocked1.html",
                     "tests/blocked2.html",
                     "tests/blocked3.html",
-                    "tests/blocked4.html" ]
+                    "tests/blocked4.html",
+                    "tests/badCharsNoindex1.html",
+                    "tests/badCharsNoindex2.html"]
         for f in unblocked :
             self.assertFalse(gs.robotsBlocked(f))
         for f in blocked :
@@ -308,11 +311,14 @@ class TestGenerateSitemap(unittest.TestCase) :
         unblocked = [ "tests/unblocked1.html",
                       "tests/unblocked2.html",
                       "tests/unblocked3.html",
-                      "tests/unblocked4.html" ]
+                      "tests/unblocked4.html",
+                      "tests/badCharsDoIndex.html" ]
         blocked = [ "tests/blocked1.html",
                     "tests/blocked2.html",
                     "tests/blocked3.html",
-                    "tests/blocked4.html" ]
+                    "tests/blocked4.html",
+                    "tests/badCharsNoindex1.html",
+                    "tests/badCharsNoindex2.html" ]
         for f in unblocked :
             self.assertFalse(gs.hasMetaRobotsNoindex(f))
         for f in blocked :
@@ -327,7 +333,10 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./blocked3.html", "./blocked4.html",
                      "./unblocked1.html", "./unblocked2.html",
                      "./unblocked3.html", "./unblocked4.html",
-                     "./subdir/a.html", "./subdir/subdir/b.html"}
+                     "./subdir/a.html", "./subdir/subdir/b.html",
+                     "./badCharsNoindex1.html",
+                     "./badCharsNoindex2.html",
+                     "./badCharsDoIndex.html"}
         if os.name == "nt" :
             expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
@@ -343,7 +352,10 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./unblocked3.html", "./unblocked4.html",
                      "./subdir/a.html", "./subdir/subdir/b.html",
                      "./x.pdf", "./subdir/y.pdf",
-                     "./subdir/subdir/z.pdf"}
+                     "./subdir/subdir/z.pdf",
+                     "./badCharsNoindex1.html",
+                     "./badCharsNoindex2.html",
+                     "./badCharsDoIndex.html"}
         if os.name == "nt" :
             expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
