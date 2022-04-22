@@ -88,15 +88,19 @@ def hasMetaRobotsNoindex(f) :
     Keyword arguments:
     f - Filename including path
     """
-    with open(f,"r") as file :
-        for line in file :
-            # Check line for <meta name="robots" content="noindex">, etc
-            if re.search("<meta\s+name.+robots.+content.+noindex", line) != None :
-                return True
-            # We can stop searching once no longer in head of file.
-            # <meta name="robots"> directives required to be in head
-            if "<body>" in line or "</head>" in line :
-                return False
+    try:
+        with open(f, "r", errors="surrogateescape") as file :
+            for line in file :
+                # Check line for <meta name="robots" content="noindex">, etc
+                if re.search("<meta\s+name.+robots.+content.+noindex", line) != None :
+                    return True
+                # We can stop searching once no longer in head of file.
+                # <meta name="robots"> directives required to be in head
+                if "<body>" in line or "</head>" in line :
+                    return False
+    except OSError:
+        print("WARNING: OS error while checking for noindex directive in:", f)
+        print("Assuming", f, "doesn't have noindex directive.")
     return False
 
 def getFileExtension(f) :
@@ -170,30 +174,34 @@ def parseRobotsTxt(robotsFile="robots.txt") :
     must be robots.txt (the default). The parameter is to enable
     unit testing with different robots.txt files."""
     blockedPaths = []
-    if os.path.isfile(robotsFile) :
-        with open(robotsFile,"r") as robots :
-            foundBlock = False
-            rulesStart = False
-            for line in robots :
-                commentStart = line.find("#")
-                if commentStart > 0 :
-                    line = line[:commentStart]
-                line = line.strip()
-                lineLow = line.lower()
-                if foundBlock :
-                    if rulesStart and lineLow.startswith("user-agent:") :
-                        foundBlock = False
-                    elif not rulesStart and lineLow.startswith("allow:") :
-                        rulesStart = True
-                    elif lineLow.startswith("disallow:") :
-                        rulesStart = True
-                        if len(line) > 9 :
-                            path = line[9:].strip()
-                            if len(path) > 0 and " " not in path and "\t" not in path:
-                                blockedPaths.append(path)
-                elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
-                    foundBlock = True
-                    rulesStart = False
+    try:
+        if os.path.isfile(robotsFile) :
+            with open(robotsFile, "r", errors="surrogateescape") as robots :
+                foundBlock = False
+                rulesStart = False
+                for line in robots :
+                    commentStart = line.find("#")
+                    if commentStart > 0 :
+                        line = line[:commentStart]
+                    line = line.strip()
+                    lineLow = line.lower()
+                    if foundBlock :
+                        if rulesStart and lineLow.startswith("user-agent:") :
+                            foundBlock = False
+                        elif not rulesStart and lineLow.startswith("allow:") :
+                            rulesStart = True
+                        elif lineLow.startswith("disallow:") :
+                            rulesStart = True
+                            if len(line) > 9 :
+                                path = line[9:].strip()
+                                if len(path) > 0 and " " not in path and "\t" not in path:
+                                    blockedPaths.append(path)
+                    elif lineLow.startswith("user-agent:") and len(line)>11 and line[11:].strip() == "*" :
+                        foundBlock = True
+                        rulesStart = False
+    except OSError:
+        print("WARNING: OS error while parsing robots.txt")
+        print("Assuming nothing disallowed.")
     return blockedPaths
 
 def lastmod(f) :
