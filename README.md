@@ -6,12 +6,11 @@ Check out all of our GitHub Actions: https://actions.cicirello.org/
 
 ## About
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/cicirello/generate-sitemap?label=Marketplace&logo=GitHub)](https://github.com/marketplace/actions/generate-sitemap)
-[![Count of Action Users](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.cicirello.org%2Fendpoints%2Fgenerate-sitemap.json)](https://github.com/search?q=cicirello+generate-sitemap+path%3A.github%2Fworkflows+language%3AYAML&type=Code)
-[![build](https://github.com/cicirello/generate-sitemap/actions/workflows/build.yml/badge.svg)](https://github.com/cicirello/generate-sitemap/actions/workflows/build.yml)
-[![CodeQL](https://github.com/cicirello/generate-sitemap/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/cicirello/generate-sitemap/actions/workflows/codeql-analysis.yml)
-[![GitHub](https://img.shields.io/github/license/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap/blob/master/LICENSE)
-![GitHub top language](https://img.shields.io/github/languages/top/cicirello/generate-sitemap)
+| __GitHub Actions__ | [![GitHub release (latest by date)](https://img.shields.io/github/v/release/cicirello/generate-sitemap?label=Marketplace&logo=GitHub)](https://github.com/marketplace/actions/generate-sitemap) [![Count of Action Users](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.cicirello.org%2Fendpoints%2Fgenerate-sitemap.json)](https://github.com/search?q=cicirello+generate-sitemap+path%3A.github%2Fworkflows+language%3AYAML&type=Code) |
+| :--- | :--- |
+| __Build Status__ | [![build](https://github.com/cicirello/generate-sitemap/actions/workflows/build.yml/badge.svg)](https://github.com/cicirello/generate-sitemap/actions/workflows/build.yml) [![CodeQL](https://github.com/cicirello/generate-sitemap/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/cicirello/generate-sitemap/actions/workflows/codeql-analysis.yml) |
+| __Source Info__ | [![GitHub](https://img.shields.io/github/license/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap/blob/master/LICENSE) [![GitHub top language](https://img.shields.io/github/languages/top/cicirello/generate-sitemap)](https://github.com/cicirello/generate-sitemap) |
+| __Support__ | [![GitHub Sponsors](https://img.shields.io/badge/sponsor-30363D?logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/cicirello) [![Liberapay](https://img.shields.io/badge/Liberapay-F6C915?logo=liberapay&logoColor=black)](https://liberapay.com/cicirello) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?logo=ko-fi&logoColor=white)](https://ko-fi.com/cicirello) |
 
 The generate-sitemap GitHub action generates a sitemap for a website hosted on GitHub
 Pages, and has the following features:
