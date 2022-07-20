@@ -113,7 +113,7 @@ def getFileExtension(f) :
     i = f.rfind(".")
     return f[i+1:].lower() if i >= 0 and f.rfind("/") < i else None
 
-HTML_EXTENSIONS = { "html", "htm" }
+HTML_EXTENSIONS = { "html", "htm", "shtml" }
 
 def isHTMLFile(f) :
     """Checks if the file is an HTML file,

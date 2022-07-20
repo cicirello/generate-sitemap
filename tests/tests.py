@@ -46,22 +46,22 @@ def validateDate(s) :
 class TestGenerateSitemap(unittest.TestCase) :
 
     def test_createExtensionSet_htmlOnly(self):
-        self.assertEqual({"html", "htm"}, gs.createExtensionSet(True, False, set()))
+        self.assertEqual({"html", "htm", "shtml"}, gs.createExtensionSet(True, False, set()))
 
     def test_createExtensionSet_pdfOnly(self):
         self.assertEqual({"pdf"}, gs.createExtensionSet(False, True, set()))
 
     def test_createExtensionSet_htmlAndPdf(self):
-        self.assertEqual({"html", "htm", "pdf"}, gs.createExtensionSet(True, True, set()))
+        self.assertEqual({"html", "htm", "shtml", "pdf"}, gs.createExtensionSet(True, True, set()))
 
     def test_createExtensionSet_html_and_more(self):
-        self.assertEqual({"html", "htm", "abc"}, gs.createExtensionSet(True, False, {"abc"}))
+        self.assertEqual({"html", "htm", "shtml", "abc"}, gs.createExtensionSet(True, False, {"abc"}))
 
     def test_createExtensionSet_pdf_and_more(self):
         self.assertEqual({"pdf", "abc", "def"}, gs.createExtensionSet(False, True, {"abc", "def"}))
 
     def test_createExtensionSet_htmlAndPdf_and_more(self):
-        self.assertEqual({"html", "htm", "pdf", "abc"}, gs.createExtensionSet(True, True, {"abc"}))
+        self.assertEqual({"html", "htm", "shtml", "pdf", "abc"}, gs.createExtensionSet(True, True, {"abc"}))
 
     def test_createExtensionSet_only_additional(self):
         self.assertEqual({"abc", "def"}, gs.createExtensionSet(False, False, {"abc", "def"}))
@@ -133,7 +133,16 @@ class TestGenerateSitemap(unittest.TestCase) :
                           "b/a.html",
                           "b/a.htm",
                           "b/index.html",
-                          "b/index.htm"
+                          "b/index.htm",
+                          ".shtml",
+                          "a.shtml",
+                          "index.shtml",
+                          "/.shtml",
+                          "/a.shtml",
+                          "/index.shtml",
+                          "b/.shtml",
+                          "b/a.shtml",
+                          "b/index.shtml"
                           ]
         nonHtmlFilenames = [ ".0html",
                           ".0htm",
