@@ -113,7 +113,7 @@ def getFileExtension(f) :
     i = f.rfind(".")
     return f[i+1:].lower() if i >= 0 and f.rfind("/") < i else None
 
-HTML_EXTENSIONS = { "html", "htm" }
+HTML_EXTENSIONS = { "html", "htm", "shtml" }
 
 def isHTMLFile(f) :
     """Checks if the file is an HTML file,
@@ -233,12 +233,7 @@ def urlstring(f, baseUrl, dropExtension=False) :
         u = f[1:]
     else :
         u = f
-    if len(u) >= 11 and u[-11:] == "/index.html" :
-        u = u[:-10]
-    elif u == "index.html" :
-        u = ""
-    elif dropExtension and len(u) >= 5 and u[-5:] == ".html" :
-        u = u[:-5]
+    u = sortname(u, dropExtension)
     if len(u) >= 1 and u[0]=="/" and len(baseUrl) >= 1 and baseUrl[-1]=="/" :
         u = u[1:]
     elif (len(u)==0 or u[0]!="/") and (len(baseUrl)==0 or baseUrl[-1]!="/") :
