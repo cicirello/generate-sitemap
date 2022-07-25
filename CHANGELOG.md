@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-* Bumped base docker image cicirello/pyaction from 4.3.1 to 4.6.0.
+* Bumped base docker image cicirello/pyaction from 4.3.1 to 4.7.0.
 
 ### Deprecated
 
