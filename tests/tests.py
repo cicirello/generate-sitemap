@@ -93,7 +93,13 @@ class TestGenerateSitemap(unittest.TestCase) :
                   "/.HTML", "/.HTM",
                   "/a.HTML", "/a.HTM",
                   "b/a.HTML", "b/a.HTM",
-                  "b/index.HTML", "b/index.HTM"
+                  "b/index.HTML", "b/index.HTM",
+                  ".shtml",
+                  "a.shtml",
+                  "/.shtml",
+                  "/a.shtml",
+                  "b/a.shtml",
+                  "b/index.shtml"
                   ]
         ext = [ "html", "htm",
                 "html", "htm",
@@ -110,7 +116,8 @@ class TestGenerateSitemap(unittest.TestCase) :
                 "html", "htm",
                 "html", "htm",
                 "html", "htm",
-                "html", "htm"
+                "html", "htm",
+                "shtml", "shtml", "shtml", "shtml", "shtml", "shtml"
                 ]
         for i, f in enumerate(cases) :
             self.assertEqual(ext[i], gs.getFileExtension(f), msg="failed on filename: "+f)
@@ -185,7 +192,10 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "/dir/goodbye.html",
                     "/dir/dir/c.html",
                     "/aindex.html",
-                    "/dir/aindex.html"
+                    "/dir/aindex.html",
+                    "/dir/xyz.shtml",
+                    "/3.shtml",
+                    "/dir/dir/abc.shtml"
                   ]
         expected = [ "/dir/dir/z.pdf", 
                     "/dir/yoohoo.html",
@@ -203,7 +213,10 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "/dir/goodbye.html",
                     "/dir/dir/c.html",
                     "/aindex.html",
-                    "/dir/aindex.html"
+                    "/dir/aindex.html",
+                    "/dir/xyz.shtml",
+                    "/3.shtml",
+                    "/dir/dir/abc.shtml"
                   ]
         expectedDropHtml = [ "/dir/dir/z.pdf", 
                     "/dir/yoohoo",
@@ -221,7 +234,10 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "/dir/goodbye",
                     "/dir/dir/c",
                     "/aindex",
-                    "/dir/aindex"
+                    "/dir/aindex",
+                    "/dir/xyz.shtml",
+                    "/3.shtml",
+                    "/dir/dir/abc.shtml"
                   ]
         for i, f in enumerate(files) :
             self.assertEqual(gs.sortname(f), expected[i])
@@ -243,22 +259,30 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "/dir/index.html",
                     "/dir/dir/d.html",
                     "/dir/goodbye.html",
-                    "/dir/dir/c.html" ]
+                    "/dir/dir/c.html",
+                    "/dir/xyz.shtml",
+                    "/3.shtml",
+                    "/dir/dir/abc.shtml"
+                  ]
         expected = [ "/index.html",
                      "/1.html",
                      "/2.html",
+                     "/3.shtml",
                      "/x.pdf",
                      "/dir/index.html",
                      "/dir/goodbye.html",
                      "/dir/hello.html",
+                     "/dir/xyz.shtml",
                      "/dir/y.pdf",
                      "/dir/yoohoo.html",
                      "/dir/dir/index.html",
                      "/dir/dir/a.html",
+                     "/dir/dir/abc.shtml",
                      "/dir/dir/b.html",
                      "/dir/dir/c.html",
                      "/dir/dir/d.html",
-                     "/dir/dir/z.pdf" ]
+                     "/dir/dir/z.pdf"
+                     ]
         gs.urlsort(files)
         self.assertEqual(files, expected)
 
@@ -277,22 +301,30 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "/dir/index.html",
                     "/dir/dir/d.html",
                     "/dir/goodbye.html",
-                    "/dir/dir/c.html" ]
+                    "/dir/dir/c.html",
+                    "/dir/xyz.shtml",
+                    "/3.shtml",
+                    "/dir/dir/abc.shtml"
+                  ]
         expected = [ "/index.html",
                      "/1.html",
                      "/2.html",
+                     "/3.shtml",
                      "/x.pdf",
                      "/dir/index.html",
                      "/dir/goodbye.html",
                      "/dir/hello.html",
+                     "/dir/xyz.shtml",
                      "/dir/y.pdf",
                      "/dir/yoohoo.html",
                      "/dir/dir/index.html",
                      "/dir/dir/a.html",
+                     "/dir/dir/abc.shtml",
                      "/dir/dir/b.html",
                      "/dir/dir/c.html",
                      "/dir/dir/d.html",
-                     "/dir/dir/z.pdf" ]
+                     "/dir/dir/z.pdf"
+                   ]
         gs.urlsort(files, True)
         self.assertEqual(files, expected)
         
@@ -401,6 +433,14 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "./subdir/subdir/index.html",
                       "./aindex.html",
                       "./subdir/aindex.html",
+                      "./a.shtml",
+                      "./index.shtml",
+                      "./subdir/a.shtml",
+                      "./subdir/index.shtml",
+                      "./subdir/subdir/a.shtml",
+                      "./subdir/subdir/index.shtml",
+                      "./aindex.shtml",
+                      "./subdir/aindex.shtml",
                       "/a.html",
                       "/index.html",
                       "/subdir/a.html",
@@ -409,6 +449,14 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "/subdir/subdir/index.html",
                       "/aindex.html",
                       "/subdir/aindex.html",
+                      "/a.shtml",
+                      "/index.shtml",
+                      "/subdir/a.shtml",
+                      "/subdir/index.shtml",
+                      "/subdir/subdir/a.shtml",
+                      "/subdir/subdir/index.shtml",
+                      "/aindex.shtml",
+                      "/subdir/aindex.shtml",
                       "a.html",
                       "index.html",
                       "subdir/a.html",
@@ -416,8 +464,16 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "subdir/subdir/a.html",
                       "subdir/subdir/index.html",
                       "aindex.html",
-                      "subdir/aindex.html"
-                      ]
+                      "subdir/aindex.html",
+                      "a.shtml",
+                      "index.shtml",
+                      "subdir/a.shtml",
+                      "subdir/index.shtml",
+                      "subdir/subdir/a.shtml",
+                      "subdir/subdir/index.shtml",
+                      "aindex.shtml",
+                      "subdir/aindex.shtml",
+                    ]
         base1 = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
         base2 = "https://TESTING.FAKE.WEB.ADDRESS.TESTING"
         expected = [ "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html",
@@ -427,8 +483,16 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/a.html",
                       "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/",
                       "https://TESTING.FAKE.WEB.ADDRESS.TESTING/aindex.html",
-                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/aindex.html"
-                     ]
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/aindex.html",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.shtml",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/a.shtml",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/a.shtml",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/aindex.shtml",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/aindex.shtml"
+                    ]
         for i, f in enumerate(filenames) :
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base1))
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base2))
@@ -442,6 +506,14 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "./subdir/subdir/index.html",
                       "./aindex.html",
                       "./subdir/aindex.html",
+                      "./a.shtml",
+                      "./index.shtml",
+                      "./subdir/a.shtml",
+                      "./subdir/index.shtml",
+                      "./subdir/subdir/a.shtml",
+                      "./subdir/subdir/index.shtml",
+                      "./aindex.shtml",
+                      "./subdir/aindex.shtml",
                       "/a.html",
                       "/index.html",
                       "/subdir/a.html",
@@ -450,6 +522,14 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "/subdir/subdir/index.html",
                       "/aindex.html",
                       "/subdir/aindex.html",
+                      "/a.shtml",
+                      "/index.shtml",
+                      "/subdir/a.shtml",
+                      "/subdir/index.shtml",
+                      "/subdir/subdir/a.shtml",
+                      "/subdir/subdir/index.shtml",
+                      "/aindex.shtml",
+                      "/subdir/aindex.shtml",
                       "a.html",
                       "index.html",
                       "subdir/a.html",
@@ -457,7 +537,15 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "subdir/subdir/a.html",
                       "subdir/subdir/index.html",
                       "aindex.html",
-                      "subdir/aindex.html"
+                      "subdir/aindex.html",
+                      "a.shtml",
+                      "index.shtml",
+                      "subdir/a.shtml",
+                      "subdir/index.shtml",
+                      "subdir/subdir/a.shtml",
+                      "subdir/subdir/index.shtml",
+                      "aindex.shtml",
+                      "subdir/aindex.shtml",
                       ]
         base1 = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
         base2 = "https://TESTING.FAKE.WEB.ADDRESS.TESTING"
@@ -468,7 +556,15 @@ class TestGenerateSitemap(unittest.TestCase) :
                       "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/a",
                       "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/",
                       "https://TESTING.FAKE.WEB.ADDRESS.TESTING/aindex",
-                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/aindex"
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/aindex",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.shtml",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/a.shtml",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/a.shtml",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/subdir/",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/aindex.shtml",
+                      "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/aindex.shtml"
                      ]
         for i, f in enumerate(filenames) :
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base1, True))

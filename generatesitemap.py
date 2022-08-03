@@ -50,7 +50,7 @@ def gatherfiles(extensionsToInclude) :
                 allfiles.append(os.path.join(root, f))
     return allfiles
 
-INDEX_FILENAMES = { "index.html" }
+INDEX_FILENAMES = { "index.html", "index.shtml" }
 
 def sortname(f, dropExtension=False) :
     """Partial url to sort by, which strips out the filename
