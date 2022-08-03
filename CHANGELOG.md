@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 * Checks .shtml files for noindex directives, excluding those that have it from the sitemap.
+* Added index.shtml to set of index filenames that are dropped from URLs in sitemap.
 
 ### CI/CD
 
