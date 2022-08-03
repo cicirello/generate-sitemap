@@ -50,6 +50,8 @@ def gatherfiles(extensionsToInclude) :
                 allfiles.append(os.path.join(root, f))
     return allfiles
 
+INDEX_FILENAMES = { "index.html" }
+
 def sortname(f, dropExtension=False) :
     """Partial url to sort by, which strips out the filename
     if the filename is index.html.
@@ -58,9 +60,10 @@ def sortname(f, dropExtension=False) :
     f - Filename with path
     dropExtension - true to drop extensions of .html from the filename when sorting
     """
-    if len(f) >= 11 and f[-11:] == "/index.html" :
-        return f[:-10]
-    elif f == "index.html" :
+    slash = f.rfind("/")
+    if slash >= 0 and slash < len(f)-1 and f[slash+1:] in INDEX_FILENAMES :
+        return f[:slash+1]
+    elif f in INDEX_FILENAMES :
         return ""
     elif dropExtension and len(f) >= 5 and f[-5:] == ".html" :
         return f[:-5]
