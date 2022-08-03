@@ -4,23 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2022-07-25
+## [Unreleased] - 2022-08-03
 
 ### Added
 
 ### Changed
-* Bumped base docker image cicirello/pyaction from 4.3.1 to 4.7.0.
+* Refactored index.html dropping logic to ease support for additional dropped index filenames.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-* Checks .shtml files for noindex directives, excluding those that do from the sitemap.
+* Checks .shtml files for noindex directives, excluding those that have it from the sitemap.
 
 ### CI/CD
 
 ### Dependencies
+* Bumped base docker image cicirello/pyaction from 4.3.1 to 4.7.0.
 
 
 ## [1.8.3] - 2022-04-22
