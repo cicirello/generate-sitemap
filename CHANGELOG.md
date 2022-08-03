@@ -9,17 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-* Refactored index.html dropping logic to ease support for additional dropped index filenames.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-* Checks .shtml files for noindex directives, excluding those that have it from the sitemap.
-* Added index.shtml to set of index filenames that are dropped from URLs in sitemap.
 
 ### CI/CD
+
+### Dependencies
+
+
+## [1.8.4] - 2022-08-03
+
+### Changed
+* Refactored index.html dropping logic to ease support for additional dropped index filenames.
+
+### Fixed
+* Checks .shtml files for noindex directives, excluding those that have it from the sitemap.
+* Added index.shtml to set of index filenames that are dropped from URLs in sitemap.
 
 ### Dependencies
 * Bumped base docker image cicirello/pyaction from 4.3.1 to 4.7.0.
