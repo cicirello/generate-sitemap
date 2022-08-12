@@ -49,6 +49,10 @@ inputs:
     description: 'Indicates if sitemap should be formatted in xml.'
     required: false
     default: 'xml'
+  timestamp-format:
+    description: 'Indicates if sitemap timestamp should be formatted.'
+    required: false
+    default: 'None'    
   additional-extensions:
     description: 'Space separated list of additional file extensions to include in sitemap.'
     required: false
