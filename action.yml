@@ -77,5 +77,6 @@ runs:
     - ${{ inputs.include-html }}
     - ${{ inputs.include-pdf }}
     - ${{ inputs.sitemap-format }}
+    - ${{ inputs.timestamp-format }}
     - ${{ inputs.additional-extensions }}
     - ${{ inputs.drop-html-extension }}
