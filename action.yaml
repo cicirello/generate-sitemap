@@ -1,0 +1,82 @@
+# generate-sitemap: Github action for automating sitemap generation
+# 
+# Copyright (c) 2020-2021 Vincent A Cicirello
+# https://www.cicirello.org/
+#
+# MIT License
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+# 
+name: 'generate-sitemap'
+description: 'Generate an XML sitemap for a GitHub Pages site using GitHub Actions'
+branding:
+  icon: 'book-open'
+  color: 'green'
+inputs:
+  path-to-root:  
+    description: 'The path to the root of the website'
+    required: false
+    default: '.'
+  base-url-path:
+    description: 'The url of your webpage'
+    required: false
+    default: 'https://web.address.of.your.nifty.website/'
+  include-html:
+    description: 'Indicates whether to include html files in the sitemap.'
+    required: false
+    default: true
+  include-pdf:
+    description: 'Indicates whether to include pdf files in the sitemap.'
+    required: false
+    default: true
+  sitemap-format:
+    description: 'Indicates if sitemap should be formatted in xml.'
+    required: false
+    default: 'xml'
+  additional-extensions:
+    description: 'Space separated list of additional file extensions to include in sitemap.'
+    required: false
+    default: ''
+  drop-html-extension:
+    description: 'Enables dropping .html from urls in sitemap.'
+    required: false
+    default: false
+  date-only:
+    description: 'Indicates if sitemap timestamp should be formatted.'
+    required: false
+    default: 'false'        
+outputs:
+  sitemap-path: 
+    description: 'The path to the generated sitemap file.'
+  url-count:
+    description: 'The number of entries in the sitemap.'
+  excluded-count:
+    description: 'The number of html files excluded from sitemap due to noindex meta tag.' 
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.path-to-root }}
+    - ${{ inputs.base-url-path }}
+    - ${{ inputs.include-html }}
+    - ${{ inputs.include-pdf }}
+    - ${{ inputs.sitemap-format }}
+    - ${{ inputs.additional-extensions }}
+    - ${{ inputs.drop-html-extension }}
+    - ${{ inputs.date-only }}
