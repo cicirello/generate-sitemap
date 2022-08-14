@@ -148,6 +148,14 @@ that are generated using the last commit dates of each file. Setting
 this input to anything other than `xml` will generate a plain text 
 `sitemap.txt` simply listing the urls.
 
+### `date-only`
+
+Use this to change the default timestamp format. Default: `false`.
+The `date-only` input provides the option to change the default lastmod
+date format in the generated sitemap from `YYYY-MM-DDThh:mm:ssTZD` to `YYYY-MM-DD`
+when **not** set to `false`.
+
+
 ### `drop-html-extension`
 
 The `drop-html-extension` input provides the option to exclude `.html` extension 
