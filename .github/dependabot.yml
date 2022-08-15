@@ -5,11 +5,15 @@
 
 version: 2
 updates:
+
+  # Configure docker dependabot updates
   - package-ecosystem: "docker" 
     directory: "/" 
     target-branch: "master"
     schedule:
       interval: "daily"
+
+  # Configure GitHub Actions dependabot updates
   - package-ecosystem: "github-actions" 
     directory: "/" 
     target-branch: "master"
