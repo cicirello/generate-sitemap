@@ -289,16 +289,32 @@ def writeXmlSitemap(files, baseUrl, dropExtension=False) :
             sitemap.write("\n")
         sitemap.write('</urlset>\n')
 
+def main(
+        websiteRoot,
+        baseUrl,
+        includeHTML,
+        includePDF,
+        sitemapFormat,
+        additionalExt,
+        dropExtension
+    ) :
+    """The main function of the generate-sitemap GitHub Action.
 
-if __name__ == "__main__" :
-    websiteRoot = sys.argv[1]
-    baseUrl = sys.argv[2]
-    includeHTML = sys.argv[3]=="true"
-    includePDF = sys.argv[4]=="true"
-    sitemapFormat = sys.argv[5]
-    additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split())
-    dropExtension = sys.argv[7]=="true"
-
+    Keyword arguments:
+    websiteRoot - The path to the root of the website relative
+            to the root of the repository.
+    baseUrl - The URL of the website.
+    includeHTML - A boolean that controls whether to include HTML
+            files in the sitemap.
+    includePDF - A boolean that controls whether to include PDF
+            files in the sitemap.
+    sitemapFormat - A string either: xml or txt.
+    additionalExt - A set of additional user-defined filename
+            extensions for inclusion in the sitemap.
+    dropExtension - A boolean that controls whether to drop .html from
+            URLs that are to html files (e.g., GitHub Pages will serve
+            an html file if URL doesn't include the .html extension).
+    """
     os.chdir(websiteRoot)
     blockedPaths = parseRobotsTxt()
     
@@ -319,3 +335,17 @@ if __name__ == "__main__" :
     print("::set-output name=sitemap-path::" + pathToSitemap)
     print("::set-output name=url-count::" + str(len(files)))
     print("::set-output name=excluded-count::" + str(len(allFiles)-len(files)))
+
+
+if __name__ == "__main__" :
+    main(
+        websiteRoot = sys.argv[1],
+        baseUrl = sys.argv[2],
+        includeHTML = sys.argv[3].lower() == "true",
+        includePDF = sys.argv[4].lower() == "true",
+        sitemapFormat = sys.argv[5],
+        additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split()),
+        dropExtension = sys.argv[7].lower() == "true"
+    )
+
+    
