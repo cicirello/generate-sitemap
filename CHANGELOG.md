@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### CI/CD
 
 ### Dependencies
+* Bumped pyaction from 4.7.0 to 4.7.1.
 
 
 ## [1.8.4] - 2022-08-03
