@@ -164,6 +164,16 @@ pass `drop-html-extension: true` to the action in your workflow.
 Note that you should also ensure that any canonical links that you list within
 the html files corresponds to your choice here.  
 
+
+### `date-only`
+
+Use this to change the default timestamp format. Default: `false`.
+The `date-only` input provides the option to change the default lastmod
+date format in the generated sitemap from `YYYY-MM-DDThh:mm:ssTZD` to `YYYY-MM-DD`
+when **not** set to `false`.
+
+
+
 ## Outputs
 
 ### `sitemap-path`

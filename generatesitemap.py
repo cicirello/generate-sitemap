@@ -209,7 +209,7 @@ def parseRobotsTxt(robotsFile="robots.txt") :
         print("Assuming nothing disallowed.")
     return blockedPaths
 
-def lastmod(f) :
+def lastmod(f, date_only) :
     """Determines the date when the file was last modified and
     returns a string with the date formatted as required for
     the lastmod tag in an xml sitemap.
@@ -220,8 +220,12 @@ def lastmod(f) :
     mod = subprocess.run(['git', 'log', '-1', '--format=%cI', f],
                     stdout=subprocess.PIPE,
                     universal_newlines=True).stdout.strip()
+    print(date_only) # trying to debug what's going wrong...
     if len(mod) == 0 :
         mod = datetime.now().astimezone().replace(microsecond=0).isoformat()
+    if date_only == "true":
+        date_only = '%Y-%m-%d'
+        mod = datetime.strptime(mod, '%Y-%m-%dT%H:%M:%S%z').strftime(date_only)	
     return mod
 
 def urlstring(f, baseUrl, dropExtension=False) :
@@ -273,7 +277,7 @@ def writeTextSitemap(files, baseUrl, dropExtension=False) :
             sitemap.write(urlstring(f, baseUrl, dropExtension))
             sitemap.write("\n")
             
-def writeXmlSitemap(files, baseUrl, dropExtension=False) :
+def writeXmlSitemap(files, baseUrl, date_only, dropExtension=False) :
     """Writes an xml sitemap to the file sitemap.xml.
 
     Keyword Arguments:
@@ -285,7 +289,7 @@ def writeXmlSitemap(files, baseUrl, dropExtension=False) :
         sitemap.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         sitemap.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         for f in files :
-            sitemap.write(xmlSitemapEntry(f, baseUrl, lastmod(f), dropExtension))
+            sitemap.write(xmlSitemapEntry(f, baseUrl, lastmod(f, date_only), dropExtension))
             sitemap.write("\n")
         sitemap.write('</urlset>\n')
 
@@ -296,7 +300,8 @@ def main(
         includePDF,
         sitemapFormat,
         additionalExt,
-        dropExtension
+        dropExtension,
+	date_only
     ) :
     """The main function of the generate-sitemap GitHub Action.
 
@@ -326,7 +331,7 @@ def main(
     if pathToSitemap[-1] != "/" :
         pathToSitemap += "/"
     if sitemapFormat == "xml" :
-        writeXmlSitemap(files, baseUrl, dropExtension)
+        writeXmlSitemap(files, baseUrl, date_only, dropExtension)
         pathToSitemap += "sitemap.xml"
     else :
         writeTextSitemap(files, baseUrl, dropExtension)
@@ -345,7 +350,8 @@ if __name__ == "__main__" :
         includePDF = sys.argv[4].lower() == "true",
         sitemapFormat = sys.argv[5],
         additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split()),
-        dropExtension = sys.argv[7].lower() == "true"
+        dropExtension = sys.argv[7].lower() == "true",
+	date_only = sys.argv[8]
     )
 
     

@@ -57,6 +57,10 @@ inputs:
     description: 'Enables dropping .html from urls in sitemap.'
     required: false
     default: false
+  date-only:
+    description: 'Indicates if sitemap timestamp should be formatted.'
+    required: false
+    default: false
 outputs:
   sitemap-path: 
     description: 'The path to the generated sitemap file.'
@@ -75,3 +79,4 @@ runs:
     - ${{ inputs.sitemap-format }}
     - ${{ inputs.additional-extensions }}
     - ${{ inputs.drop-html-extension }}
+    - ${{ inputs.date-only }}
