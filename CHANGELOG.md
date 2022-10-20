@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2022-10-19
+## [Unreleased] - 2022-10-20
 
 ### Added
 
@@ -15,8 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
-* Now handles alternate casing of boolean inputs specified in GitHub workflow YAML files,
-  where it previously expected lowercase only.
+* Replaced the usage of GitHub Action's deprecated `set-output` with the new `$GITHUB_OUTPUT` env file.
+* Handle alternate casing of boolean inputs in GitHub workflow YAML files (previously expected lowercase).
 * Refactored entrypoint for improved maintainability, and ease of planned new functionality.
 
 ### CI/CD
