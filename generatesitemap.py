@@ -289,6 +289,17 @@ def writeXmlSitemap(files, baseUrl, dropExtension=False) :
             sitemap.write("\n")
         sitemap.write('</urlset>\n')
 
+def set_outputs(names_values) :
+    """Sets the GitHub Action outputs.
+
+    Keyword arguments:
+    names_values - Dictionary of output names with values
+    """
+    if "GITHUB_OUTPUT" in os.environ :
+        with open(os.environ["GITHUB_OUTPUT"], "a") as f :
+            for name, value in names_values.items() :
+                print("{0}={1}".format(name, value), file=f)
+
 def main(
         websiteRoot,
         baseUrl,
@@ -332,10 +343,11 @@ def main(
         writeTextSitemap(files, baseUrl, dropExtension)
         pathToSitemap += "sitemap.txt"
 
-    print("::set-output name=sitemap-path::" + pathToSitemap)
-    print("::set-output name=url-count::" + str(len(files)))
-    print("::set-output name=excluded-count::" + str(len(allFiles)-len(files)))
-
+    set_outputs({
+        "sitemap-path" : pathToSitemap,
+        "url-count" : len(files),
+        "excluded-count" : len(allFiles)-len(files)
+    })
 
 if __name__ == "__main__" :
     main(
