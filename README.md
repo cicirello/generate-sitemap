@@ -203,7 +203,7 @@ you can also use a specific version such as with:
 
 ```yml
     - name: Generate the sitemap
-      uses: cicirello/generate-sitemap@v1.8.0
+      uses: cicirello/generate-sitemap@v1.8.5
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 ```

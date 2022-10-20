@@ -15,11 +15,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+
+### CI/CD
+
+### Dependencies
+
+
+## [1.8.5] - 2022-10-20
+
+### Fixed
 * Replaced the usage of GitHub Action's deprecated `set-output` with the new `$GITHUB_OUTPUT` env file.
 * Handle alternate casing of boolean inputs in GitHub workflow YAML files (previously expected lowercase).
 * Refactored entrypoint for improved maintainability, and ease of planned new functionality.
-
-### CI/CD
 
 ### Dependencies
 * Bumped pyaction from 4.7.0 to 4.11.0, which includes upgrading Python in the Docker container to 3.10.7.
