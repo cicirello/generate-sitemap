@@ -570,6 +570,11 @@ class TestGenerateSitemap(unittest.TestCase) :
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base1, True))
             self.assertEqual(expected[i%len(expected)], gs.urlstring(f, base2, True))
 
+    def test_removeTime(self) :
+        date = "2020-09-11T13:35:00-04:00"
+        expected = "2020-09-11"
+        self.assertEqual(expected, gs.removeTime(date))
+        
     def test_xmlSitemapEntry(self) :
         base = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
         f = "./a.html"
@@ -579,6 +584,17 @@ class TestGenerateSitemap(unittest.TestCase) :
         self.assertEqual(actual, expected)
         actual = gs.xmlSitemapEntry(f, base, date, True)
         expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>"
+        self.assertEqual(actual, expected)
+
+    def test_xmlSitemapEntryDateOnly(self) :
+        base = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
+        f = "./a.html"
+        date = "2020-09-11T13:35:00-04:00"
+        actual = gs.xmlSitemapEntry(f, base, date, False, True)
+        expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a.html</loc>\n<lastmod>2020-09-11</lastmod>\n</url>"
+        self.assertEqual(actual, expected)
+        actual = gs.xmlSitemapEntry(f, base, date, True, True)
+        expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a</loc>\n<lastmod>2020-09-11</lastmod>\n</url>"
         self.assertEqual(actual, expected)
 
     def test_robotsTxtParser(self) :
