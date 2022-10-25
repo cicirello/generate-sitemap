@@ -162,7 +162,13 @@ for pages where the filename has the `.html` extension. If you prefer to exclude
 `.html` extension from the URLs in your sitemap, then 
 pass `drop-html-extension: true` to the action in your workflow. 
 Note that you should also ensure that any canonical links that you list within
-the html files corresponds to your choice here.  
+the html files corresponds to your choice here.
+
+### `date-only`
+
+The `date-only` input controls whether XML sitemaps include the full date and time in lastmod,
+or only the date. The default is `date-only: false`, which includes the full date and time
+in the lastmod fields. If you only want the date in the lastmod, then use `date-only: true`.
 
 ## Outputs
 
@@ -203,7 +209,7 @@ you can also use a specific version such as with:
 
 ```yml
     - name: Generate the sitemap
-      uses: cicirello/generate-sitemap@v1.8.5
+      uses: cicirello/generate-sitemap@v1.9.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 ```

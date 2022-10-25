@@ -247,8 +247,16 @@ xmlSitemapEntryTemplate = """<url>
 <loc>{0}</loc>
 <lastmod>{1}</lastmod>
 </url>"""	
-	
-def xmlSitemapEntry(f, baseUrl, dateString, dropExtension=False) :
+
+def removeTime(dateString) :
+    """Removes the time from a date-time.
+
+    Keyword arguments:
+    dateString - The date-time.
+    """
+    return dateString[:10]
+
+def xmlSitemapEntry(f, baseUrl, dateString, dropExtension=False, dateOnly=False) :
     """Forms a string with an entry formatted for an xml sitemap
     including lastmod date.
 
@@ -258,7 +266,10 @@ def xmlSitemapEntry(f, baseUrl, dateString, dropExtension=False) :
     dateString - lastmod date correctly formatted
     dropExtension - true to drop extensions of .html from the filename in urls
     """
-    return xmlSitemapEntryTemplate.format(urlstring(f, baseUrl, dropExtension), dateString)
+    return xmlSitemapEntryTemplate.format(
+        urlstring(f, baseUrl, dropExtension),
+        removeTime(dateString) if dateOnly else dateString
+    )
 
 def writeTextSitemap(files, baseUrl, dropExtension=False) :
     """Writes a plain text sitemap to the file sitemap.txt.
@@ -273,7 +284,7 @@ def writeTextSitemap(files, baseUrl, dropExtension=False) :
             sitemap.write(urlstring(f, baseUrl, dropExtension))
             sitemap.write("\n")
             
-def writeXmlSitemap(files, baseUrl, dropExtension=False) :
+def writeXmlSitemap(files, baseUrl, dropExtension=False, dateOnly=False) :
     """Writes an xml sitemap to the file sitemap.xml.
 
     Keyword Arguments:
@@ -285,7 +296,7 @@ def writeXmlSitemap(files, baseUrl, dropExtension=False) :
         sitemap.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         sitemap.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         for f in files :
-            sitemap.write(xmlSitemapEntry(f, baseUrl, lastmod(f), dropExtension))
+            sitemap.write(xmlSitemapEntry(f, baseUrl, lastmod(f), dropExtension, dateOnly))
             sitemap.write("\n")
         sitemap.write('</urlset>\n')
 
@@ -310,7 +321,8 @@ def main(
         includePDF,
         sitemapFormat,
         additionalExt,
-        dropExtension
+        dropExtension,
+        dateOnly
     ) :
     """The main function of the generate-sitemap GitHub Action.
 
@@ -340,7 +352,7 @@ def main(
     if pathToSitemap[-1] != "/" :
         pathToSitemap += "/"
     if sitemapFormat == "xml" :
-        writeXmlSitemap(files, baseUrl, dropExtension)
+        writeXmlSitemap(files, baseUrl, dropExtension, dateOnly)
         pathToSitemap += "sitemap.xml"
     else :
         writeTextSitemap(files, baseUrl, dropExtension)
@@ -360,7 +372,8 @@ if __name__ == "__main__" :
         includePDF = sys.argv[4].lower() == "true",
         sitemapFormat = sys.argv[5],
         additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split()),
-        dropExtension = sys.argv[7].lower() == "true"
+        dropExtension = sys.argv[7].lower() == "true",
+        dateOnly = sys.argv[8].lower() == "true"
     )
 
     

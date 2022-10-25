@@ -57,6 +57,10 @@ inputs:
     description: 'Enables dropping .html from urls in sitemap.'
     required: false
     default: false
+  date-only:
+    description: 'Pass true to include only the date without the time in XML sitemaps; and false to include full date and time.'
+    required: false
+    default: false
 outputs:
   sitemap-path: 
     description: 'The path to the generated sitemap file.'
@@ -75,3 +79,4 @@ runs:
     - ${{ inputs.sitemap-format }}
     - ${{ inputs.additional-extensions }}
     - ${{ inputs.drop-html-extension }}
+    - ${{ inputs.date-only }}
