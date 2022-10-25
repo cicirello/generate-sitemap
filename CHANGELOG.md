@@ -17,6 +17,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### CI/CD
+
+### Dependencies
+
+
+## [1.9.0] - 2022-10-25
+
+### Added
+* Option to include dates only in the lastmod fields of XML sitemaps. Default includes full date-time.
+
+### CI/CD
 * Bump Python to 3.11 in CI/CD workflows.
 
 ### Dependencies
