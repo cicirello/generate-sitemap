@@ -74,6 +74,7 @@ sections:
 * [Outputs](#outputs): Documentation of all of the actions's outputs.
 * [Examples](#examples): Several example workflows illustrating various features.
 * [Real Examples From Projects Using the Action](#real-examples-from-projects-using-the-action)
+* [Blog Posts](#blog-posts): A selection of blog posts about the GitHub Action.
 * [Support the Project](#support-the-project): Information on various ways that you can support
   the project.
 
@@ -409,6 +410,11 @@ the lastmod dates will be accurate. Finally, it uses
 to generate a pull request. You can also replace that step with a commit and push instead.
 
 You can find the resulting sitemap here: [sitemap.xml](https://chips-n-salsa.cicirello.org/sitemap.xml).
+
+## Blog Posts
+
+Here is a selection of blog posts about generate-sitemap on DEV.to:
+* [Generate an XML Sitemap for a Static Website in GitHub Actions](https://dev.to/cicirello/generate-an-xml-sitemap-for-a-static-website-in-github-actions-20do), posted on DEV on November 23, 2022.
 
 ## Support the Project
 
