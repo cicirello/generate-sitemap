@@ -414,6 +414,7 @@ You can find the resulting sitemap here: [sitemap.xml](https://chips-n-salsa.cic
 ## Blog Posts
 
 Here is a selection of blog posts about generate-sitemap on DEV.to:
+* [Deploy a Documentation Website for a Java Library Using GitHub Actions](https://dev.to/cicirello/deploy-a-documentation-website-for-a-java-library-using-github-actions-197n), posted on DEV on November 30, 2022.
 * [Generate an XML Sitemap for a Static Website in GitHub Actions](https://dev.to/cicirello/generate-an-xml-sitemap-for-a-static-website-in-github-actions-20do), posted on DEV on November 23, 2022.
 
 ## Support the Project
