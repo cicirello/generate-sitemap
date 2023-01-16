@@ -2,7 +2,7 @@
 #
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020-2022 Vincent A Cicirello
+# Copyright (c) 2020-2023 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -81,6 +81,10 @@ def urlsort(files, dropExtension=False) :
     files.sort(key = lambda f : sortname(f, dropExtension))
     files.sort(key = lambda f : f.count("/"))
 
+
+RE_FLAGS = re.I | re.M | re.S
+RE_META_TAG = re.compile(r"<meta([^>]*)>", flags=RE_FLAGS)
+
 def hasMetaRobotsNoindex(f) :
     """Checks whether an html file contains
     <meta name="robots" content="noindex"> or
@@ -93,18 +97,20 @@ def hasMetaRobotsNoindex(f) :
     """
     try:
         with open(f, "r", errors="surrogateescape") as file :
-            for line in file :
-                # Check line for <meta name="robots" content="noindex">, etc
-                if re.search("<meta\s+name.+robots.+content.+noindex", line) != None :
+            contents = file.read()
+            m = re.search("</head>", contents, flags=re.I)
+            if not m :
+                m = re.search("<body>", contents, flags=re.I)
+            all_meta_tags = RE_META_TAG.findall(contents, endpos=m.start()) if m else RE_META_TAG.findall(contents)
+            for tag in all_meta_tags :
+                if re.search("name\s*=\s*\"\s*robots", tag, flags=re.I) and re.search("content\s*=\s*\".*noindex", tag, flags=re.I) :
                     return True
-                # We can stop searching once no longer in head of file.
-                # <meta name="robots"> directives required to be in head
-                if "<body>" in line or "</head>" in line :
-                    return False
+            return False
     except OSError:
         print("WARNING: OS error while checking for noindex directive in:", f)
         print("Assuming", f, "doesn't have noindex directive.")
     return False
+
 
 def getFileExtension(f) :
     """Gets the file extension, and returns it (in all
