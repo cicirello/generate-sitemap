@@ -91,7 +91,7 @@ sure to include the following as a step in your workflow:
 ```yml
     steps:
     - name: Checkout the repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0 
 ```
@@ -210,7 +210,7 @@ you can also use a specific version such as with:
 
 ```yml
     - name: Generate the sitemap
-      uses: cicirello/generate-sitemap@v1.9.0
+      uses: cicirello/generate-sitemap@v1.9.1
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 ```
@@ -236,7 +236,7 @@ jobs:
 
     steps:
     - name: Checkout the repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0 
 
@@ -274,7 +274,7 @@ jobs:
 
     steps:
     - name: Checkout the repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0 
 
@@ -316,7 +316,7 @@ jobs:
 
     steps:
     - name: Checkout the repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0 
 
@@ -357,7 +357,7 @@ jobs:
 
     steps:
     - name: Checkout the repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0 
 
