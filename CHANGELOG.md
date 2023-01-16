@@ -15,10 +15,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
-* Case-insensitive check for `<meta name="robots" content="noindex">` in head of html files.
-* Correct handling of `<meta content="noindex" name="robots">` (i.e., content before name).
 
 ### CI/CD
+
+### Dependencies
+
+
+## [1.9.1] - 2023-01-16
+
+### Fixed
+* Case-insensitive check for `<meta name="robots" content="noindex">` in head of html files.
+* Correct handling of `<meta content="noindex" name="robots">` (i.e., content before name).
 
 ### Dependencies
 * Bump cicirello/pyaction from 4.12.0 to 4.14.1
