@@ -343,7 +343,8 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "tests/blocked4.html",
                     "tests/badCharsNoindex1.html",
                     "tests/badCharsNoindex2.html",
-                    "tests/blocked5.html"]
+                    "tests/blocked5.html",
+                    "tests/blocked6.html"]
         for f in unblocked :
             self.assertFalse(gs.robotsBlocked(f))
         for f in blocked :
@@ -361,7 +362,8 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "tests/blocked4.html",
                     "tests/badCharsNoindex1.html",
                     "tests/badCharsNoindex2.html",
-                    "tests/blocked5.html"]
+                    "tests/blocked5.html",
+                    "tests/blocked6.html"]
         for f in unblocked :
             self.assertFalse(gs.hasMetaRobotsNoindex(f))
         for f in blocked :
@@ -380,7 +382,8 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./badCharsNoindex1.html",
                      "./badCharsNoindex2.html",
                      "./badCharsDoIndex.html",
-                     "./blocked5.html"}
+                     "./blocked5.html",
+                     "./blocked6.html"}
         if os.name == "nt" :
             expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
@@ -400,7 +403,8 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./badCharsNoindex1.html",
                      "./badCharsNoindex2.html",
                      "./badCharsDoIndex.html",
-                     "./blocked5.html"}
+                     "./blocked5.html",
+                     "./blocked6.html"}
         if os.name == "nt" :
             expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
