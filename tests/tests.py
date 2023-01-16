@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020-2022 Vincent A Cicirello
+# Copyright (c) 2020-2023 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -342,7 +342,9 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "tests/blocked3.html",
                     "tests/blocked4.html",
                     "tests/badCharsNoindex1.html",
-                    "tests/badCharsNoindex2.html"]
+                    "tests/badCharsNoindex2.html",
+                    "tests/blocked5.html",
+                    "tests/blocked6.html"]
         for f in unblocked :
             self.assertFalse(gs.robotsBlocked(f))
         for f in blocked :
@@ -359,7 +361,9 @@ class TestGenerateSitemap(unittest.TestCase) :
                     "tests/blocked3.html",
                     "tests/blocked4.html",
                     "tests/badCharsNoindex1.html",
-                    "tests/badCharsNoindex2.html" ]
+                    "tests/badCharsNoindex2.html",
+                    "tests/blocked5.html",
+                    "tests/blocked6.html"]
         for f in unblocked :
             self.assertFalse(gs.hasMetaRobotsNoindex(f))
         for f in blocked :
@@ -377,7 +381,9 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./subdir/a.html", "./subdir/subdir/b.html",
                      "./badCharsNoindex1.html",
                      "./badCharsNoindex2.html",
-                     "./badCharsDoIndex.html"}
+                     "./badCharsDoIndex.html",
+                     "./blocked5.html",
+                     "./blocked6.html"}
         if os.name == "nt" :
             expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
@@ -396,7 +402,9 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./subdir/subdir/z.pdf",
                      "./badCharsNoindex1.html",
                      "./badCharsNoindex2.html",
-                     "./badCharsDoIndex.html"}
+                     "./badCharsDoIndex.html",
+                     "./blocked5.html",
+                     "./blocked6.html"}
         if os.name == "nt" :
             expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
