@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020-2021 Vincent A Cicirello
+# Copyright (c) 2020-2023 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
