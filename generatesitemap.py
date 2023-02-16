@@ -330,7 +330,7 @@ def sanitize_path(websiteRoot) :
     safe_path = os.path.realpath(websiteRoot)
     prefix = os.path.commonpath([repo_root, safe_path])
     if prefix == repo_root :
-        return safe_path
+        return os.path.join(repo_root, safe_path)
     else :
         print("ERROR: Specified website root directory appears to be outside of current working directory. Exiting....")
         exit(1)
