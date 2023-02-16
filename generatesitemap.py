@@ -326,11 +326,11 @@ def sanitize_path(websiteRoot) :
     Keyword arguments:
     websiteRoot - the root of the website relative to current working directory
     """
-    repo_root = os.getcwd()
+    repo_root = os.environ["PWD"]
     safe_path = os.path.realpath(websiteRoot)
     prefix = os.path.commonpath([repo_root, safe_path])
     if prefix == repo_root :
-        return safe_path
+        return os.path.join(repo_root, safe_path)
     else :
         print("ERROR: Specified website root directory appears to be outside of current working directory. Exiting....")
         exit(1)
