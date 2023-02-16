@@ -326,7 +326,7 @@ def sanitize_path(websiteRoot) :
     Keyword arguments:
     websiteRoot - the root of the website relative to current working directory
     """
-    repo_root = os.environ["PWD"]
+    repo_root = os.getcwd()
     safe_path = os.path.realpath(websiteRoot)
     prefix = os.path.commonpath([repo_root, safe_path])
     if prefix == repo_root :
