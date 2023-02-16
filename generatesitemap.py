@@ -320,6 +320,21 @@ def set_outputs(names_values) :
         for name, value in names_values.items() :
             print("::set-output name={0}::{1}".format(name, value))
 
+def sanitize_path(websiteRoot) :
+    """Verifies specified website root is within the current working directory.
+
+    Keyword arguments:
+    websiteRoot - the root of the website relative to current working directory
+    """
+    repo_root = os.getcwd()
+    safe_path = os.path.realpath(websiteRoot)
+    prefix = os.path.commonpath([repo_root, safe_path])
+    if prefix == repo_root :
+        return safe_path
+    else :
+        print("ERROR: Specified website root directory appears to be outside of current working directory. Exiting....")
+        exit(1)
+    
 def main(
         websiteRoot,
         baseUrl,
@@ -348,13 +363,7 @@ def main(
             an html file if URL doesn't include the .html extension).
     """
     repo_root = os.getcwd()
-    safe_path = os.path.realpath(websiteRoot)
-    prefix = os.path.commonpath([repo_root, safe_path])
-    if prefix == repo_root :
-        os.chdir(os.path.join(repo_root, safe_path))
-    else :
-        print("ERROR: Specified website root directory appears to be outside of current working directory. Exiting....")
-        exit(1)
+    os.chdir(sanitize_path(websiteRoot))
 
     # Fixes "dubious ownership" warning related to
     # how the actions working directory is mounted
