@@ -347,7 +347,20 @@ def main(
             URLs that are to html files (e.g., GitHub Pages will serve
             an html file if URL doesn't include the .html extension).
     """
-    os.chdir(websiteRoot)
+    repo_root = os.getcwd()
+    safe_path = os.path.realpath(websiteRoot)
+    prefix = os.path.commonpath([repo_root, safe_path])
+    if prefix == repo_root :
+        os.chdir(safe_path)
+    else :
+        print("ERROR: Specified website root directory appears to be outside of current working directory. Exiting....")
+        exit(1)
+
+    # Fixes "dubious ownership" warning related to
+    # how the actions working directory is mounted
+    # inside container actions.
+    subprocess.run(['git', 'config', '--global', '--add', 'safe.directory', repo_root])
+    
     blockedPaths = parseRobotsTxt()
     
     allFiles = gatherfiles(createExtensionSet(includeHTML, includePDF, additionalExt))
