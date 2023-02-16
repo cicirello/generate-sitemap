@@ -348,7 +348,6 @@ def main(
             an html file if URL doesn't include the .html extension).
     """
     repo_root = os.getcwd()
-    print("Root inside container:", repo_root)
     safe_path = os.path.realpath(websiteRoot)
     prefix = os.path.commonpath([repo_root, safe_path])
     if prefix == repo_root :
@@ -356,6 +355,12 @@ def main(
     else :
         print("ERROR: Specified website root directory appears to be outside of current working directory. Exiting....")
         exit(1)
+
+    # Fixes "dubious ownership" warning related to
+    # how the actions working directory is mounted
+    # inside container actions.
+    subprocess.run(['git', 'config', '--global', '--add', 'safe.directory', repo_root])
+    
     blockedPaths = parseRobotsTxt()
     
     allFiles = gatherfiles(createExtensionSet(includeHTML, includePDF, additionalExt))
