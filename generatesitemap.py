@@ -348,6 +348,7 @@ def main(
             an html file if URL doesn't include the .html extension).
     """
     repo_root = os.getcwd()
+    print("Root inside container:", repo_root)
     safe_path = os.path.realpath(websiteRoot)
     prefix = os.path.commonpath([repo_root, safe_path])
     if prefix == repo_root :
