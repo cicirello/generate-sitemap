@@ -74,6 +74,7 @@ sections:
 * [Outputs](#outputs): Documentation of all of the actions's outputs.
 * [Examples](#examples): Several example workflows illustrating various features.
 * [Real Examples From Projects Using the Action](#real-examples-from-projects-using-the-action)
+* [Built With](#built-with): A list of languages, tools, etc used to develop this action.
 * [Blog Posts](#blog-posts): A selection of blog posts about the GitHub Action.
 * [Support the Project](#support-the-project): Information on various ways that you can support
   the project.
@@ -410,6 +411,17 @@ the lastmod dates will be accurate. Finally, it uses
 to generate a pull request. You can also replace that step with a commit and push instead.
 
 You can find the resulting sitemap here: [sitemap.xml](https://chips-n-salsa.cicirello.org/sitemap.xml).
+
+## Built With
+
+The `generate-sitemap` action uses the following:
+* Python (implemented almost entirely in Python);
+* The [cicirello/pyaction](https://actions.cicirello.org/pyaction/) Docker container, which 
+  is designed to support GitHub Actions development in the Python language (see
+  [pyaction's GitHub repository](https://github.com/cicirello/pyaction));
+* git to use last commit dates for last modified dates in the sitemaps; and
+* We started with our template repository for GitHub Actions implemented in 
+  Python: [cicirello/python-github-action-template](https://github.com/cicirello/python-github-action-template).
 
 ## Blog Posts
 
