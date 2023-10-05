@@ -103,7 +103,7 @@ def hasMetaRobotsNoindex(f) :
                 m = re.search("<body>", contents, flags=re.I)
             all_meta_tags = RE_META_TAG.findall(contents, endpos=m.start()) if m else RE_META_TAG.findall(contents)
             for tag in all_meta_tags :
-                if re.search("name\s*=\s*\"\s*robots", tag, flags=re.I) and re.search("content\s*=\s*\".*noindex", tag, flags=re.I) :
+                if re.search("name\\s*=\\s*\"\\s*robots", tag, flags=re.I) and re.search("content\\s*=\\s*\".*noindex", tag, flags=re.I) :
                     return True
             return False
     except OSError:
