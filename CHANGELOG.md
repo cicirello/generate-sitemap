@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+
+### CI/CD
+
+### Dependencies
+
+
+## [1.9.2] - 2023-10-05
+
+### Fixed
 * Fix minor bug in regex used to detect if a page has a meta robots noindex directive in head.
 
 ### CI/CD
