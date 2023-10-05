@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+* Fix minor bug in regex used to detect if a page has a meta robots noindex directive in head.
 
 ### CI/CD
 * Bump Python to 3.12 in CI/CD workflows when running unit tests.
