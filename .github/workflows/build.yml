@@ -92,6 +92,20 @@ jobs:
         echo "url-count = ${{ steps.integration4.outputs.url-count }}"
         echo "excluded-count = ${{ steps.integration4.outputs.excluded-count }}"
 
+    - name: Integration test 5
+      id: integration5
+      uses: ./
+      with:
+        path-to-root: tests/exclude
+        base-url-path: https://TESTING.FAKE.WEB.ADDRESS.TESTING/
+        exclude-paths: /excludeSubDir /exc1.html /subdir/exc4.html
+
+    - name: Output stats test 5
+      run: |
+        echo "sitemap-path = ${{ steps.integration5.outputs.sitemap-path }}"
+        echo "url-count = ${{ steps.integration5.outputs.url-count }}"
+        echo "excluded-count = ${{ steps.integration5.outputs.excluded-count }}"
+
     - name: Verify integration test results
-      run: python3 -u -m unittest tests/integration.py
+      run: python3 -u -B -m unittest tests/integration.py
 

@@ -334,6 +334,19 @@ def sanitize_path(websiteRoot) :
     else :
         print("ERROR: Specified website root directory appears to be outside of current working directory. Exiting....")
         exit(1)
+
+def adjust_path(path):
+    """Checks that path is formatted as expected, adjusting if necessary.
+
+    Keyword arguments:
+    path - the path to check and adjust
+    """
+    path = path.replace("\\", "/").removeprefix(".")
+    if len(path) == 0:
+        return "/"
+    if path[0] != "/":
+        return "/" + path
+    return path
     
 def main(
         websiteRoot,
@@ -343,7 +356,8 @@ def main(
         sitemapFormat,
         additionalExt,
         dropExtension,
-        dateOnly
+        dateOnly,
+        excludePaths
     ) :
     """The main function of the generate-sitemap GitHub Action.
 
@@ -361,6 +375,12 @@ def main(
     dropExtension - A boolean that controls whether to drop .html from
             URLs that are to html files (e.g., GitHub Pages will serve
             an html file if URL doesn't include the .html extension).
+    dateOnly - If true, includes only the date but not the time in XML
+            sitemaps, otherwise includes full date and time in lastmods
+            within XML sitemaps.
+    excludePaths - A set of paths to exclude from the sitemap, which can
+            include directories (relative from the root) or even full
+            paths to individual files.
     """
     repo_root = os.getcwd()
     os.chdir(sanitize_path(websiteRoot))
@@ -369,8 +389,10 @@ def main(
     # how the actions working directory is mounted
     # inside container actions.
     subprocess.run(['git', 'config', '--global', '--add', 'safe.directory', repo_root])
-    
-    blockedPaths = parseRobotsTxt()
+
+    if len(excludePaths) > 0:
+        excludePaths = { adjust_path(path) for path in excludePaths}
+    blockedPaths = set(parseRobotsTxt()) | excludePaths
     
     allFiles = gatherfiles(createExtensionSet(includeHTML, includePDF, additionalExt))
     files = [ f for f in allFiles if not robotsBlocked(f, blockedPaths) ]
@@ -401,7 +423,8 @@ if __name__ == "__main__" :
         sitemapFormat = sys.argv[5],
         additionalExt = set(sys.argv[6].lower().replace(",", " ").replace(".", " ").split()),
         dropExtension = sys.argv[7].lower() == "true",
-        dateOnly = sys.argv[8].lower() == "true"
+        dateOnly = sys.argv[8].lower() == "true",
+        excludePaths = set(sys.argv[9].replace(",", " ").split())
     )
 
     

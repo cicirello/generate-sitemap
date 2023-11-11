@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020-2021 Vincent A Cicirello
+# Copyright (c) 2020-2023 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -61,6 +61,10 @@ inputs:
     description: 'Pass true to include only the date without the time in XML sitemaps; and false to include full date and time.'
     required: false
     default: false
+  exclude-paths:
+    description: 'Space separated list of paths to exclude from the sitemap.'
+    required: false
+    default: ''
 outputs:
   sitemap-path: 
     description: 'The path to the generated sitemap file.'
@@ -80,3 +84,4 @@ runs:
     - ${{ inputs.additional-extensions }}
     - ${{ inputs.drop-html-extension }}
     - ${{ inputs.date-only }}
+    - ${{ inputs.exclude-paths }}
