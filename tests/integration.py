@@ -43,6 +43,33 @@ def validateDate(s) :
         
 class IntegrationTest(unittest.TestCase) :
 
+    def testIntegrationExcludePaths(self):
+        urlset = set()
+        with open("tests/exclude/sitemap.xml","r") as f :
+            for line in f :
+                i = line.find("<loc>")
+                if i >= 0 :
+                    i += 5
+                    j = line.find("</loc>", i)
+                    if j >= 0 :
+                        urlset.add(line[i:j].strip())
+                    else :
+                        self.fail("No closing </loc>")
+                i = line.find("<lastmod>")
+                if i >= 0 :
+                    i += 9
+                    j = line.find("</lastmod>", i)
+                    if j >= 0 :
+                        self.assertTrue(validateDate(line[i:j].strip()))
+                    else :
+                        self.fail("No closing </lastmod>")
+        
+        expected = { "https://TESTING.FAKE.WEB.ADDRESS.TESTING/inc1.html",
+                     "https://TESTING.FAKE.WEB.ADDRESS.TESTING/subdir/inc2.html"
+                     }
+        self.assertEqual(expected, urlset)
+                    
+
     def testIntegration(self) :
         urlset = set()
         with open("tests/sitemap.xml","r") as f :

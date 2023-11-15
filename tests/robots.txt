@@ -10,3 +10,4 @@ Disallow: /
 
 User-agent: *
 Disallow: /subdir/y.pdf
+Disallow: /exclude

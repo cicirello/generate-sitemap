@@ -383,7 +383,11 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./badCharsNoindex2.html",
                      "./badCharsDoIndex.html",
                      "./blocked5.html",
-                     "./blocked6.html"}
+                     "./blocked6.html",
+                     "./exclude/inc1.html", "./exclude/exc1.html",
+                     "./exclude/subdir/inc2.html", "./exclude/subdir/exc2.html",
+                     "./exclude/excludeSubDir/exc3.html",
+                     "./exclude/subdir/exc4.html"}
         if os.name == "nt" :
             expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
@@ -404,7 +408,11 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./badCharsNoindex2.html",
                      "./badCharsDoIndex.html",
                      "./blocked5.html",
-                     "./blocked6.html"}
+                     "./blocked6.html",
+                     "./exclude/inc1.html", "./exclude/exc1.html",
+                     "./exclude/subdir/inc2.html", "./exclude/subdir/exc2.html",
+                     "./exclude/excludeSubDir/exc3.html",
+                     "./exclude/subdir/exc4.html"}
         if os.name == "nt" :
             expected = { s.replace("/", "\\") for s in expected }
         self.assertEqual(asSet, expected)
@@ -635,7 +643,7 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./x.pdf", "./subdir/y.pdf",
                      "./subdir/subdir/z.pdf"]
         for f in allFiles :
-            self.assertTrue(gs.robotsBlocked(f, ["/"]))
+            self.assertTrue(gs.robotsBlocked(f, {"/"}))
         blocked = {  "./blocked1.html", "./blocked2.html",
                      "./blocked3.html", "./blocked4.html",
                      "./subdir/a.html", "./subdir/subdir/b.html",
@@ -643,27 +651,43 @@ class TestGenerateSitemap(unittest.TestCase) :
                      "./subdir/subdir/z.pdf"}
         for f in allFiles :
             if f in blocked :
-                self.assertTrue(gs.robotsBlocked(f, ["/subdir/"]))
+                self.assertTrue(gs.robotsBlocked(f, {"/subdir/"}))
             else :
-                self.assertFalse(gs.robotsBlocked(f, ["/subdir/"]))
+                self.assertFalse(gs.robotsBlocked(f, {"/subdir/"}))
         blocked = {  "./blocked1.html", "./blocked2.html",
                      "./blocked3.html", "./blocked4.html",
                      "./subdir/subdir/b.html",
                      "./subdir/subdir/z.pdf"}
         for f in allFiles :
             if f in blocked :
-                self.assertTrue(gs.robotsBlocked(f, ["/subdir/subdir/"]))
+                self.assertTrue(gs.robotsBlocked(f, {"/subdir/subdir/"}))
             else :
-                self.assertFalse(gs.robotsBlocked(f, ["/subdir/subdir"]))
+                self.assertFalse(gs.robotsBlocked(f, {"/subdir/subdir"}))
         blocked = { "./blocked1.html", "./blocked2.html",
                     "./blocked3.html", "./blocked4.html",
                     "./subdir/subdir/b.html", "./subdir/y.pdf",
                     "./unblocked1.html" }
-        blockThese = [ "/subdir/subdir/b", "/unblocked1.html", "/subdir/y.pdf"]
+        blockThese = { "/subdir/subdir/b", "/unblocked1.html", "/subdir/y.pdf"}
         for f in allFiles :
             if f in blocked :
                 self.assertTrue(gs.robotsBlocked(f, blockThese))
             else :
                 self.assertFalse(gs.robotsBlocked(f, blockThese))
         os.chdir("..")
-        
+
+    def test_adjust_path(self):
+        self.assertEqual("/", gs.adjust_path("."))
+        self.assertEqual("/", gs.adjust_path("\\"))
+        self.assertEqual("/", gs.adjust_path(".\\"))
+        self.assertEqual("/hello", gs.adjust_path("\\hello"))
+        self.assertEqual("/hello", gs.adjust_path(".\\hello"))
+        self.assertEqual("/hello/bye", gs.adjust_path("\\hello\\bye"))
+        self.assertEqual("/hello/bye", gs.adjust_path(".\\hello\\bye"))
+        self.assertEqual("/", gs.adjust_path("/"))
+        self.assertEqual("/", gs.adjust_path("./"))
+        self.assertEqual("/hello", gs.adjust_path("/hello"))
+        self.assertEqual("/hello", gs.adjust_path("./hello"))
+        self.assertEqual("/hello/bye", gs.adjust_path("/hello/bye"))
+        self.assertEqual("/hello/bye", gs.adjust_path("./hello/bye"))
+        self.assertEqual("/hello", gs.adjust_path("hello"))
+        self.assertEqual("/hello/bye", gs.adjust_path("hello/bye"))

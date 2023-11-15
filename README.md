@@ -27,6 +27,8 @@ Pages, and has the following features:
   directives, excluding any that do from the sitemap. 
 * Parses a robots.txt, if present at the root of the website, excluding 
   any URLs from the sitemap that match `Disallow:` rules for `User-agent: *`.
+* Enables specifying a list of directories and/or specific files to exclude from
+  the sitemap.
 * Sorts the sitemap entries in a consistent order, such that the URLs are 
   first sorted by depth in the directory structure (i.e., pages at the website 
   root appear first, etc), and then pages at the same depth are sorted alphabetically. 
@@ -142,6 +144,35 @@ is an example:
         additional-extensions: doc docx ppt pptx
 ```
 
+### `exclude-paths`
+
+The action will automatically exclude any files or directories
+based on a robots.txt file, if present. But if you have additional
+directories or individual files that you wish to exclude from the
+sitemap that are not otherwise blocked, you can use the `exclude-paths`
+input to specify a list of them, separated by any whitespace characters. 
+For example, if you wish to exclude the directory `/exclude-these` as 
+well as the individual file `/nositemap.html`, you can use the following:
+
+```yml
+    - name: Generate the sitemap
+      uses: cicirello/generate-sitemap@v1
+      with:
+        exclude-paths: /exclude-these /nositemap.html
+```
+
+If you have many such cases to exclude, your workflow may be easier to
+read if you use a YAML multi-line string, with the following:
+
+```yml
+    - name: Generate the sitemap
+      uses: cicirello/generate-sitemap@v1
+      with:
+        exclude-paths: >
+          /exclude-these 
+          /nositemap.html
+```
+
 ### `sitemap-format`
 
 Use this to specify the sitemap format. Default: `xml`.
@@ -211,7 +242,7 @@ you can also use a specific version such as with:
 
 ```yml
     - name: Generate the sitemap
-      uses: cicirello/generate-sitemap@v1.9.1
+      uses: cicirello/generate-sitemap@v1.10.0
       with:
         base-url-path: https://THE.URL.TO.YOUR.PAGE/
 ```
