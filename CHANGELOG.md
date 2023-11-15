@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2023-11-11
+## [Unreleased] - 2023-11-15
 
 ### Added
-* Ability to specify list of paths to exclude from sitemap, via new input `exclude-paths`.
 
 ### Changed
 
@@ -18,6 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### CI/CD
+
+### Dependencies
+
+
+## [1.10.0] - 2023-11-15
+
+### Added
+* Ability to specify list of paths to exclude from sitemap, via new input `exclude-paths`.
 
 ### Dependencies
 * Bump cicirello/pyaction from 4.25.0 to 4.26.0
