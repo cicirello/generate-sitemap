@@ -15,9 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
-* Escape characters that must be escaped in XML.
 
 ### CI/CD
+
+### Dependencies
+
+
+## [1.10.1] - 2024-06-08
+
+### Fixed
+* Escape characters that must be escaped in XML.
 
 ### Dependencies
 * Bump cicirello/pyaction from 4.26.0 to 4.30.0
