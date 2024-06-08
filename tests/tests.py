@@ -1,6 +1,6 @@
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020-2023 Vincent A Cicirello
+# Copyright (c) 2020-2024 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -590,6 +590,26 @@ class TestGenerateSitemap(unittest.TestCase) :
         date = "2020-09-11T13:35:00-04:00"
         expected = "2020-09-11"
         self.assertEqual(expected, gs.removeTime(date))
+
+    def test_xmlEscapeCharacters(self):
+        test_strings = [
+            "abs&def",
+            "abs<def",
+            "abs>def",
+            "abs'def",
+            'abs"def',
+            """&<>"'"'><&"""
+        ]
+        expected = [
+            "abs&amp;def",
+            "abs&lt;def",
+            "abs&gt;def",
+            "abs&apos;def",
+            "abs&quot;def",
+            "&amp;&lt;&gt;&quot;&apos;&quot;&apos;&gt;&lt;&amp;"
+        ]
+        for t, e in zip(test_strings, expected):
+            self.assertEqual(e, gs.xmlEscapeCharacters(t))
         
     def test_xmlSitemapEntry(self) :
         base = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
@@ -612,6 +632,36 @@ class TestGenerateSitemap(unittest.TestCase) :
         actual = gs.xmlSitemapEntry(f, base, date, True, True)
         expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a</loc>\n<lastmod>2020-09-11</lastmod>\n</url>"
         self.assertEqual(actual, expected)
+
+    def test_xmlSitemapEntry_withEscapes(self):
+        base = "https://TESTING.FAKE.WEB.ADDRESS.TESTING/"
+        f_template = "./a{0}.html"
+        date = "2020-09-11T13:35:00-04:00"
+        test_strings = [
+            "abs&def",
+            "abs<def",
+            "abs>def",
+            "abs'def",
+            'abs"def',
+            """&<>"'"'><&"""
+        ]
+        expected = [
+            "abs&amp;def",
+            "abs&lt;def",
+            "abs&gt;def",
+            "abs&apos;def",
+            "abs&quot;def",
+            "&amp;&lt;&gt;&quot;&apos;&quot;&apos;&gt;&lt;&amp;"
+        ]
+        for t, e in zip(test_strings, expected):
+            f = f_template.format(t)
+            self.assertEqual(e, gs.xmlEscapeCharacters(t))
+            actual = gs.xmlSitemapEntry(f, base, date)
+            expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a{0}.html</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>".format(e)
+            self.assertEqual(actual, expected)
+            actual = gs.xmlSitemapEntry(f, base, date, True)
+            expected = "<url>\n<loc>https://TESTING.FAKE.WEB.ADDRESS.TESTING/a{0}</loc>\n<lastmod>2020-09-11T13:35:00-04:00</lastmod>\n</url>".format(e)
+            self.assertEqual(actual, expected)
 
     def test_robotsTxtParser(self) :
         expected = [ [],

@@ -2,7 +2,7 @@
 #
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020-2023 Vincent A Cicirello
+# Copyright (c) 2020-2024 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -262,6 +262,25 @@ def removeTime(dateString) :
     """
     return dateString[:10]
 
+def xmlEscapeCharacters(f):
+    """Escapes any characters that XML requires escaped, such as
+    ampersands, etc.
+
+    Keyword arguments:
+    f - the filename
+    """
+    return f.replace(
+        "&", "&amp;"
+    ).replace(
+        "<", "&lt;"
+    ).replace(
+        ">", "&gt;"
+    ).replace(
+        "'", "&apos;"
+    ).replace(
+        '"', "&quot;"
+    )
+
 def xmlSitemapEntry(f, baseUrl, dateString, dropExtension=False, dateOnly=False) :
     """Forms a string with an entry formatted for an xml sitemap
     including lastmod date.
@@ -273,7 +292,7 @@ def xmlSitemapEntry(f, baseUrl, dateString, dropExtension=False, dateOnly=False)
     dropExtension - true to drop extensions of .html from the filename in urls
     """
     return xmlSitemapEntryTemplate.format(
-        urlstring(f, baseUrl, dropExtension),
+        urlstring(xmlEscapeCharacters(f), baseUrl, dropExtension),
         removeTime(dateString) if dateOnly else dateString
     )
 
