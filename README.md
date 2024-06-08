@@ -264,6 +264,8 @@ on:
 jobs:
   sitemap_job:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     name: Generate a sitemap
 
     steps:
@@ -283,6 +285,9 @@ jobs:
         echo "sitemap-path = ${{ steps.sitemap.outputs.sitemap-path }}"
         echo "url-count = ${{ steps.sitemap.outputs.url-count }}"
         echo "excluded-count = ${{ steps.sitemap.outputs.excluded-count }}"
+
+    - name: Add Commit Push
+      uses: planetrenox/addcommitpush-action@v0
 ```
 
 ### Example 2: Webpage for API Docs
