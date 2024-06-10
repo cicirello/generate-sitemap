@@ -1,6 +1,6 @@
 # Copyright (c) 2021-2024 Vincent A. Cicirello
 # https://www.cicirello.org/
 # Licensed under the MIT License
-FROM ghcr.io/cicirello/pyaction:4.30.0
+FROM ghcr.io/cicirello/pyaction:4.31.0
 COPY generatesitemap.py /generatesitemap.py
 ENTRYPOINT ["/generatesitemap.py"]
