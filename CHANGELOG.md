@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### CI/CD
 
 ### Dependencies
+
+
+## [1.10.2] - 2025-07-15
+
+### Dependencies
 * Use the new tag scheme for cicirello/pyaction.
 * Bumps cicirello/pyaction to 3.13.5-gh-2.75.1.
 
