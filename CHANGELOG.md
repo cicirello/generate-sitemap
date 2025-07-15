@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-05-19
+## [Unreleased] - 2025-07-15
 
 ### Added
 
@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### CI/CD
 
 ### Dependencies
-* Bumps cicirello/pyaction from 4.30.0 to 4.33.0.
+* Use the new tag scheme for cicirello/pyaction.
+* Bumps cicirello/pyaction to 3.13.5-gh-2.75.1.
 
 
 ## [1.10.1] - 2024-06-08
