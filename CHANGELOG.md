@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+* Fixed failure to get last commit dates in case of nested repository checkouts.
 
 ### CI/CD
 
