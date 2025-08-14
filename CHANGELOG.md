@@ -15,9 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
-* Fixed failure to get last commit dates in case of nested repository checkouts.
 
 ### CI/CD
+
+### Dependencies
+
+
+## [1.10.3] - 2025-08-14
+
+### Fixed
+* Fixed failure to get last commit dates in case of nested repository checkouts.
 
 ### Dependencies
 * Bump cicirello/pyaction from 3.13.5-gh-2.75.1 to 3.13.6-gh-2.76.2
