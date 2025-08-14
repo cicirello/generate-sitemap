@@ -2,7 +2,7 @@
 #
 # generate-sitemap: Github action for automating sitemap generation
 # 
-# Copyright (c) 2020-2024 Vincent A Cicirello
+# Copyright (c) 2020-2025 Vincent A Cicirello
 # https://www.cicirello.org/
 #
 # MIT License
@@ -402,12 +402,14 @@ def main(
             paths to individual files.
     """
     repo_root = os.getcwd()
-    os.chdir(sanitize_path(websiteRoot))
+    sanitized_root = sanitize_path(websiteRoot) 
+    os.chdir(sanitized_root)
 
     # Fixes "dubious ownership" warning related to
     # how the actions working directory is mounted
     # inside container actions.
     subprocess.run(['git', 'config', '--global', '--add', 'safe.directory', repo_root])
+    subprocess.run(['git', 'config', '--global', '--add', 'safe.directory', sanitized_root])
 
     if len(excludePaths) > 0:
         excludePaths = { adjust_path(path) for path in excludePaths}
