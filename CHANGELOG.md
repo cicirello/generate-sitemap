@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - 2025-08-14
+## [Unreleased] - 2025-10-11
 
 ### Added
 
@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### CI/CD
 
 ### Dependencies
+* Bump cicirello/pyaction from `3.13.6-gh-2.76.2` to `3.13.7-gh-2.81.0`
 
 
 ## [1.10.3] - 2025-08-14
@@ -27,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Fixed failure to get last commit dates in case of nested repository checkouts.
 
 ### Dependencies
-* Bump cicirello/pyaction from 3.13.5-gh-2.75.1 to 3.13.6-gh-2.76.2
+* Bump cicirello/pyaction from `3.13.5-gh-2.75.1` to `3.13.6-gh-2.76.2`
 
 
 ## [1.10.2] - 2025-07-15
