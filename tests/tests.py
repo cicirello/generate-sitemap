@@ -27,6 +27,7 @@
 import unittest
 import generatesitemap as gs
 import os
+import tempfile
 
 def validateDate(s) :
     if len(s) < 25 :
@@ -368,6 +369,17 @@ class TestGenerateSitemap(unittest.TestCase) :
             self.assertFalse(gs.hasMetaRobotsNoindex(f))
         for f in blocked :
             self.assertTrue(gs.hasMetaRobotsNoindex(f))
+
+    def test_hasMetaRobotsNoindex_singleQuotes(self) :
+        with tempfile.TemporaryDirectory() as tmp :
+            single = os.path.join(tmp, "single.html")
+            with open(single, "w") as f :
+                f.write("<html><head><meta name='robots' content='noindex'></head><body></body></html>")
+            self.assertTrue(gs.hasMetaRobotsNoindex(single))
+            double_ok = os.path.join(tmp, "double.html")
+            with open(double_ok, "w") as f :
+                f.write('<html><head><meta name="robots" content="index, follow"></head><body></body></html>')
+            self.assertFalse(gs.hasMetaRobotsNoindex(double_ok))
 
     def test_gatherfiles_html(self) :
         os.chdir("tests")
